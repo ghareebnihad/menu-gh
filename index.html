@@ -24,7 +24,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding: 20px;
+            padding: 10px; /* Mobil için kenar boşluğunu azalttık */
             box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5); 
             min-height: 100vh;
         }
@@ -34,52 +34,59 @@
             direction: rtl;
             font-family: 'Harmattan', serif; 
         }
+        /* RTL için Dil Kontrolünü Sol Tarafa Taşır */
+        body.rtl #dynamic-lang-control {
+            right: auto;
+            left: 10px;
+        }
+        
         .menu-container { max-width: var(--max-width); margin: 0 auto; }
         
         /* BAŞLIK VE KONTAK BİLGİLERİ */
         .menu-header { 
             text-align: center; 
-            padding: 50px 0 30px; 
-            margin-bottom: 40px; 
+            padding: 30px 0 20px; /* Mobil için dikey boşluğu azalttık */
+            margin-bottom: 20px; 
             position: relative;
         }
         .menu-header h1 { 
             font-family: 'Playfair Display', serif; 
-            font-size: 3.8em; 
+            font-size: 2.5em; /* Mobil için yazı boyutunu küçülttük */
             color: var(--accent-color); 
-            letter-spacing: 6px; 
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.3);
+            letter-spacing: 4px; /* Mobil için harf aralığını azalttık */
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.7), 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         /* KONTAK BİLGİLERİ BAR STİLİ */
         .contact-bar {
             display: flex;
+            flex-direction: column; /* Mobil için alt alta sıraladık */
             justify-content: center;
             align-items: center;
-            gap: 40px; 
-            margin: 20px auto 30px;
+            gap: 10px; 
+            margin: 15px auto 20px;
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
+            padding: 10px 0;
             max-width: 600px;
         }
         .contact-bar p {
-            font-size: 1.2em;
+            font-size: 1em; 
             color: var(--accent-color);
             font-weight: 700;
             margin: 0;
             display: flex;
             align-items: center;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .contact-bar i {
-            margin-right: 8px;
+            margin-right: 6px;
             color: var(--secondary-text);
-            font-size: 1.1em;
+            font-size: 1em;
         }
         #cuisine-text {
-            font-size: 1.2em;
+            font-size: 1em;
             color: var(--secondary-text);
             margin-bottom: 5px;
             display: block !important; 
@@ -88,35 +95,36 @@
         /* --- DİL SEÇİMİ EKANI (Aşama 1) --- */
         #initial-lang-select {
             display: flex;
+            flex-direction: column; /* Mobil için dikey sıraladık */
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            padding: 50px 0 100px; 
+            gap: 15px; 
+            padding: 30px 0 60px; 
         }
         .initial-lang-button {
             background: none;
             border: 2px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 15px 40px;
-            font-size: 1.4em;
+            padding: 12px 30px; 
+            font-size: 1.2em;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             font-weight: 700;
-            min-width: 150px;
+            min-width: 200px; 
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
         .initial-lang-button:hover {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
 
         /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ (Aşama 2) --- */
         #dynamic-lang-control {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            position: fixed; /* Sabit pozisyon */
+            top: 10px;
+            right: 10px;
             display: none; 
             z-index: 100;
         }
@@ -124,29 +132,36 @@
             background: var(--bg-color);
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 8px 12px;
+            padding: 6px 10px;
             cursor: pointer;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 5px;
             box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            font-size: 0.9em;
         }
         #lang-dropdown-content {
             display: none;
             position: absolute;
             right: 0;
             background-color: #111;
-            min-width: 100px;
+            min-width: 80px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);
             z-index: 1;
         }
+        /* RTL Desteği için dropdown'u da sola taşır */
+        body.rtl #lang-dropdown-content {
+            left: 0;
+            right: auto;
+        }
         #lang-dropdown-content .lang-item {
             color: var(--text-color);
-            padding: 12px 16px;
+            padding: 8px 12px;
             text-decoration: none;
             display: block;
             cursor: pointer;
+            font-size: 0.9em;
         }
         #lang-dropdown-content .lang-item:hover {
             background-color: var(--accent-color);
@@ -155,26 +170,31 @@
 
         /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ --- */
         .controls { 
-            display: none; /* JS ile flex yapılır */
-            flex-direction: row; /* Yan yana hizalama */
-            justify-content: space-between; /* Sekmeler ve Görünüm Kontrolü arası boşluk */
+            display: none; 
+            flex-direction: column; 
             align-items: center;
-            margin-bottom: 30px; 
-            padding: 0 20px;
+            margin-bottom: 20px; 
+            padding: 0 5px;
         }
 
         .tabs { 
             display: flex; 
-            flex-wrap: wrap; 
-            gap: 10px; 
+            overflow-x: auto; 
+            white-space: nowrap;
+            gap: 8px; 
+            width: 100%;
+            padding-bottom: 10px; 
+            justify-content: flex-start; 
         }
+        /* Yatay kaydırma çubuğunu gizle (isteğe bağlı) */
+        .tabs::-webkit-scrollbar { display: none; }
+        .tabs { -ms-overflow-style: none; scrollbar-width: none; } 
         
-        /* Görünüm ayarlarını (Grid) sağa hizala */
         .view-switch { 
             display: flex; 
             gap: 5px; 
-            /* İstenen mesafe için sol marjin eklendi */
-            margin-left: 30px; 
+            margin-left: 0; 
+            margin-top: 10px; 
         } 
 
         /* Sekme Buton Stilleri */
@@ -182,13 +202,15 @@
             background: none; 
             border: 2px solid var(--accent-color); 
             color: var(--accent-color); 
-            padding: 10px 25px; 
+            flex-shrink: 0; 
+            padding: 8px 15px; 
             font-family: 'Lora', serif; 
             cursor: pointer; 
             transition: all 0.3s ease; 
             text-transform: uppercase; 
-            letter-spacing: 2px; 
+            letter-spacing: 1px; 
             box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); 
+            font-size: 0.9em;
         }
         .tab-button:hover, .tab-button.active { 
             background-color: var(--accent-color); 
@@ -201,8 +223,8 @@
             background-color: #ffffff; 
             border: 1px solid var(--border-color); 
             color: var(--bg-color); 
-            padding: 8px 12px; 
-            font-size: 1.2em; 
+            padding: 6px 10px; 
+            font-size: 1em; 
             cursor: pointer; 
             transition: all 0.2s ease;
         }
@@ -211,33 +233,102 @@
             color: var(--bg-color); 
         }
 
-        /* Menü İçeriği Stilleri (Aynı kaldı) */
+        /* Menü İçeriği Stilleri */
         #menu-content { display: none; } 
-        .menu-section { display: none; padding: 20px 0; }
+        .menu-section { display: none; padding: 10px 0; }
         .menu-section.active { display: block; }
-        .menu-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5em; color: var(--accent-color); text-align: center; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
-        .menu-grid { display: grid; gap: 30px; padding: 10px 0; }
-        .grid-4x4 { grid-template-columns: repeat(4, 1fr); }
-        .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+        .menu-section h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2em; 
+            color: var(--accent-color); 
+            text-align: center; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px dashed var(--border-color); 
+        }
+        
+        /* IZGARA AYARLARI */
+        .menu-grid { 
+            display: grid; 
+            gap: 20px; 
+            padding: 0;
+        }
+        /* Mobil Varsayılan: 2x2 */
+        .grid-4x4, .grid-2x2 { 
+            grid-template-columns: repeat(2, 1fr); 
+        }
         .grid-1x1 { grid-template-columns: 1fr; }
-        .menu-item { background-color: #1a1a1a; border: 1px solid rgba(255, 215, 0, 0.2); padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); }
-        .item-image { width: 100%; height: 180px; object-fit: cover; border-radius: 3px; margin-bottom: 15px; }
-        .item-details h3 { font-family: 'Playfair Display', serif; font-size: 1.4em; color: var(--accent-color); margin-bottom: 10px; }
-        .item-details p { font-size: 0.9em; color: var(--secondary-text); margin-bottom: 15px; }
-        .price { font-family: 'Playfair Display', serif; font-size: 1.6em; color: var(--accent-color); font-weight: 700; display: block; margin-top: auto;}
+
+        .menu-item { 
+            background-color: #1a1a1a; 
+            border: 1px solid rgba(255, 215, 0, 0.2); 
+            padding: 15px; 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            position: relative; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); 
+        }
+        .item-image { 
+            width: 100%; 
+            height: 150px; 
+            object-fit: cover; 
+            border-radius: 3px; 
+            margin-bottom: 10px; 
+        }
+        .item-details h3 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.2em; 
+            color: var(--accent-color); 
+            margin-bottom: 5px; 
+        }
+        .item-details p { 
+            font-size: 0.85em; 
+            color: var(--secondary-text); 
+            margin-bottom: 10px; 
+        }
+        .price { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.4em; 
+            color: var(--accent-color); 
+            font-weight: 700; 
+            display: block; 
+            margin-top: auto;
+        }
         
-        .main-footer { max-width: var(--max-width); margin: 50px auto 0; padding: 20px 0; text-align: center; border-top: 1px dashed var(--border-color); font-size: 0.8em; color: var(--secondary-text); }
+        .main-footer { 
+            max-width: var(--max-width); 
+            margin: 30px auto 0; 
+            padding: 15px 0; 
+            text-align: center; 
+            border-top: 1px dashed var(--border-color); 
+            font-size: 0.7em; 
+            color: var(--secondary-text); 
+        }
         
-        @media (max-width: 1000px) { .grid-4x4 { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { 
-            .contact-bar { flex-direction: column; gap: 10px; } 
-            #initial-lang-select { flex-direction: column; padding: 50px 0; }
+        /* Tablet ve Büyük Ekranlar İçin Medya Sorgusu */
+        @media (min-width: 768px) { 
+            body { padding: 20px; }
+            .menu-header h1 { font-size: 3.8em; letter-spacing: 6px; }
             
-            /* Mobil görünümde Sekmeler ve Görünüm Kontrolleri alt alta */
-            .controls { flex-direction: column; gap: 15px; }
-            .tabs { justify-content: center; }
-            .view-switch { margin-left: 0; justify-content: center; } /* Mobil için marjini kaldır */
-            .grid-4x4, .grid-2x2 { grid-template-columns: repeat(2, 1fr); } 
+            /* Kontak Bar */
+            .contact-bar { flex-direction: row; gap: 40px; padding: 15px 0; } 
+            .contact-bar p { font-size: 1.2em; }
+            
+            /* Kontroller */
+            .controls { flex-direction: row; justify-content: space-between; padding: 0 20px; }
+            .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; }
+            .view-switch { margin-top: 0; margin-left: 30px; }
+            
+            /* Izgara */
+            .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-4x4 { grid-template-columns: repeat(3, 1fr); } /* Tabletler için 3x3 ideal */
+        }
+        
+        /* Büyük Masaüstü Ekranlar İçin */
+        @media (min-width: 1000px) {
+             .grid-4x4 { grid-template-columns: repeat(4, 1fr); } /* 1000px üzeri için 4x4 */
         }
     </style>
 </head>
@@ -353,18 +444,27 @@
             const langMap = { 'EN': 'English', 'AR': 'العربية', 'KU': 'کوردی' };
             const langKeys = ['EN', 'AR', 'KU'];
 
-            // Görünüm butonları artık HTML'de sabit, JS'te sadece içeriği alıyoruz.
-            const viewSwitchHTML = document.querySelector('.view-switch').outerHTML;
-            
             let currentLang = 'EN'; 
-            let currentView = 'grid-4x4'; 
+            let currentView = 'grid-4x4'; // Masaüstü varsayılanı, mobil için JS'te düzeltilecek
             let firstSectionId = ''; 
+            
+            // --- BAŞLANGIÇ GÖRÜNÜMÜNÜ AYARLA (Hata Düzeltme) ---
+            const determineInitialView = () => {
+                // Mobil cihazlarda varsayılan olarak 2x2'yi kullan
+                if (window.innerWidth <= 768) {
+                    currentView = 'grid-2x2';
+                } else {
+                    currentView = 'grid-4x4';
+                }
+            };
+            
+            determineInitialView(); // Sayfa yüklenir yüklenmez görünümü belirle
 
             // --- Arayüz Görünürlüğünü Ayarlama ---
             const toggleMenuVisibility = (isVisible) => {
                 if (isVisible) {
                     initialLangSelect.style.display = 'none';
-                    menuControls.style.display = 'flex'; // Kontrol çubuğunu göster
+                    menuControls.style.display = 'flex'; 
                     menuContentContainer.style.display = 'block';
                     dynamicLangControl.style.display = 'block';
                     infoBar.style.display = 'flex'; 
@@ -399,14 +499,12 @@
 
             // --- Dil Çeviri Fonksiyonu ---
             const applyTranslations = (lang) => {
-                // Header Çevirileri
                 document.getElementById('restaurant-name').textContent = translations.restaurantName[lang];
                 document.getElementById('cuisine-text').textContent = translations.cuisineText[lang];
                 
                 document.getElementById('location-text').innerHTML = translations.locationText[lang];
                 document.getElementById('reservation-text').innerHTML = translations.reservationText[lang];
 
-                // RTL desteği
                 if (lang === 'AR') {
                     document.body.classList.add('rtl');
                 } else {
@@ -424,7 +522,7 @@
                 currentLang = targetLang;
                 applyTranslations(targetLang);
                 
-                // Menü yeniden render edildiği için ilk sekmeyi aktif et
+                // İlk sekmeyi ve içeriğini yeniden aktif et
                 const activeTab = document.querySelector(`.tab-button[data-tab="${firstSectionId}"]`);
                 const activeSection = document.getElementById(firstSectionId);
                 
@@ -436,9 +534,17 @@
                     activeSection.classList.add('active');
                 }
                 
-                // Görünüm butonlarını tekrar aktif hale getir (Örn: 4x4)
+                // Görünüm butonlarını doğru şekilde aktif et
                 document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelector(`[data-view="${currentView}"]`).classList.add('active');
+                
+                // Hata düzeltme: Başlangıçta belirlenen currentView'i kullan
+                const activeViewButton = document.querySelector(`.view-button[data-view="${currentView}"]`);
+                if(activeViewButton) {
+                    activeViewButton.classList.add('active');
+                } else {
+                    // Varsayılan butonu aktif et (genellikle 4x4)
+                    document.querySelector('.view-switch .view-button').classList.add('active');
+                }
             };
 
             // --- Menüyü Oluşturma ve Ekrana Basma Fonksiyonu ---
@@ -449,7 +555,8 @@
 
                 for (const sectionKey in menuData) {
                     const sectionData = menuData[sectionKey];
-                    const sectionName = sectionData[lang] || sectionData['EN'];
+                    // Çeviri yoksa EN kullan (Hata Düzeltme)
+                    const sectionName = sectionData[lang] || sectionData['EN']; 
                     const sectionId = sectionKey.toLowerCase().replace(/ /g, '-');
                     const sectionItems = sectionData.items;
                     const isActive = isFirstSection ? ' active' : '';
@@ -458,14 +565,14 @@
                         firstSectionId = sectionId; 
                     }
 
-                    // 1. Sekme Butonunu Oluştur (Sadece ismini)
+                    // 1. Sekme Butonunu Oluştur
                     const tabButton = document.createElement('button');
                     tabButton.className = 'tab-button' + isActive;
                     tabButton.setAttribute('data-tab', sectionId);
                     tabButton.textContent = sectionName;
                     menuTabsContainer.appendChild(tabButton);
 
-                    // 2. Menü Bölümünü Oluştur (Section)
+                    // 2. Menü Bölümünü Oluştur (currentView değişkenini kullan)
                     const sectionHTML = `
                         <section id="${sectionId}" class="menu-section${isActive}">
                             <h2>${sectionName}</h2>
@@ -480,16 +587,19 @@
                 }
             };
 
-            // --- Menü Kartı Oluşturma Fonksiyonu (Aynı Kaldı) ---
+            // --- Menü Kartı Oluşturma Fonksiyonu ---
             const createMenuItem = (item, lang) => {
                 const priceText = item.price + '₺'; 
+                // Çeviri yoksa EN kullan (Hata Düzeltme)
+                const itemName = item.name[lang] || item.name['EN'];
+                const itemDesc = item.desc[lang] || item.desc['EN'];
                 
                 return `
                     <div class="menu-item">
-                        <img src="${item.img}" alt="${item.name[lang] || item.name['EN']}" class="item-image"> 
+                        <img src="${item.img}" alt="${itemName}" class="item-image"> 
                         <div class="item-details">
-                            <h3>${item.name[lang] || item.name['EN']}</h3>
-                            <p>${item.desc[lang] || item.desc['EN']}</p>
+                            <h3>${itemName}</h3>
+                            <p>${itemDesc}</p>
                         </div>
                         <span class="price">${priceText}</span>
                     </div>
@@ -513,20 +623,20 @@
                                 section.classList.add('active');
                             }
                         });
+                        // Mobil için kaydırma
+                        button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     });
                 });
 
-                // Görünüm Kontrolü (Controls içinde tek bir set var)
+                // Görünüm Kontrolü
                 document.querySelectorAll('.view-button').forEach(button => {
                     button.addEventListener('click', () => {
                         const targetView = button.getAttribute('data-view');
                         currentView = targetView; 
                         
-                        // Tüm view butonlarının aktifliğini ayarla
                         document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
 
-                        // Tüm menü ızgaralarını güncelle
                         document.querySelectorAll('.menu-grid').forEach(grid => {
                             grid.classList.remove('grid-4x4', 'grid-2x2', 'grid-1x1');
                             grid.classList.add(targetView);
@@ -541,6 +651,10 @@
             document.querySelectorAll('.initial-lang-button').forEach(button => {
                 button.addEventListener('click', () => {
                     const targetLang = button.getAttribute('data-lang');
+                    
+                    // Görüntüleme ayarını başlangıçta belirle (Mobil / Masaüstü)
+                    determineInitialView(); 
+                    
                     toggleMenuVisibility(true); 
                     switchLanguage(targetLang); 
                     
@@ -556,7 +670,7 @@
 
             // Dropdown dışına tıklanınca kapat
             window.addEventListener('click', (e) => {
-                if (!dynamicLangControl.contains(e.target)) {
+                if (!dynamicLangControl.contains(e.target) && !langDropdownButton.contains(e.target)) {
                     langDropdownContent.style.display = 'none';
                 }
             });
