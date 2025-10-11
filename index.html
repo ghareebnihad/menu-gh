@@ -30,202 +30,108 @@
         }
 
         /* SAĞDAN SOLA DESTEĞİ (ARAPÇA İÇİN) */
-        body.rtl {
-            direction: rtl;
-            font-family: 'Harmattan', serif; 
-        }
-        body.rtl #dynamic-lang-control {
-            right: auto;
-            left: 10px;
-        }
-        body.rtl #lang-dropdown-content {
-            left: 0;
-            right: auto;
-        }
+        body.rtl { direction: rtl; font-family: 'Harmattan', serif; }
+        body.rtl #dynamic-lang-control { right: auto; left: 10px; }
+        body.rtl #lang-dropdown-content { left: 0; right: auto; }
         
         .menu-container { max-width: var(--max-width); margin: 0 auto; }
         
         /* BAŞLIK VE KONTAK BİLGİLERİ */
         .menu-header { 
-            text-align: center; 
-            padding: 30px 0 20px; 
-            margin-bottom: 20px; 
-            position: relative;
+            text-align: center; padding: 30px 0 20px; margin-bottom: 20px; position: relative;
         }
         .menu-header h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.5em; 
-            color: var(--accent-color); 
-            letter-spacing: 4px; 
-            margin-bottom: 5px;
+            font-family: 'Playfair Display', serif; font-size: 2.5em; color: var(--accent-color); 
+            letter-spacing: 4px; margin-bottom: 5px;
             text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.7), 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         /* KONTAK BİLGİLERİ BAR STİLİ */
         .contact-bar {
-            display: flex;
-            flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            gap: 10px; 
-            margin: 15px auto 20px;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-            max-width: 600px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 10px; margin: 15px auto 20px; border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color); padding: 10px 0; max-width: 600px;
         }
         .contact-bar p {
-            font-size: 1em; 
-            color: var(--accent-color);
-            font-weight: 700;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            letter-spacing: 0.5px;
+            font-size: 1em; color: var(--accent-color); font-weight: 700; margin: 0;
+            display: flex; align-items: center; letter-spacing: 0.5px;
         }
-        .contact-bar i {
-            margin-right: 6px;
-            color: var(--secondary-text);
-            font-size: 1em;
-        }
-        #cuisine-text {
-            font-size: 1em;
-            color: var(--secondary-text);
-            margin-bottom: 5px;
-            display: block !important; 
-        }
+        .contact-bar i { margin-right: 6px; color: var(--secondary-text); font-size: 1em; }
+        #cuisine-text { font-size: 1em; color: var(--secondary-text); margin-bottom: 5px; display: block !important; }
         
         /* --- DİL SEÇİMİ EKANI --- */
         #initial-lang-select {
-            display: flex;
-            flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            gap: 15px; 
-            padding: 30px 0 60px; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 15px; padding: 30px 0 60px; 
         }
         .initial-lang-button {
-            background: none;
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 12px 30px; 
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-weight: 700;
-            min-width: 200px; 
+            background: none; border: 2px solid var(--accent-color); color: var(--accent-color);
+            padding: 12px 30px; font-size: 1.2em; cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; font-weight: 700; min-width: 200px; 
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
         .initial-lang-button:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
+            background-color: var(--accent-color); color: var(--bg-color);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
 
         /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ --- */
         #dynamic-lang-control {
-            position: fixed; 
-            top: 10px;
-            right: 10px;
-            display: none; 
-            z-index: 100;
+            position: fixed; top: 10px; right: 10px; display: none; z-index: 100;
         }
         #lang-dropdown-button {
-            background: var(--bg-color);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 6px 10px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-            font-size: 0.9em;
+            background: var(--bg-color); border: 1px solid var(--accent-color); color: var(--accent-color);
+            padding: 6px 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center;
+            gap: 5px; box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); font-size: 0.9em;
         }
         #lang-dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: #111;
-            min-width: 80px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);
-            z-index: 1;
+            display: none; position: absolute; right: 0; background-color: #111;
+            min-width: 80px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 1;
         }
         #lang-dropdown-content .lang-item {
-            color: var(--text-color);
-            padding: 8px 12px;
-            text-decoration: none;
-            display: block;
-            cursor: pointer;
-            font-size: 0.9em;
+            color: var(--text-color); padding: 8px 12px; text-decoration: none;
+            display: block; cursor: pointer; font-size: 0.9em;
         }
         #lang-dropdown-content .lang-item:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
+            background-color: var(--accent-color); color: var(--bg-color);
         }
 
         /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ --- */
         .controls { 
-            display: none; 
-            flex-direction: column; 
-            align-items: center;
-            margin-bottom: 20px; 
-            padding: 0 5px;
+            display: none; flex-direction: column; align-items: center;
+            margin-bottom: 20px; padding: 0 5px;
         }
-
         .tabs { 
-            display: flex; 
-            overflow-x: auto; 
-            white-space: nowrap;
-            gap: 8px; 
-            width: 100%;
-            padding-bottom: 10px; 
-            justify-content: flex-start; 
+            display: flex; overflow-x: auto; white-space: nowrap; gap: 8px; 
+            width: 100%; padding-bottom: 10px; justify-content: flex-start; 
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tabs { -ms-overflow-style: none; scrollbar-width: none; } 
         
         .view-switch { 
-            display: flex; 
-            gap: 5px; 
-            margin-left: 0; 
-            margin-top: 10px; 
+            display: flex; gap: 5px; margin-left: 0; margin-top: 10px; 
         } 
 
+        /* Sekme Buton Stilleri */
         .tab-button { 
-            background: none; 
-            border: 2px solid var(--accent-color); 
-            color: var(--accent-color); 
-            flex-shrink: 0; 
-            padding: 8px 15px; 
-            font-family: 'Lora', serif; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); 
-            font-size: 0.9em;
+            background: none; border: 2px solid var(--accent-color); color: var(--accent-color); 
+            flex-shrink: 0; padding: 8px 15px; font-family: 'Lora', serif; cursor: pointer; 
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; 
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); font-size: 0.9em;
         }
         .tab-button:hover, .tab-button.active { 
-            background-color: var(--accent-color); 
-            color: var(--bg-color); 
+            background-color: var(--accent-color); color: var(--bg-color); 
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); 
         }
 
+        /* Görünüm Buton Stilleri */
         .view-button { 
-            background-color: #ffffff; 
-            border: 1px solid var(--border-color); 
-            color: var(--bg-color); 
-            padding: 6px 10px; 
-            font-size: 1em; 
-            cursor: pointer; 
-            transition: all 0.2s ease;
+            background-color: #ffffff; border: 1px solid var(--border-color); 
+            color: var(--bg-color); padding: 6px 10px; font-size: 1em; 
+            cursor: pointer; transition: all 0.2s ease;
         }
         .view-button:hover, .view-button.active { 
-            background-color: var(--accent-color); 
-            color: var(--bg-color); 
+            background-color: var(--accent-color); color: var(--bg-color); 
         }
 
         /* Menü İçeriği Stilleri */
@@ -233,102 +139,64 @@
         .menu-section { display: none; padding: 10px 0; }
         .menu-section.active { display: block; }
         .menu-section h2 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 2em; 
-            color: var(--accent-color); 
-            text-align: center; 
-            margin-bottom: 20px; 
-            padding-bottom: 10px; 
+            font-family: 'Playfair Display', serif; font-size: 2em; color: var(--accent-color); 
+            text-align: center; margin-bottom: 20px; padding-bottom: 10px; 
             border-bottom: 1px dashed var(--border-color); 
         }
         
         /* IZGARA AYARLARI (Mobil için Optimize Edildi) */
         .menu-grid { 
-            display: grid; 
-            gap: 15px; /* Boşluğu azalttık */
-            padding: 0;
+            display: grid; gap: 15px; padding: 0;
         }
         
-        /* Telefonlar (Genel kural: max-width: 767px) */
-        /* Tüm ızgara görünümleri varsayılan olarak 2 sütunlu olsun (4x4, 2x2) */
-        .grid-4x4, .grid-2x2 { 
+        /* 2x2 Görünümü (Tüm Telefonlar için 2 sütun) */
+        .grid-2x2 { 
             grid-template-columns: repeat(2, 1fr); 
         }
-        /* 1x1 listesi tam sütun alır */
+        /* 1x1 Görünümü (Tam sütun) */
         .grid-1x1 { 
             grid-template-columns: 1fr; 
         }
 
         .menu-item { 
-            background-color: #1a1a1a; 
-            border: 1px solid rgba(255, 215, 0, 0.2); 
-            padding: 15px; 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            position: relative; 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); 
+            background-color: #1a1a1a; border: 1px solid rgba(255, 215, 0, 0.2); 
+            padding: 15px; text-align: center; display: flex; flex-direction: column; 
+            justify-content: space-between; position: relative; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); 
         }
         .item-image { 
-            width: 100%; 
-            height: 150px; 
-            object-fit: cover; 
-            border-radius: 3px; 
+            width: 100%; height: 150px; object-fit: cover; border-radius: 3px; 
             margin-bottom: 10px; 
         }
+        
         /* Liste Görünümü (1x1) için özel düzen */
         .grid-1x1 .menu-item {
-            display: flex;
-            flex-direction: row;
-            text-align: left;
-            padding: 10px;
-            gap: 15px;
-            align-items: center;
+            display: flex; flex-direction: row; text-align: left; padding: 10px;
+            gap: 15px; align-items: center;
         }
         .grid-1x1 .item-image {
-            width: 80px; 
-            height: 80px; 
-            flex-shrink: 0;
-            margin-bottom: 0;
+            width: 80px; height: 80px; flex-shrink: 0; margin-bottom: 0;
         }
-        .grid-1x1 .item-details {
-            flex-grow: 1;
-        }
+        .grid-1x1 .item-details { flex-grow: 1; }
         .grid-1x1 .price {
-            flex-shrink: 0;
-            font-size: 1.6em;
-            margin-left: 10px;
+            flex-shrink: 0; font-size: 1.6em; margin-left: 10px;
         }
 
         .item-details h3 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 1.2em; 
-            color: var(--accent-color); 
+            font-family: 'Playfair Display', serif; font-size: 1.2em; color: var(--accent-color); 
             margin-bottom: 5px; 
         }
         .item-details p { 
-            font-size: 0.85em; 
-            color: var(--secondary-text); 
-            margin-bottom: 10px; 
+            font-size: 0.85em; color: var(--secondary-text); margin-bottom: 10px; 
         }
         .price { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 1.4em; 
-            color: var(--accent-color); 
-            font-weight: 700; 
-            display: block; 
-            margin-top: auto;
+            font-family: 'Playfair Display', serif; font-size: 1.4em; color: var(--accent-color); 
+            font-weight: 700; display: block; margin-top: auto;
         }
         
         .main-footer { 
-            max-width: var(--max-width); 
-            margin: 30px auto 0; 
-            padding: 15px 0; 
-            text-align: center; 
-            border-top: 1px dashed var(--border-color); 
-            font-size: 0.7em; 
-            color: var(--secondary-text); 
+            max-width: var(--max-width); margin: 30px auto 0; padding: 15px 0; 
+            text-align: center; border-top: 1px dashed var(--border-color); 
+            font-size: 0.7em; color: var(--secondary-text); 
         }
         
         /* Tablet ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
@@ -341,20 +209,12 @@
             .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; }
             .view-switch { margin-top: 0; margin-left: 30px; }
             
-            /* Tabletler için 3x3 (4x4 butonu seçilirse) */
-            .grid-4x4 { grid-template-columns: repeat(3, 1fr); }
+            /* Tabletler için 2x2'yi koru (büyük ekranlarda da 2x2 kalır) */
             .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
-
-            /* Tablette Liste Görünümü ayarı */
+            
             .grid-1x1 .item-image {
-                width: 120px; 
-                height: 120px; 
+                width: 120px; height: 120px; 
             }
-        }
-        
-        /* Büyük Masaüstü Ekranlar İçin (1000px üzeri) */
-        @media (min-width: 1000px) {
-             .grid-4x4 { grid-template-columns: repeat(4, 1fr); } 
         }
     </style>
 </head>
@@ -398,8 +258,7 @@
             </div>
             
             <div class="view-switch">
-                <button class="view-button active" data-view="grid-4x4" title="4x4 Görünüm"><i class="fas fa-th-large"></i></button>
-                <button class="view-button" data-view="grid-2x2" title="2x2 Görünüm"><i class="fas fa-th"></i></button>
+                <button class="view-button active" data-view="grid-2x2" title="Izgara Görünümü"><i class="fas fa-th"></i></button>
                 <button class="view-button" data-view="grid-1x1" title="Liste Görünümü"><i class="fas fa-list"></i></button>
             </div>
         </div>
@@ -471,17 +330,13 @@
             const langKeys = ['EN', 'AR', 'KU'];
 
             let currentLang = 'EN'; 
-            let currentView = 'grid-4x4'; 
+            let currentView = 'grid-2x2'; // Yeni varsayılan 2x2
             let firstSectionId = ''; 
             
             // --- BAŞLANGIÇ GÖRÜNÜMÜNÜ AYARLA ---
             const determineInitialView = () => {
-                // Mobil cihazlarda varsayılan olarak 2x2'yi kullan
-                if (window.innerWidth <= 768) {
-                    currentView = 'grid-2x2';
-                } else {
-                    currentView = 'grid-4x4';
-                }
+                // Sadece 2x2 ve 1x1 kaldığı için, başlangıç görünümü her zaman 2x2'dir.
+                currentView = 'grid-2x2';
             };
             
             determineInitialView(); 
@@ -565,7 +420,8 @@
                 if(activeViewButton) {
                     activeViewButton.classList.add('active');
                 } else {
-                    document.querySelector('.view-switch .view-button').classList.add('active');
+                    // Eğer currentView yanlışsa, varsayılanı (2x2) aktif et
+                    document.querySelector('.view-switch .view-button[data-view="grid-2x2"]').classList.add('active');
                 }
             };
 
@@ -655,16 +511,13 @@
                         document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
 
-                        // Aktif olan menü bölümünün grid sınıfını değiştir
                         const activeSection = document.querySelector('.menu-section.active');
                         if (activeSection) {
                             const grid = activeSection.querySelector('.menu-grid');
-                            grid.classList.remove('grid-4x4', 'grid-2x2', 'grid-1x1');
+                            // Sadece 2x2 ve 1x1'i kaldırıp ekle
+                            grid.classList.remove('grid-2x2', 'grid-1x1'); 
                             grid.classList.add(targetView);
                         }
-                        
-                        // NOT: Diğer sekmelerdeki grid sınıfları renderMenu sırasında doğru ayarlanacak. 
-                        // Sadece aktif olanı anlık olarak güncelliyoruz.
                     });
                 });
             };
