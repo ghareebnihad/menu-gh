@@ -1,795 +1,573 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Semele Aqarat - Modern Lüks İlanlar</title>
-  <style>
-    /* Reset */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e3ebf8;
-      margin: 0;
-      padding: 90px 15px 100px;
-      color: #222;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    /* HEADER / ADMIN BAR */
-    #adminBar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 70px;
-      background: #273c75;
-      color: #f0f4f8;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 30px;
-      z-index: 10000;
-      box-shadow: 0 3px 12px rgba(39, 60, 117, 0.7);
-      font-weight: 600;
-      user-select: none;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    /* Sol taraf şirket bilgileri */
-    #companyInfo {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      min-width: 220px;
-      flex-shrink: 0;
-    }
-    /* Logo şekli */
-    #companyLogo {
-      width: 48px;
-      height: 48px;
-      background: #273c75;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 28px;
-      font-weight: 700;
-      color: #dff3ff;
-      font-family: 'Segoe UI Black', Tahoma, Geneva, Verdana, sans-serif;
-      user-select: none;
-      box-shadow: none;
-    }
-    /* Şirket metinleri */
-    #companyTexts {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-      font-size: 14.5px;
-      color: #dff3ff;
-      text-shadow: none;
-    }
-    #companyTexts span {
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    #companyTexts .companyName {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #e6f0ff;
-    }
-    /* Sağ taraf giriş ve butonlar */
-    #rightPanel {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      flex-grow: 1;
-      min-width: 260px;
-    }
-    #loginForm {
-      display: flex;
-      gap: 12px;
-    }
-    #loginForm input {
-      height: 36px;
-      border-radius: 8px;
-      border: 1.5px solid #a4bad4;
-      padding: 0 14px;
-      font-size: 15px;
-      outline: none;
-      font-weight: 500;
-      min-width: 140px;
-      transition: border-color 0.3s ease;
-      background: #f0f4f8;
-      color: #222;
-    }
-    #loginForm input:focus {
-      border-color: #556b2f;
-    }
-    #loginForm button {
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      padding: 11px 22px;
-      font-weight: 600;
-      font-size: 15px;
-      color: white;
-      background-color: #556b2f;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: none;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      letter-spacing: 0.03em;
-    }
-    #loginForm button:hover {
-      background-color: #40551d;
-      box-shadow: none;
-    }
-    #logoutBtn, #newIlanBtn {
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      padding: 11px 22px;
-      font-weight: 600;
-      font-size: 15px;
-      color: white;
-      box-shadow: none;
-      transition: background-color 0.3s ease;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      letter-spacing: 0.03em;
-    }
-    #logoutBtn {
-      background-color: #b23e3e;
-    }
-    #logoutBtn:hover {
-      background-color: #7a2929;
-    }
-    #newIlanBtn {
-      background-color: #556b2f;
-    }
-    #newIlanBtn:hover {
-      background-color: #40551d;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duhok Rest & Caffe - Lüks Menü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Harmattan:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #f0f0f0;
+            --accent-color: #ffd700; /* Altın Rengi */
+            --secondary-text: #a0a0a0;
+            --border-color: #333;
+            --max-width: 1200px;
+        }
 
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      flex-grow: 1;
-    }
-    #ilanlar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 26px;
-      justify-content: center;
-      padding-bottom: 40px;
-    }
-    .ilan-karti {
-      background: #f0f4f8;
-      width: 300px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
-      cursor: pointer;
-      font-weight: 600;
-      position: relative;
-    }
-    .ilan-karti:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 14px 26px rgba(85, 107, 47, 0.3);
-    }
-    .ilan-karti img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      border-bottom: 4px solid #273c75;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      transition: transform 0.35s ease;
-    }
-    .ilan-karti:hover img {
-      transform: scale(1.05);
-    }
-    /* Satıldı kaplaması */
-    .sold-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  pointer-events: none;
-  user-select: none;
-  z-index: 10;
-  transition: background-color 0.3s ease;
-}
+        /* GENEL STİLLER */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5); 
+            min-height: 100vh;
+        }
 
-.sold-overlay span {
-  font-size: 36px;
-  font-weight: 700;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 8px 28px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 40px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  user-select: none;
-  transform: rotate(-12deg);
-}
+        /* SAĞDAN SOLA DESTEĞİ (ARAPÇA İÇİN) */
+        body.rtl {
+            direction: rtl;
+            font-family: 'Harmattan', serif; 
+        }
+        .menu-container { max-width: var(--max-width); margin: 0 auto; }
+        
+        /* BAŞLIK VE KONTAK BİLGİLERİ */
+        .menu-header { 
+            text-align: center; 
+            padding: 50px 0 30px; 
+            margin-bottom: 40px; 
+            position: relative;
+        }
+        .menu-header h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3.8em; 
+            color: var(--accent-color); 
+            letter-spacing: 6px; 
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.3);
+        }
 
-    .ilan-karti.sold {
-      background-color: #b0b0b0;
-      cursor: default;
-    }
+        /* KONTAK BİLGİLERİ BAR STİLİ */
+        .contact-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; 
+            margin: 20px auto 30px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            max-width: 600px;
+        }
+        .contact-bar p {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        .contact-bar i {
+            margin-right: 8px;
+            color: var(--secondary-text);
+            font-size: 1.1em;
+        }
+        #cuisine-text {
+            font-size: 1.2em;
+            color: var(--secondary-text);
+            margin-bottom: 5px;
+            display: block !important; 
+        }
+        
+        /* --- DİL SEÇİMİ EKANI (Aşama 1) --- */
+        #initial-lang-select {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 50px 0 100px; 
+        }
+        .initial-lang-button {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 15px 40px;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 700;
+            min-width: 150px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+        .initial-lang-button:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
 
-    .ilan-icerik {
-      padding: 22px 24px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #1e293b;
-    }
-    .ilan-icerik h3 {
-      margin: 0 0 14px;
-      font-size: 22px;
-      color: #273c75;
-      line-height: 1.1;
-      letter-spacing: 0.02em;
-      text-transform: capitalize;
-    }
-    .ilan-icerik p {
-      margin: 0 0 16px;
-      color: #475569;
-      font-size: 16px;
-      line-height: 1.4;
-      flex-grow: 1;
-      font-weight: 500;
-    }
-    .fiyat-alan {
-      font-weight: 700;
-      font-size: 17px;
-      color: #556b2f;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
-      letter-spacing: 0.02em;
-    }
-    /* Detay görünümü */
-    #detailView {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #f0f4f8;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      padding: 20px;
-      display: none;
-      flex-direction: column;
-      position: relative;
-    }
-    #detailView img {
-      max-width: 100%;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      object-fit: cover;
-    }
-    #detailView h2 {
-      margin: 0 0 12px;
-      color: #273c75;
-      font-size: 26px;
-    }
-    #detailView p {
-      font-size: 18px;
-      color: #475569;
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-    #detailView .fiyat-alan {
-      font-size: 20px;
-      color: #556b2f;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    #backBtn {
-      cursor: pointer;
-      background: #556b2f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-weight: 600;
-      border-radius: 10px;
-      align-self: flex-start;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    #backBtn:hover {
-      background-color: #40551d;
-    }
+        /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ (Aşama 2) --- */
+        #dynamic-lang-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: none; 
+            z-index: 100;
+        }
+        #lang-dropdown-button {
+            background: var(--bg-color);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        #lang-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #111;
+            min-width: 100px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);
+            z-index: 1;
+        }
+        #lang-dropdown-content .lang-item {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+        #lang-dropdown-content .lang-item:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
 
-    /* Admin edit modal */
-    #editModal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.3);
-      padding: 20px 30px;
-      width: 320px;
-      display: none;
-      z-index: 11000;
-      flex-direction: column;
-      gap: 10px;
-    }
-    #editModal label {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    #editModal input[type="text"],
-    #editModal textarea,
-    #editModal input[type="number"] {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1.5px solid #a4bad4;
-      font-size: 15px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      resize: vertical;
-    }
-    #editModal textarea {
-      min-height: 60px;
-    }
-    #editModal input[type="file"] {
-      padding: 3px;
-    }
-    #editModal .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-    #editModal button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #saveBtn {
-      background-color: #556b2f;
-      color: white;
-    }
-    #saveBtn:hover {
-      background-color: #40551d;
-    }
-    #cancelBtn {
-      background-color: #b23e3e;
-      color: white;
-      margin-left: 10px;
-    }
-    #cancelBtn:hover {
-      background-color: #7a2929;
-    }
+        /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ --- */
+        .controls { 
+            display: none; /* JS ile flex yapılır */
+            flex-direction: row; /* Yan yana hizalama */
+            justify-content: space-between; /* Sekmeler ve Görünüm Kontrolü arası boşluk */
+            align-items: center;
+            margin-bottom: 30px; 
+            padding: 0 20px;
+        }
 
-    /* Overlay for modal */
-    #modalOverlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.35);
-      z-index: 10900;
-      display: none;
-    }
+        .tabs { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+        
+        /* Görünüm ayarlarını (Grid) sağa hizala */
+        .view-switch { 
+            display: flex; 
+            gap: 5px; 
+            /* İstenen mesafe için sol marjin eklendi */
+            margin-left: 30px; 
+        } 
 
-    /* Responsive */
-    @media (max-width: 800px) {
-      body {
-        padding-top: 120px;
-      }
-      #adminBar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px 20px;
-        gap: 15px;
-      }
-      #companyInfo {
-        min-width: auto;
-        justify-content: center;
-        width: 100%;
-      }
-      #companyTexts {
-        text-align: center;
-      }
-      #rightPanel {
-        justify-content: center;
-        width: 100%;
-        min-width: auto;
-      }
-      #loginForm input {
-        min-width: 120px;
-        font-size: 14px;
-      }
-      #loginForm button,
-      #logoutBtn,
-      #newIlanBtn {
-        padding: 9px 18px;
-        font-size: 14px;
-      }
-      #editModal {
-        width: 90%;
-        padding: 15px 20px;
-      }
-    }
-  </style>
+        /* Sekme Buton Stilleri */
+        .tab-button { 
+            background: none; 
+            border: 2px solid var(--accent-color); 
+            color: var(--accent-color); 
+            padding: 10px 25px; 
+            font-family: 'Lora', serif; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); 
+        }
+        .tab-button:hover, .tab-button.active { 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); 
+        }
+
+        /* Görünüm Buton Stilleri */
+        .view-button { 
+            background-color: #ffffff; 
+            border: 1px solid var(--border-color); 
+            color: var(--bg-color); 
+            padding: 8px 12px; 
+            font-size: 1.2em; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
+        .view-button:hover, .view-button.active { 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
+        }
+
+        /* Menü İçeriği Stilleri (Aynı kaldı) */
+        #menu-content { display: none; } 
+        .menu-section { display: none; padding: 20px 0; }
+        .menu-section.active { display: block; }
+        .menu-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5em; color: var(--accent-color); text-align: center; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
+        .menu-grid { display: grid; gap: 30px; padding: 10px 0; }
+        .grid-4x4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-1x1 { grid-template-columns: 1fr; }
+        .menu-item { background-color: #1a1a1a; border: 1px solid rgba(255, 215, 0, 0.2); padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); }
+        .item-image { width: 100%; height: 180px; object-fit: cover; border-radius: 3px; margin-bottom: 15px; }
+        .item-details h3 { font-family: 'Playfair Display', serif; font-size: 1.4em; color: var(--accent-color); margin-bottom: 10px; }
+        .item-details p { font-size: 0.9em; color: var(--secondary-text); margin-bottom: 15px; }
+        .price { font-family: 'Playfair Display', serif; font-size: 1.6em; color: var(--accent-color); font-weight: 700; display: block; margin-top: auto;}
+        
+        .main-footer { max-width: var(--max-width); margin: 50px auto 0; padding: 20px 0; text-align: center; border-top: 1px dashed var(--border-color); font-size: 0.8em; color: var(--secondary-text); }
+        
+        @media (max-width: 1000px) { .grid-4x4 { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { 
+            .contact-bar { flex-direction: column; gap: 10px; } 
+            #initial-lang-select { flex-direction: column; padding: 50px 0; }
+            
+            /* Mobil görünümde Sekmeler ve Görünüm Kontrolleri alt alta */
+            .controls { flex-direction: column; gap: 15px; }
+            .tabs { justify-content: center; }
+            .view-switch { margin-left: 0; justify-content: center; } /* Mobil için marjini kaldır */
+            .grid-4x4, .grid-2x2 { grid-template-columns: repeat(2, 1fr); } 
+        }
+    </style>
 </head>
 <body>
 
-  <div id="adminBar">
-    <div id="companyInfo" aria-label="Şirket Bilgileri">
-      <div id="companyLogo" aria-hidden="true">SA</div>
-      <div id="companyTexts">
-        <span class="companyName"> Aqarat Semel</span>
-        <span>Adres: Semel</span>
-        <span>No. 0750 111 1222</span>
-      </div>
-    </div>
+    <header class="menu-header" id="menu-header">
+        
+        <h1 id="restaurant-name">DUHOK REST & CAFFE</h1>
+        
+        <p id="cuisine-text">Akdeniz & İtalyan Lüks Lezzetler</p>
+        
+        <div class="contact-bar" id="info-bar" style="display: none;">
+            <p id="reservation-text">
+                <i class="fas fa-phone-alt"></i> Rezervasyon: 0750 222 22 22
+            </p>
+            <p id="location-text">
+                <i class="fas fa-map-marker-alt"></i> Konum: <strong>Duhok KRO</strong>
+            </p>
+        </div>
 
-    <div id="rightPanel">
-      <button id="newIlanBtn" style="display:none;">Yeni İlan Ekle</button>
-      <form id="loginForm" aria-label="Giriş Formu">
-        <input type="text" id="username" placeholder="Kullanıcı Adı" autocomplete="off" required />
-        <input type="password" id="password" placeholder="Şifre" autocomplete="off" required />
-        <button type="submit">Giriş</button>
-      </form>
-      <button id="logoutBtn" style="display:none;">Çıkış Yap</button>
-    </div>
-  </div>
+        <div id="initial-lang-select">
+            <button class="initial-lang-button" data-lang="EN">English</button>
+            <button class="initial-lang-button" data-lang="AR">العربية</button>
+            <button class="initial-lang-button" data-lang="KU">کوردی</button>
+        </div>
 
-  <main>
-    <section id="ilanlar" aria-live="polite" aria-label="İlanlar Listesi"></section>
+        <div id="dynamic-lang-control">
+            <button id="lang-dropdown-button">
+                <span id="current-lang-display">EN</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="lang-dropdown-content">
+                </div>
+        </div>
+        
+    </header>
 
-    <!-- Detay görünüm -->
-    <section id="detailView" role="dialog" aria-modal="true" aria-labelledby="detailTitle" tabindex="-1">
-      <button id="backBtn" aria-label="İlanlara Geri Dön">Geri</button>
-      <h2 id="detailTitle"></h2>
-      <img id="detailImg" alt="" />
-      <p id="detailDesc"></p>
-      <div class="fiyat-alan" id="detailFiyatAlan"></div>
-      <div style="font-weight:600; font-size:16px; color:#556b2f;" id="detailAlan"></div>
-      <div style="margin-top:15px;">
-        <img id="detailAdditionalImg" alt="" style="max-width:100%; border-radius:12px; display:none; margin-top:10px;" />
-      </div>
-    </section>
-  </main>
+    <main class="menu-container">
+        
+        <div class="controls" id="menu-controls">
+            <div class="tabs" id="menu-tabs">
+            </div>
+            
+            <div class="view-switch">
+                <button class="view-button active" data-view="grid-4x4" title="4x4 Görünüm"><i class="fas fa-th-large"></i></button>
+                <button class="view-button" data-view="grid-2x2" title="2x2 Görünüm"><i class="fas fa-th"></i></button>
+                <button class="view-button" data-view="grid-1x1" title="Liste Görünümü"><i class="fas fa-list"></i></button>
+            </div>
+        </div>
 
-  <!-- Admin edit modal -->
-  <div id="modalOverlay"></div>
-  <div id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle" tabindex="-1">
-    <h3 id="editModalTitle">İlan Düzenle</h3>
-    <label for="editTitle">Başlık</label>
-    <input type="text" id="editTitle" />
-    <label for="editDescription">Açıklama</label>
-    <textarea id="editDescription"></textarea>
-    <label for="editFiyat">Fiyat (TL)</label>
-    <input type="number" id="editFiyat" min="0" />
-    <label for="editAlan">Alan (m²)</label>
-    <input type="number" id="editAlan" min="0" />
-    <label for="editFoto">Fotoğraf Yükle</label>
-    <input type="file" id="editFoto" accept="image/*" />
-    <label class="checkbox-label"><input type="checkbox" id="editSold" /> Satıldı</label>
-    <div style="display:flex; justify-content:flex-end; margin-top: 15px;">
-      <button id="saveBtn">Kaydet</button>
-      <button id="cancelBtn">İptal</button>
-    </div>
-  </div>
+        <div id="menu-content">
+            </div>
+    </main>
 
-  <footer>
-    <div>Developed By Ghareeb</div>
-  </footer>
+    <footer class="main-footer">
+        Developed by | **Ghareeb**
+    </footer>
 
-  <script>
-    // Sabit admin bilgisi
-const adminUser = "admin";
-const adminPass = "1234";
+    <script id="menu-data" type="application/json">
+        {
+            "translations": {
+                "restaurantName": {"EN": "DUHOK REST & CAFFE", "AR": "مطعم وكافية دهوك", "KU": "رێستۆرانت و کافێ دهوک"},
+                "cuisineText": {"EN": "Mediterranean & Italian Luxury Cuisine", "AR": "مأكولات فاخرة متوسطية وإيطالية", "KU": "خواردنێن لوکس یێن دەریا ناڤین و ئیتاڵی"},
+                "locationText": {"EN": "<i class=\"fas fa-map-marker-alt\"></i> Location: <strong>Duhok KRO</strong>", "AR": "<i class=\"fas fa-map-marker-alt\"></i> الموقع: <strong>دهوك، طريق كرو</strong>", "KU": "<i class=\"fas fa-map-marker-alt\"></i> جهـ: <strong>دهوک کرۆ</strong>"},
+                "reservationText": {"EN": "<i class=\"fas fa-phone-alt\"></i> Reservation: 0750 222 22 22", "AR": "<i class=\"fas fa-phone-alt\"></i> للحجز: 0750 222 22 22", "KU": "<i class=\"fas fa-phone-alt\"></i> بۆ حجزکرنێ: 0750 222 22 22"}
+            },
+            "menu": {
+                "Akdeniz": {
+                    "EN": "Mediterranean", "AR": "متوسطية", "KU": "دەریا ناڤین",
+                    "items": [
+                        {"id": "deniz", "name": {"EN": "Sea Breeze Carpaccio", "AR": "كارباتشيو نسيم البحر", "KU": "کارپاتشیۆیا گەنجی دەریاێ"}, "price": "35", "desc": {"EN": "Delicate scallop carpaccio marinated with citrus. The soul of the Aegean shores.", "AR": "كارباتشيو الإسكالوب المتبل بالحمضيات. روح شواطئ إيجة.", "KU": "کارپاتشیۆیا شەمالێ یا دەریاێ، ب تامێ ترشاتیێ. گیانێ کەنارێن ئیجەیێ."}, "img": "https://media.istockphoto.com/id/2148672887/photo/beef-patty-burger-with-vegetables-and-lettuce-on-white-background-file-contains-clipping-path.jpg?s=612x612&w=0&k=20&c=9HnGNZAv4PEvexEE6J4KIBNJFP_jK_qJ69fHt_sV7jU="},
+                        {"id": "kuzu", "name": {"EN": "Lavender Wind Lamb Shoulder", "AR": "كتف الضأن بريح الخزامى", "KU": "ملێ بەرازیێ بێهنا خوزامایێ"}, "price": "115", "desc": {"EN": "Tender lamb shoulder slow-cooked for 12 hours with lavender and red wine.", "AR": "كتف ضأن طري مطبوخ ببطء لمدة 12 ساعة مع اللافندر والنبيذ الأحمر.", "KU": "ملێ بەرازیێ نەرن و ب کێماتی دهێتە ئاڤا کرن بۆ ١٢ دەمژمێر ب تامێ خوزاما و شەربەتا سۆر."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Kuzu+Kol"},
+                        {"id": "bonfile", "name": {"EN": "Olive Tree Fillet Steak", "AR": "فيليه لحم شجرة الزيتون", "KU": "فیلێی دارا زەیتونێ"}, "price": "125", "desc": {"EN": "The highest quality beef fillet, smoked with olive tree branches for a unique aroma.", "AR": "أجود أنواع فيليه البقر، مدخن بأغصان الزيتون لنكهة فريدة.", "KU": "باشترین جۆرێ گۆشتێ فیلێ، ب تاڤگێن دارا زەیتونێ دهێتە دۆخانکرن بۆ تامەکا تایبەت."}, "img": "https://media.istockphoto.com/id/1879112733/photo/delicious-double-cheeseburger-close-up-on-a-black-background-delicious-cheeseburger-sandwich.jpg?s=612x612&w=0&k=20&c=kGhrhCmfrhlW_a--AA8Ey1A5d8AVthYiHhBR7SJdxBY="},
+                        {"id": "risotto", "name": {"EN": "Mother Earth Risotto", "AR": "ريزوتو أم الأرض", "KU": "رێزۆتۆیا دەیکا عەردی"}, "price": "85", "desc": {"EN": "A vegetarian masterpiece prepared with seasonal mushrooms and fresh white truffle shavings.", "AR": "تحفة نباتية محضرة بفطر الموسمي ورقائق الكمأة البيضاء الطازجة.", "KU": "شاکارەکێ رووەکی یە ب کاراڤکا زەمستانی و پاقژیا تڕفلا سپی یا نوی دهێتە ئاڤا کرن."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Risotto"}
+                    ]
+                },
+                "Pizza": {
+                    "EN": "Pizza", "AR": "بيتزا", "KU": "پیتزا",
+                    "items": [
+                        {"id": "margarita", "name": {"EN": "Vesuvio Margarita", "AR": "مارغريتا فيزوفيو", "KU": "مارگاریتایا ڤێسوڤیۆ"}, "price": "55", "desc": {"EN": "San Marzano tomato, fresh buffalo mozzarella, and basil. The pinnacle of Italian classics.", "AR": "طماطم سان مارزانو، موزاريلا بافلو طازجة وريحان. ذروة الكلاسيكيات الإيطالية.", "KU": "گێزوویا سان مارزانۆ، مۆززاریلایا گاڤا یا نوی، و ریحان. لوتکەیێ کلاسیکێن ئیتاڵی."}, "img": "https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+                        {"id": "truflu", "name": {"EN": "Truffle Funghi", "AR": "فطر الكمأة", "KU": "کاریڤکا تڕفلا"}, "price": "78", "desc": {"EN": "White truffle oil, porcini mushrooms, smoked beef, and provolone cheese. A feast of intense flavors.", "AR": "زيت الكمأة الأبيض، فطر البورشيني، لحم البقر المدخن، وجبنة بروفولوني. وليمة من النكهات الغنية.", "KU": "زەیتێ تڕفلا سپی، کاراڤکا پۆرچین، گۆشتێ گاڤا یێ دۆخانکری، و پەنیرا پرۆڤۆلۆنێ. شاییەک ژ تامێن زەنگین."}, "img": "https://media.istockphoto.com/id/2170408203/photo/pizza-with-prosciutto-cotto-ham-and-mushrooms.jpg?s=612x612&w=0&k=20&c=JpOFZYYLO1KmVJles1M-1QSA9zgxdyOTtfewCG84sAg="},
+                        {"id": "denizli", "name": {"EN": "Adriatic Seafood", "AR": "مأكولات بحرية أدريهاتيكية", "KU": "خواردنێن دەریایێ یێن ئەدریاتیکی"}, "price": "82", "desc": {"EN": "Calamari, shrimp, and mussels with fresh tomato sauce. All the flavors of the Adriatic in one pizza.", "AR": "كاليماري، روبيان، وبلح البحر بصلصة الطماطم الطازجة. كل نكهات البحر الأبيض المتوسط في بيتزا واحدة.", "KU": "قەلەماری، شریمپ، و سێل ب ئاڤا گێزۆییا نوی. هەمی تامێن دەریایێ د پیتزایەکێ دا."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Deniz+Ürünleri"}
+                    ]
+                },
+                "Tatlılar": {
+                    "EN": "Desserts", "AR": "حلويات", "KU": "شیرینی",
+                    "items": [
+                        {"id": "baklava", "name": {"EN": "Pistachio Lament", "AR": "أنين الفستق", "KU": "هێڤییا فستقی"}, "price": "38", "desc": {"EN": "A modern take on traditional baklava: Antep pistachio cream between crunchy layers.", "AR": "تفسير حديث للبقلاوة التقليدية: كريمة فستق عنتاب بين طبقات مقرمشة.", "KU": "خوەشخاندنەکا نوی بۆ باقلەواییا کەڤن: کڕێما فستقی د ناڤ بەرەنگێن خڕێن دا."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Baklava"},
+                        {"id": "cikolata", "name": {"EN": "Chocolate Crater", "AR": "فوهة الشوكولاتة", "KU": "کرێتەرا چکلێتێ"}, "price": "42", "desc": {"EN": "A warm soufflé with molten Valrhona chocolate flowing out like lava, balanced with salted caramel.", "AR": "سوفليه دافئ بشوكولاتة فالرونا المنصهرة تتدفق كالحمم، متوازنة بالكراميل المملح.", "KU": "سوفلێکا گەرم ب چکلێتێ ڤالرۆنا یێ تڤژی و کڕێما کەرەمەلێ یا خوەش تام."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Çikolata"}
+                    ]
+                }
+            }
+        }
+    </script>
 
-// Elementler
-const loginForm = document.getElementById("loginForm");
-const logoutBtn = document.getElementById("logoutBtn");
-const newIlanBtn = document.getElementById("newIlanBtn");
-const ilanlarEl = document.getElementById("ilanlar");
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dataElement = document.getElementById('menu-data');
+            const fullMenuData = JSON.parse(dataElement.textContent);
+            const menuData = fullMenuData.menu;
+            const translations = fullMenuData.translations;
+            
+            const menuTabsContainer = document.getElementById('menu-tabs');
+            const menuContentContainer = document.getElementById('menu-content');
+            const menuControls = document.getElementById('menu-controls');
+            const initialLangSelect = document.getElementById('initial-lang-select');
+            
+            const dynamicLangControl = document.getElementById('dynamic-lang-control');
+            const langDropdownButton = document.getElementById('lang-dropdown-button');
+            const langDropdownContent = document.getElementById('lang-dropdown-content');
+            const currentLangDisplay = document.getElementById('current-lang-display');
+            const infoBar = document.getElementById('info-bar'); 
+            
+            const langMap = { 'EN': 'English', 'AR': 'العربية', 'KU': 'کوردی' };
+            const langKeys = ['EN', 'AR', 'KU'];
 
-const detailView = document.getElementById("detailView");
-const backBtn = document.getElementById("backBtn");
-const detailTitle = document.getElementById("detailTitle");
-const detailImg = document.getElementById("detailImg");
-const detailDesc = document.getElementById("detailDesc");
-const detailFiyatAlan = document.getElementById("detailFiyatAlan");
-const detailAlan = document.getElementById("detailAlan");
-const detailAdditionalImg = document.getElementById("detailAdditionalImg");
+            // Görünüm butonları artık HTML'de sabit, JS'te sadece içeriği alıyoruz.
+            const viewSwitchHTML = document.querySelector('.view-switch').outerHTML;
+            
+            let currentLang = 'EN'; 
+            let currentView = 'grid-4x4'; 
+            let firstSectionId = ''; 
 
-const editModal = document.getElementById("editModal");
-const modalOverlay = document.getElementById("modalOverlay");
-const editTitle = document.getElementById("editTitle");
-const editDescription = document.getElementById("editDescription");
-const editFiyat = document.getElementById("editFiyat");
-const editAlan = document.getElementById("editAlan");
-const editFoto = document.getElementById("editFoto");
-const editSold = document.getElementById("editSold");
-const saveBtn = document.getElementById("saveBtn");
-const cancelBtn = document.getElementById("cancelBtn");
+            // --- Arayüz Görünürlüğünü Ayarlama ---
+            const toggleMenuVisibility = (isVisible) => {
+                if (isVisible) {
+                    initialLangSelect.style.display = 'none';
+                    menuControls.style.display = 'flex'; // Kontrol çubuğunu göster
+                    menuContentContainer.style.display = 'block';
+                    dynamicLangControl.style.display = 'block';
+                    infoBar.style.display = 'flex'; 
+                } else {
+                    infoBar.style.display = 'none'; 
+                    menuControls.style.display = 'none';
+                    menuContentContainer.style.display = 'none';
+                    dynamicLangControl.style.display = 'none';
+                }
+            };
+            
+            // --- Dinamik Dil Kontrolünü Güncelleme ---
+            const updateDynamicLangControl = (selectedLang) => {
+                currentLangDisplay.textContent = selectedLang;
+                langDropdownContent.innerHTML = '';
+                
+                langKeys.filter(key => key !== selectedLang).forEach(lang => {
+                    const langItem = document.createElement('a');
+                    langItem.href = '#';
+                    langItem.className = 'lang-item';
+                    langItem.textContent = langMap[lang];
+                    langItem.setAttribute('data-lang', lang);
+                    langDropdownContent.appendChild(langItem);
 
-let ilanlar = [
-  {
-    id: 1,
-    title: "Modern Lüks Daire",
-    description: "3+1, havuzlu site içinde, şehir merkezinde.",
-    fiyat: 850000,
-    alan: 140,
-    photos: [],
-    sold: false,
-  },
-  {
-    id: 2,
-    title: "Bahçeli Villa",
-    description: "Geniş bahçesiyle müstakil villa, şehir dışında.",
-    fiyat: 1200000,
-    alan: 220,
-    photos: [],
-    sold: false,
-  },
-];
+                    langItem.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        switchLanguage(lang);
+                        langDropdownContent.style.display = 'none';
+                    });
+                });
+            };
 
-let loggedIn = false;
-let editingIlanId = null;
+            // --- Dil Çeviri Fonksiyonu ---
+            const applyTranslations = (lang) => {
+                // Header Çevirileri
+                document.getElementById('restaurant-name').textContent = translations.restaurantName[lang];
+                document.getElementById('cuisine-text').textContent = translations.cuisineText[lang];
+                
+                document.getElementById('location-text').innerHTML = translations.locationText[lang];
+                document.getElementById('reservation-text').innerHTML = translations.reservationText[lang];
 
-function renderIlanlar() {
-  ilanlarEl.innerHTML = "";
-  ilanlar.forEach((ilan) => {
-    const card = document.createElement("div");
-    card.className = "ilan-karti";
-    if (ilan.sold) card.classList.add("sold");
+                // RTL desteği
+                if (lang === 'AR') {
+                    document.body.classList.add('rtl');
+                } else {
+                    document.body.classList.remove('rtl');
+                }
+                
+                // Menü içeriğini yeniden render et
+                renderMenu(lang);
+                setupTabAndViews();
+                updateDynamicLangControl(lang); 
+            };
 
-    const mainPhoto = ilan.photos.length ? ilan.photos[0] : "";
-    const img = document.createElement("img");
-    img.src = mainPhoto || "https://via.placeholder.com/300x190?text=Fotoğraf+Yok";
-    img.alt = ilan.title;
-    card.appendChild(img);
+            // --- Dil Değiştirme Fonksiyonu ---
+            const switchLanguage = (targetLang) => {
+                currentLang = targetLang;
+                applyTranslations(targetLang);
+                
+                // Menü yeniden render edildiği için ilk sekmeyi aktif et
+                const activeTab = document.querySelector(`.tab-button[data-tab="${firstSectionId}"]`);
+                const activeSection = document.getElementById(firstSectionId);
+                
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
+                
+                if (activeTab && activeSection) {
+                    activeTab.classList.add('active');
+                    activeSection.classList.add('active');
+                }
+                
+                // Görünüm butonlarını tekrar aktif hale getir (Örn: 4x4)
+                document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`[data-view="${currentView}"]`).classList.add('active');
+            };
 
-    if (ilan.sold) {
-      const soldOverlay = document.createElement("div");
-      soldOverlay.className = "sold-overlay";
-      soldOverlay.innerHTML = "<span>Satıldı</span>";
-      card.appendChild(soldOverlay);
-    }
+            // --- Menüyü Oluşturma ve Ekrana Basma Fonksiyonu ---
+            const renderMenu = (lang = currentLang) => {
+                let isFirstSection = true;
+                menuContentContainer.innerHTML = ''; 
+                menuTabsContainer.innerHTML = ''; 
 
-    const content = document.createElement("div");
-    content.className = "ilan-icerik";
+                for (const sectionKey in menuData) {
+                    const sectionData = menuData[sectionKey];
+                    const sectionName = sectionData[lang] || sectionData['EN'];
+                    const sectionId = sectionKey.toLowerCase().replace(/ /g, '-');
+                    const sectionItems = sectionData.items;
+                    const isActive = isFirstSection ? ' active' : '';
 
-    const title = document.createElement("h3");
-    title.textContent = ilan.title;
-    content.appendChild(title);
+                    if (isFirstSection) {
+                        firstSectionId = sectionId; 
+                    }
 
-    const desc = document.createElement("p");
-    desc.textContent = ilan.description;
-    content.appendChild(desc);
+                    // 1. Sekme Butonunu Oluştur (Sadece ismini)
+                    const tabButton = document.createElement('button');
+                    tabButton.className = 'tab-button' + isActive;
+                    tabButton.setAttribute('data-tab', sectionId);
+                    tabButton.textContent = sectionName;
+                    menuTabsContainer.appendChild(tabButton);
 
-    const fiyatAlanDiv = document.createElement("div");
-    fiyatAlanDiv.className = "fiyat-alan";
-    fiyatAlanDiv.textContent = `Fiyat: ${ilan.fiyat.toLocaleString()} TL | Alan: ${ilan.alan} m²`;
-    content.appendChild(fiyatAlanDiv);
+                    // 2. Menü Bölümünü Oluştur (Section)
+                    const sectionHTML = `
+                        <section id="${sectionId}" class="menu-section${isActive}">
+                            <h2>${sectionName}</h2>
+                            <div class="menu-grid ${currentView}">
+                                ${sectionItems.map(item => createMenuItem(item, lang)).join('')}
+                            </div>
+                        </section>
+                    `;
+                    menuContentContainer.insertAdjacentHTML('beforeend', sectionHTML);
+                    
+                    isFirstSection = false;
+                }
+            };
 
-    if (loggedIn) {
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Düzenle";
-      editBtn.style.marginTop = "12px";
-      editBtn.style.backgroundColor = "#273c75";
-      editBtn.style.color = "white";
-      editBtn.style.border = "none";
-      editBtn.style.borderRadius = "8px";
-      editBtn.style.padding = "8px 14px";
-      editBtn.style.cursor = "pointer";
-      editBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openEditModal(ilan.id);
-      });
-      content.appendChild(editBtn);
-    }
+            // --- Menü Kartı Oluşturma Fonksiyonu (Aynı Kaldı) ---
+            const createMenuItem = (item, lang) => {
+                const priceText = item.price + '₺'; 
+                
+                return `
+                    <div class="menu-item">
+                        <img src="${item.img}" alt="${item.name[lang] || item.name['EN']}" class="item-image"> 
+                        <div class="item-details">
+                            <h3>${item.name[lang] || item.name['EN']}</h3>
+                            <p>${item.desc[lang] || item.desc['EN']}</p>
+                        </div>
+                        <span class="price">${priceText}</span>
+                    </div>
+                `;
+            };
+            
+            // --- Sekme ve Görünüm Kontrollerini Bağlama ---
+            const setupTabAndViews = () => {
+                const tabButtons = document.querySelectorAll('.tab-button');
+                const menuSections = document.querySelectorAll('.menu-section');
+                
+                // Sekme Kontrolü
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetTab = button.getAttribute('data-tab');
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        menuSections.forEach(section => {
+                            section.classList.remove('active');
+                            if (section.id === targetTab) {
+                                section.classList.add('active');
+                            }
+                        });
+                    });
+                });
 
-    card.appendChild(content);
+                // Görünüm Kontrolü (Controls içinde tek bir set var)
+                document.querySelectorAll('.view-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetView = button.getAttribute('data-view');
+                        currentView = targetView; 
+                        
+                        // Tüm view butonlarının aktifliğini ayarla
+                        document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
 
-    card.addEventListener("click", () => {
-      showDetail(ilan.id);
-    });
+                        // Tüm menü ızgaralarını güncelle
+                        document.querySelectorAll('.menu-grid').forEach(grid => {
+                            grid.classList.remove('grid-4x4', 'grid-2x2', 'grid-1x1');
+                            grid.classList.add(targetView);
+                        });
+                    });
+                });
+            };
 
-    ilanlarEl.appendChild(card);
-  });
-}
+            // --- Olay Dinleyicileri ---
+            
+            // 1. Başlangıç Dil Seçimini Dinle
+            document.querySelectorAll('.initial-lang-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetLang = button.getAttribute('data-lang');
+                    toggleMenuVisibility(true); 
+                    switchLanguage(targetLang); 
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
 
-function showDetail(id) {
-  const ilan = ilanlar.find((i) => i.id === id);
-  if (!ilan) return;
-  detailTitle.textContent = ilan.title;
-  detailDesc.textContent = ilan.description;
-  detailFiyatAlan.textContent = `Fiyat: ${ilan.fiyat.toLocaleString()} TL`;
-  detailAlan.textContent = `Alan: ${ilan.alan} m²`;
+            // 2. Dinamik Dil Kontrolünü Aç/Kapa
+            langDropdownButton.addEventListener('click', () => {
+                const isVisible = langDropdownContent.style.display === 'block';
+                langDropdownContent.style.display = isVisible ? 'none' : 'block';
+            });
 
-  if (ilan.photos.length > 0) {
-    detailImg.src = ilan.photos[0];
-    detailImg.alt = ilan.title;
-
-    if (ilan.photos.length > 1) {
-      detailAdditionalImg.src = ilan.photos[1];
-      detailAdditionalImg.alt = ilan.title + " - Ek fotoğraf";
-      detailAdditionalImg.style.display = "block";
-    } else {
-      detailAdditionalImg.style.display = "none";
-    }
-  } else {
-    detailImg.src = "https://via.placeholder.com/600x400?text=Fotoğraf+Yok";
-    detailImg.alt = "Fotoğraf yok";
-    detailAdditionalImg.style.display = "none";
-  }
-
-  ilanlarEl.style.display = "none";
-  detailView.style.display = "flex";
-}
-
-backBtn.addEventListener("click", () => {
-  detailView.style.display = "none";
-  ilanlarEl.style.display = "flex";
-});
-
-loginForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (username === adminUser && password === adminPass) {
-    loggedIn = true;
-    loginForm.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    newIlanBtn.style.display = "inline-block";
-    renderIlanlar();
-  } else {
-    alert("Hatalı kullanıcı adı veya şifre!");
-  }
-});
-
-logoutBtn.addEventListener("click", () => {
-  loggedIn = false;
-  loginForm.style.display = "flex";
-  logoutBtn.style.display = "none";
-  newIlanBtn.style.display = "none";
-  renderIlanlar();
-  closeEditModal();
-  detailView.style.display = "none";
-  ilanlarEl.style.display = "flex";
-});
-
-newIlanBtn.addEventListener("click", () => {
-  editingIlanId = null;
-  openEditModal();
-});
-
-function openEditModal(id = null) {
-  if (id !== null) {
-    const ilan = ilanlar.find((i) => i.id === id);
-    if (!ilan) return;
-
-    editingIlanId = id;
-    editTitle.value = ilan.title;
-    editDescription.value = ilan.description;
-    editFiyat.value = ilan.fiyat;
-    editAlan.value = ilan.alan;
-    editSold.checked = ilan.sold;
-    editFoto.value = "";
-  } else {
-    editingIlanId = null;
-    editTitle.value = "";
-    editDescription.value = "";
-    editFiyat.value = "";
-    editAlan.value = "";
-    editSold.checked = false;
-    editFoto.value = "";
-  }
-
-  modalOverlay.style.display = "block";
-  editModal.style.display = "flex";
-}
-
-function closeEditModal() {
-  modalOverlay.style.display = "none";
-  editModal.style.display = "none";
-}
-
-function readFileAsDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.onerror = e => reject(e);
-    reader.readAsDataURL(file);
-  });
-}
-
-saveBtn.addEventListener("click", async () => {
-  const title = editTitle.value.trim();
-  const description = editDescription.value.trim();
-  const fiyat = Number(editFiyat.value);
-  const alan = Number(editAlan.value);
-  const sold = editSold.checked;
-
-  if (!title || !description || !fiyat || !alan) {
-    alert("Lütfen tüm alanları eksiksiz doldurun.");
-    return;
-  }
-
-  let photos = [];
-  if (editingIlanId !== null) {
-    const ilan = ilanlar.find(i => i.id === editingIlanId);
-    photos = ilan.photos.slice();
-  }
-
-  if (editFoto.files.length > 0) {
-    try {
-      const base64 = await readFileAsDataURL(editFoto.files[0]);
-      photos.push(base64);
-    } catch {
-      alert("Fotoğraf yüklenirken hata oluştu.");
-      return;
-    }
-  }
-
-  if (editingIlanId === null) {
-    ilanlar.push({
-      id: ilanlar.length ? ilanlar[ilanlar.length - 1].id + 1 : 1,
-      title,
-      description,
-      fiyat,
-      alan,
-      photos,
-      sold,
-    });
-  } else {
-    const ilan = ilanlar.find(i => i.id === editingIlanId);
-    ilan.title = title;
-    ilan.description = description;
-    ilan.fiyat = fiyat;
-    ilan.alan = alan;
-    ilan.sold = sold;
-    ilan.photos = photos;
-  }
-
-  closeEditModal();
-  renderIlanlar();
-});
-
-cancelBtn.addEventListener("click", () => {
-  closeEditModal();
-});
-
-modalOverlay.addEventListener("click", () => {
-  closeEditModal();
-});
-
-renderIlanlar();
-  </script>
-
+            // Dropdown dışına tıklanınca kapat
+            window.addEventListener('click', (e) => {
+                if (!dynamicLangControl.contains(e.target)) {
+                    langDropdownContent.style.display = 'none';
+                }
+            });
+            
+            // Programı Başlat
+            toggleMenuVisibility(false);
+            
+            // Başlık çevirisini ve mutfak bilgisini başlangıçta İngilizce yükle
+            document.getElementById('restaurant-name').textContent = translations.restaurantName['EN'];
+            document.getElementById('cuisine-text').textContent = translations.cuisineText['EN'];
+        });
+    </script>
 </body>
 </html>
-
-   
