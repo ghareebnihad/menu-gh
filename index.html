@@ -28,21 +28,19 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding: 10px;
+            padding: 10px; /* Mobil padding korundu */
             /* Art Deco Arka Plan Deseni (Hafif ve Opak) */
             background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="artDecoPattern" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 0 10 L 10 0 L 20 10 L 10 20 Z" fill="none" stroke="%232d2d2d" stroke-width="0.5"/><circle cx="10" cy="10" r="2" fill="%232d2d2d"/></pattern></defs><rect width="100%" height="100%" fill="url(%23artDecoPattern)"/></svg>');
             background-size: 80px 80px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden; /* Mobil yatay kaydırmayı engelle */
         }
 
         /* Sağdan Sola Desteği (AR ve KU için) */
         body.rtl { direction: rtl; font-family: 'Harmattan', serif; }
         body.rtl #dynamic-lang-control { right: auto; left: 10px; } 
         body.rtl #lang-dropdown-content { left: 0; right: auto; }
-        
         body.rtl .contact-bar p i { margin-right: 0; margin-left: 6px; }
         body.rtl .view-switch { margin-left: 0; margin-right: 0; } 
         body.rtl .grid-1x1 .price { margin-left: 0; margin-right: 10px; }
@@ -58,11 +56,14 @@
             flex-grow: 1;
             position: relative;
             z-index: 1;
+            /* Mobil cihazlarda yatayda taşmayı önlemek için */
+            width: 100%; 
+            padding: 0;
         }
 
         .menu-wrapper {
-            background-color: rgba(0, 0, 0, 0.85); /* İçerik için hafif şeffaf arka plan */
-            padding: 20px 10px; /* Mobil padding */
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px 10px;
             border: 1px solid var(--border-color);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 50px rgba(0, 0, 0, 0.5);
             min-height: calc(100vh - 40px);
@@ -73,8 +74,8 @@
         /* BAŞLIK VE KONTAK BİLGİLERİ */
         .menu-header { 
             text-align: center; 
-            padding: 20px 0 15px; /* Mobil Başlık Paddingi Azaltıldı */
-            margin-bottom: 15px; 
+            padding: 30px 0 20px; 
+            margin-bottom: 20px; 
             position: relative;
             border-bottom: 2px solid var(--border-color);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -83,156 +84,324 @@
             font-family: 'Cinzel Decorative', serif; 
             font-size: 2em; /* Mobil için küçültüldü */
             color: var(--accent-color); 
-            letter-spacing: 3px; /* Mobil için azaltıldı */
+            letter-spacing: 3px; /* Mobil için daraltıldı */
             margin-bottom: 5px;
             text-shadow: 0 0 10px rgba(184, 134, 11, 0.9);
             text-transform: uppercase;
         }
         #cuisine-text { 
             font-family: 'Merriweather', serif;
-            font-size: 1em; 
+            font-size: 1em; /* Mobil için ayarlandı */
+            color: var(--secondary-text); 
+            margin-bottom: 0; 
+            display: block !important; 
+            letter-spacing: 1px;
+            font-style: italic;
         }
 
-        /* KONTAK BİLGİLERİ BAR STİLİ (MOBİL İÇİN YUVARLAK HAT) */
+        /* KONTAK BİLGİLERİ BAR STİLİ */
         .contact-bar {
-            flex-direction: column; 
-            gap: 5px; /* Mobil gap azaltıldı */
-            margin: 10px auto 15px; 
-            padding: 8px 0; 
-            max-width: 90%;
+            display: flex; 
+            flex-direction: column; /* Mobil için dikey düzen */
+            justify-content: center; 
+            align-items: center;
+            gap: 8px; 
+            margin: 15px auto 20px; 
+            padding: 10px 0; 
+            max-width: 600px;
             border-top: 1px dashed var(--border-color);
             border-bottom: 1px dashed var(--border-color);
         }
-        .contact-bar p { font-size: 0.8em; } /* Mobil font boyutu küçültüldü */
+        .contact-bar p {
+            font-size: 0.8em; /* Mobil için küçültüldü */
+            color: var(--secondary-text); 
+            font-weight: 400; 
+            margin: 0;
+            display: flex; 
+            align-items: center; 
+            letter-spacing: 0.5px;
+            text-align: center; /* Merkezi hizalamayı destekler */
+        }
+        .contact-bar i { 
+            margin-right: 6px; 
+            color: var(--accent-color); 
+            font-size: 1.1em; 
+        }
+        .contact-bar strong { color: var(--text-color); }
+        
+        /* --- DİL SEÇİMİ EKANI --- */
+        #initial-lang-select {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 10px; /* Mobil için küçültüldü */
+            padding: 20px 0 40px; 
+        }
+        .initial-lang-button {
+            background: none; 
+            border: 2px solid var(--accent-color); 
+            color: var(--accent-color);
+            padding: 10px 25px; /* Mobil için ayarlandı */
+            font-size: 1.1em; /* Mobil için ayarlandı */
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            text-transform: uppercase; 
+            font-weight: 700; 
+            min-width: 180px; /* Mobil için daraltıldı */
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.4);
+            font-family: 'Cinzel Decorative', serif;
+        }
+        .initial-lang-button:hover {
+            background-color: var(--accent-color); 
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.9);
+        }
 
-        /* --- ANA KONTROL VE SEKMELER --- */
+        /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ --- */
+        #dynamic-lang-control {
+            position: fixed; top: 10px; right: 10px; display: none; z-index: 100;
+        }
+        #lang-dropdown-button {
+            background: var(--vibrant-accent); 
+            border: 1px solid var(--accent-color); 
+            color: var(--text-color); 
+            padding: 6px 10px; /* Mobil için küçültüldü */
+            cursor: pointer; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center;
+            gap: 5px; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.8); 
+            font-size: 0.8em; /* Mobil için küçültüldü */
+        }
+        #lang-dropdown-content {
+            display: none; position: absolute; right: 0; background-color: var(--vibrant-accent);
+            min-width: 90px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 1;
+        }
+        #lang-dropdown-content .lang-item {
+            color: var(--text-color); padding: 6px 10px; /* Mobil için küçültüldü */
+            text-decoration: none;
+            display: block; cursor: pointer; font-size: 0.8em;
+        }
+        #lang-dropdown-content .lang-item:hover {
+            background-color: var(--accent-color); color: var(--bg-color);
+        }
+
+        /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ (MOBİL İÇİN ÖNEMLİ) --- */
         .controls { 
             display: none; 
             flex-direction: column; 
-            align-items: center; 
-            margin-bottom: 15px; /* Mobil margin azaltıldı */
-            padding: 0 0px; /* Yatay padding kaldırıldı */
+            align-items: center;
+            margin-bottom: 15px; /* Mobil için ayarlandı */
+            padding: 0 0px; /* Telefonun kenarlarına sıfırlandı */
+            width: 100%; /* Tam genişlik */
         }
         
         .tabs { 
             display: flex; 
-            overflow-x: scroll; /* Mobil cihazlarda sekme kaydırma özelliği */
+            overflow-x: scroll; /* Mobil için yatay kaydırma eklendi */
             white-space: nowrap; 
             gap: 8px; 
             width: 100%; 
-            padding-bottom: 10px; 
-            justify-content: flex-start; 
+            padding: 5px 0; /* İçerik kaydırma sırasında görünür kalsın */
+            justify-content: flex-start; /* Başlangıçta sola hizalı */
+            /* Kaydırma çubuğunu gizle */
+            -ms-overflow-style: none; scrollbar-width: none; 
         }
-        /* Kaydırma çubuğunu gizle (daha şık bir mobil görünüm için) */
         .tabs::-webkit-scrollbar { display: none; }
-        .tabs { -ms-overflow-style: none; scrollbar-width: none; } 
-        
-        .tab-button { 
-            flex-shrink: 0; 
-            padding: 7px 12px; 
-            font-size: 0.8em; /* Mobil için küçültüldü */
-        }
         
         .view-switch { 
             display: flex; 
             gap: 5px; 
             margin-top: 10px; 
-            margin-bottom: 0px;
+            margin-bottom: 5px;
         } 
+
+        /* Sekme Buton Stilleri */
+        .tab-button { 
+            background: var(--dark-border-color); 
+            border: 1px solid var(--accent-color); 
+            color: var(--secondary-text); 
+            flex-shrink: 0; /* Mobil kaydırma için önemli: düğmeler daralmasın */
+            padding: 6px 12px; /* Mobil için küçültüldü */
+            font-family: 'Merriweather', serif; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            font-size: 0.8em; /* Mobil için küçültüldü */
+        }
+        .tab-button:hover, .tab-button.active { 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.8); 
+        }
+
+        /* Görünüm Buton Stilleri */
         .view-button { 
-            padding: 5px 8px; 
+            background-color: var(--item-bg); 
+            border: 1px solid var(--border-color); 
+            color: var(--accent-color); 
+            padding: 5px 8px; /* Mobil için küçültüldü */
             font-size: 0.9em; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
+        .view-button:hover, .view-button.active { 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
         }
 
         /* Menü İçeriği Stilleri */
+        #menu-content { display: none; padding: 0 10px; } /* Mobil padding tekrar ayarlandı */
+        .menu-section { display: none; padding: 10px 0; }
+        .menu-section.active { display: block; }
         .menu-section h2 { 
+            font-family: 'Cinzel Decorative', serif; 
             font-size: 1.5em; /* Mobil için küçültüldü */
-            margin-top: 15px;
+            color: var(--text-color); 
+            text-align: center; 
+            margin-top: 20px;
             margin-bottom: 15px; 
+            padding-bottom: 8px; 
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid var(--accent-color);
+            position: relative;
+        }
+        .menu-section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -3px;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px var(--accent-color);
         }
         
         /* IZGARA AYARLARI */
         .menu-grid { 
             display: grid; 
-            gap: 15px; /* Mobil gap azaltıldı */
+            gap: 15px; /* Mobil için boşluk azaltıldı */
+            padding: 5px 0;
         }
         
-        /* Mobil: Varsayılan Liste Görünümü */
+        /* 2x2 Görünümü (MOBİLDE TEK SÜTUN OLARAK KALACAK) */
+        /* Mobil cihazlarda (varsayılan) ızgara 1 sütun (List view gibi) veya 2 sütun olabilir. 
+           Başlangıçtaki CSS mobil için varsayılanı 2 sütun yapmış, bunu 1x1 (Liste) yapıp, 
+           grid-2x2'yi mobil için 2 sütun olarak ayarlayalım. */
+        .grid-2x2 { 
+            grid-template-columns: repeat(2, 1fr); /* Mobil ve üzeri için 2 sütun */
+        }
+        /* 1x1 Görünümü (Varsayılan Lüks Liste) */
         .grid-1x1 { 
             grid-template-columns: 1fr; 
         }
 
-        /* Mobil: Opsiyonel Izgara Görünümü */
-        .grid-2x2 { 
-            grid-template-columns: repeat(2, 1fr); /* Mobil ızgarada 2 sütun */
-        }
-
         .menu-item { 
-            padding: 10px; /* Mobil padding azaltıldı */
+            background-color: var(--item-bg); 
+            border: 1px solid var(--dark-border-color); 
+            padding: 10px; /* Mobil için azaltıldı */
+            position: relative; 
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8), 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
-        /* Liste Görünümü (1x1) için özel düzen (Mobil Standart) */
+        .item-image { 
+            width: 100%; 
+            height: 100px; /* Mobil için küçültüldü */
+            object-fit: cover; 
+            margin-bottom: 8px; 
+            border: 1px solid var(--dark-border-color);
+        }
+        
+        /* Liste Görünümü (1x1) için özel düzen (Varsayılan) */
         .grid-1x1 .menu-item {
             display: flex; 
             flex-direction: row; 
-            gap: 15px; 
+            text-align: left; 
+            padding: 10px;
+            gap: 15px; /* Mobil için boşluk azaltıldı */
             align-items: center;
         }
         .grid-1x1 .item-image {
-            width: 80px; /* Mobil resim boyutu */
+            width: 80px; /* Mobil için küçültüldü */
             height: 80px; 
+            flex-shrink: 0; 
+            margin-bottom: 0;
         }
+        .grid-1x1 .item-details { flex-grow: 1; }
         .grid-1x1 .price {
-            font-size: 1.3em; /* Mobil fiyat boyutu */
-            min-width: 90px; /* Fiyatın kaymasını önle */
+            flex-shrink: 0; 
+            font-size: 1.5em; /* Mobil için ayarlandı */
+            margin-left: 10px;
         }
+
         .item-details h3 { 
-            font-size: 1.1em; /* Mobil başlık boyutu */
+            font-family: 'Merriweather', serif; 
+            font-size: 1.1em; /* Mobil için ayarlandı */
+            color: var(--accent-color); 
+            margin-bottom: 4px; 
+            font-weight: 700;
+            line-height: 1.2;
         }
         .item-details p { 
-            font-size: 0.8em; /* Mobil açıklama boyutu */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75em; /* Mobil için küçültüldü */
+            color: var(--secondary-text); 
+            margin-bottom: 0; 
+            font-weight: 300;
+        }
+        .price { 
+            font-family: 'Cinzel Decorative', serif; 
+            font-size: 1.2em; /* Mobil 2x2 görünüm için ayarlandı */
+            color: var(--accent-color); 
+            font-weight: 700; 
+            display: block; 
+            margin-top: auto;
+            text-shadow: 0 0 3px rgba(184, 134, 11, 0.7);
         }
         
         .main-footer { 
-            font-size: 0.7em; /* Mobil footer küçültüldü */
+            max-width: var(--max-width); 
+            margin: 20px auto 0; 
+            padding: 10px 0; 
+            text-align: center; 
+            border-top: 1px solid var(--dark-border-color); 
+            font-size: 0.7em; /* Mobil için küçültüldü */
+            color: var(--secondary-text); 
+            flex-shrink: 0;
         }
+        .main-footer strong { color: var(--accent-color); }
         
-        /* TABLET ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
+        /* Tablet ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
         @media (min-width: 768px) { 
             body { padding: 20px; }
             .menu-wrapper { padding: 40px; }
-            .menu-header { padding: 30px 0 20px; margin-bottom: 20px; }
             .menu-header h1 { font-size: 3.5em; letter-spacing: 8px; }
-            
-            /* Kontak barı yatay yap */
+            #cuisine-text { font-size: 1.1em; }
+
             .contact-bar { flex-direction: row; gap: 40px; padding: 15px 0; } 
             .contact-bar p { font-size: 0.9em; }
-
-            /* Kontrolleri daha geniş yap */
-            .controls { margin-bottom: 20px; } 
-            .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; justify-content: center; } 
             
+            .controls { flex-direction: column; justify-content: center; padding: 0 20px; } 
+            
+            .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; justify-content: center; } 
             .tab-button { padding: 8px 15px; font-size: 0.9em; }
 
-            /* Tablette ızgara görünümü 2x2'yi korur */
+            .view-switch { margin-top: 15px; margin-left: 0; } 
+            
             .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
             
-            /* Tablette liste görünümü detayları büyüt */
             .grid-1x1 .item-image {
                 width: 130px; 
                 height: 130px; 
             }
-            .grid-1x1 .price {
-                font-size: 1.8em; 
-            }
+            .grid-1x1 .price { font-size: 1.8em; }
+            .item-details h3 { font-size: 1.3em; }
         }
-        
-        /* Masaüstü (1024px üzeri) */
         @media (min-width: 1024px) {
-            /* Masaüstü ızgara 3x3 olabilir */
             .grid-2x2 { grid-template-columns: repeat(3, 1fr); }
-            .menu-item { padding: 15px; }
-            .grid-1x1 .item-image { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -340,7 +509,7 @@
                     "EN": "Drinks & Coffee", "AR": "مشروبات وقهوة", "KU": "ڤەخوارن و قەهوە",
                     "items": [
                         {"id": "espresso", "name": {"EN": "Duhok Royal Espresso", "AR": "إسبريسو دهوك الملكي", "KU": "ئێسپرێسۆی شاهانە یێ دهوک"}, "price": "18000", "desc": {"EN": "A single shot of our signature blend, aged in oak barrels.", "AR": "جرعة واحدة من مزيجنا الخاص، معتقة في براميل البلوط.", "KU": "یەک جۆتا ژ تێکەلەیا مە یا تایبەت، د تڕوکا دارێ گەش دایە."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Espresso"},
-                        {"id": "limonata", "name": {"EN": "Fresh Mint Limonata", "AR": "ليموناضة بالنعناع الطازج", "KU": "شەربەتا لیمۆ و نێعناعا نوی"}, "price": "22000", "desc": {"EN": "Hand-squeezed fresh lemonade with crushed mint leaves.", "AR": "ليموناضة معصورة يدوياً مع أوراق النعناع المسحوقة.", "KU": "شەربەتا لیمۆیا ب دەست هاتیە فشارکرن ب پەلێن نێعناعێن خاشکری."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Limonata"}
+                        {"id": "limonata", "name": {"EN": "Fresh Mint Limonata", "AR": "ليموناضة بالنعناع الطازج", "KU": "شەربەta لیمۆ و نێعناعا نوی"}, "price": "22000", "desc": {"EN": "Hand-squeezed fresh lemonade with crushed mint leaves.", "AR": "ليموناضة معصورة يدوياً مع أوراق النعناع المسحوقة.", "KU": "شەربەta لیمۆیا ب دەست هاتیە فشارکرن ب پەلێن نێعناعێن خاشکری."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Limonata"}
                     ]
                 }
             }
@@ -366,11 +535,12 @@
             const infoBar = document.getElementById('info-bar');
             const mainFooter = document.getElementById('main-footer');
             
+            const viewButtons = document.querySelectorAll('.view-button');
+            
             const langMap = { 'EN': 'English', 'AR': 'العربية', 'KU': 'کوردی' };
             const langKeys = ['EN', 'AR', 'KU'];
 
             let currentLang = 'EN';
-            // Mobil için varsayılan liste görünümü
             let currentView = 'grid-1x1'; 
             let firstSectionId = '';
             
@@ -418,16 +588,15 @@
                 
                 document.getElementById('location-text').innerHTML = translations.locationText[lang];
                 document.getElementById('reservation-text').innerHTML = translations.reservationText[lang];
-                mainFooter.innerHTML = translations.footerText[lang]; // Footer çevirisi
+                mainFooter.innerHTML = translations.footerText[lang];
 
                 // RTL Yönetimi
-                if (lang === 'AR' || lang === 'KU') { // KU için RTL eklendi
+                if (lang === 'AR' || lang === 'KU') {
                     document.body.classList.add('rtl');
                 } else {
                     document.body.classList.remove('rtl');
                 }
                 
-                // Menü içeriğini yeniden render et
                 renderMenu(lang);
                 setupTabAndViews();
                 updateDynamicLangControl(lang);
@@ -450,14 +619,15 @@
                     activeSection.classList.add('active');
                 }
 
-                // Görünüm butonlarını doğru şekilde aktif et (currentView'e göre)
+                // Görünüm butonlarını doğru şekilde aktif et
                 document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
                 const activeViewButton = document.querySelector(`.view-button[data-view="${currentView}"]`);
                 if(activeViewButton) {
                     activeViewButton.classList.add('active');
-                } else {
-                    // Varsayılanı (grid-1x1) aktif et
-                    document.querySelector('.view-switch .view-button[data-view="grid-1x1"]').classList.add('active');
+                    document.querySelectorAll('.menu-grid').forEach(grid => {
+                        grid.classList.remove('grid-1x1', 'grid-2x2');
+                        grid.classList.add(currentView);
+                    });
                 }
             };
 
@@ -466,139 +636,123 @@
                 let isFirstSection = true;
                 menuContentContainer.innerHTML = '';
                 menuTabsContainer.innerHTML = '';
-
-                for (const sectionKey in menuData) {
-                    const sectionData = menuData[sectionKey];
-                    // Çeviri yoksa İngilizce'yi yedekle
-                    const sectionName = sectionData[lang] || sectionData['EN'];
-                    const sectionId = sectionKey.toLowerCase().replace(/ /g, '-');
-                    const sectionItems = sectionData.items;
-                    const isActive = isFirstSection ? ' active' : '';
-
+                
+                for (const sectionId in menuData) {
+                    const sectionTitle = menuData[sectionId][lang];
+                    const items = menuData[sectionId].items;
+                    
                     if (isFirstSection) {
                         firstSectionId = sectionId;
                     }
 
+                    // Sekme Oluşturma
                     const tabButton = document.createElement('button');
-                    tabButton.className = 'tab-button' + isActive;
+                    tabButton.className = `tab-button ${isFirstSection ? 'active' : ''}`;
                     tabButton.setAttribute('data-tab', sectionId);
-                    tabButton.textContent = sectionName;
+                    tabButton.textContent = sectionTitle;
                     menuTabsContainer.appendChild(tabButton);
 
-                    // currentView değişkeni render sırasında kullanılır
-                    const sectionHTML = `
-                        <section id="${sectionId}" class="menu-section${isActive}">
-                            <h2>${sectionName}</h2>
-                            <div class="menu-grid ${currentView}">
-                                ${sectionItems.map(item => createMenuItem(item, lang)).join('')}
-                            </div>
-                        </section>
-                    `;
-                    menuContentContainer.insertAdjacentHTML('beforeend', sectionHTML);
+                    // Bölüm Oluşturma
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = `menu-section ${isFirstSection ? 'active' : ''}`;
+                    sectionDiv.id = sectionId;
                     
-                    isFirstSection = false;
-                }
-            };
-
-            // --- Menü Kartı Oluşturma Fonksiyonu ---
-            const createMenuItem = (item, lang) => {
-                // Dinar para birimi son eki (suffix) ayarı
-                let currencySuffix = ' Dinnar';
-                if (lang === 'AR') {
-                    currencySuffix = ' دينار';
-                }
-                
-                const priceText = item.price + currencySuffix; // Fiyata birim ekleniyor
-                const itemName = item.name[lang] || item.name['EN'];
-                const itemDesc = item.desc[lang] || item.desc['EN'];
-                
-                return `
-                    <div class="menu-item">
-                        <img src="${item.img}" alt="${itemName}" class="item-image">
-                        <div class="item-details">
-                            <h3>${itemName}</h3>
-                            <p>${itemDesc}</p>
-                        </div>
-                        <span class="price">${priceText}</span>
-                    </div>
-                `;
-            };
-            
-            // --- Sekme ve Görünüm Kontrollerini Bağlama ---
-            const setupTabAndViews = () => {
-                const tabButtons = document.querySelectorAll('.tab-button');
-                const menuSections = document.querySelectorAll('.menu-section');
-                
-                // Sekme Kontrolü
-                tabButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const targetTab = button.getAttribute('data-tab');
-                        tabButtons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                        menuSections.forEach(section => {
-                            section.classList.remove('active');
-                            if (section.id === targetTab) {
-                                section.classList.add('active');
-                            }
-                        });
-                        // Tıklanan sekmeyi ortala
-                        button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                    });
-                });
-
-                // Görünüm Kontrolü
-                document.querySelectorAll('.view-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const targetView = button.getAttribute('data-view');
-                        currentView = targetView;
+                    sectionDiv.innerHTML = `<h2>${sectionTitle}</h2>`;
+                    
+                    const gridDiv = document.createElement('div');
+                    gridDiv.className = `menu-grid ${currentView}`;
+                    
+                    items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'menu-item';
                         
-                        document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-
-                        document.querySelectorAll('.menu-section').forEach(activeSection => {
-                            if (activeSection) {
-                                const grid = activeSection.querySelector('.menu-grid');
-                                grid.classList.remove('grid-2x2', 'grid-1x1');
-                                grid.classList.add(targetView);
-                            }
-                        });
+                        const itemName = item.name[lang] || item.name['EN'];
+                        const itemDesc = item.desc[lang] || item.desc['EN'];
+                        const itemPrice = item.price;
+                        const itemImg = item.img;
+                        
+                        itemDiv.innerHTML = `
+                            <img src="${itemImg}" alt="${itemName}" class="item-image">
+                            <div class="item-details">
+                                <h3>${itemName}</h3>
+                                <p>${itemDesc}</p>
+                            </div>
+                            <span class="price">${itemPrice.replace('000', '')} K</span>
+                        `;
+                        gridDiv.appendChild(itemDiv);
                     });
+                    
+                    sectionDiv.appendChild(gridDiv);
+                    menuContentContainer.appendChild(sectionDiv);
+                    
+                    if (isFirstSection) isFirstSection = false;
+                }
+            };
+
+            // --- Sekme ve Görünüm Kontrolü Ayarlama ---
+            const setupTabAndViews = () => {
+                // Sekme İşleyicisi
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.onclick = () => {
+                        const targetId = button.getAttribute('data-tab');
+                        
+                        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                        document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
+                        
+                        button.classList.add('active');
+                        document.getElementById(targetId).classList.add('active');
+                    };
+                });
+                
+                // Görünüm Değiştirme İşleyicisi
+                viewButtons.forEach(button => {
+                    button.onclick = () => {
+                        const newView = button.getAttribute('data-view');
+                        currentView = newView;
+                        
+                        viewButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        
+                        document.querySelectorAll('.menu-grid').forEach(grid => {
+                            grid.classList.remove('grid-1x1', 'grid-2x2');
+                            grid.classList.add(currentView);
+                        });
+                    };
                 });
             };
 
-            // --- Olay Dinleyicileri ---
-            
-            // 1. Başlangıç Dil Seçimini Dinle
+            // --- Başlangıç İşleyicileri ---
             document.querySelectorAll('.initial-lang-button').forEach(button => {
                 button.addEventListener('click', () => {
-                    const targetLang = button.getAttribute('data-lang');
-                    
+                    const lang = button.getAttribute('data-lang');
+                    currentLang = lang;
                     toggleMenuVisibility(true);
-                    switchLanguage(targetLang);
+                    applyTranslations(lang);
                     
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Varsayılan sekmeyi ve görünümü aktif et
+                    const initialTab = document.querySelector('.tab-button');
+                    if(initialTab) initialTab.click(); 
+                    
+                    const initialView = document.querySelector(`.view-button[data-view="${currentView}"]`);
+                    if(initialView) initialView.click();
                 });
             });
 
-            // 2. Dinamik Dil Kontrolünü Aç/Kapa
+            // Dil Açılır Menüsü
             langDropdownButton.addEventListener('click', () => {
                 const isVisible = langDropdownContent.style.display === 'block';
                 langDropdownContent.style.display = isVisible ? 'none' : 'block';
             });
 
-            // Dropdown dışına tıklanınca kapat
-            window.addEventListener('click', (e) => {
-                if (!dynamicLangControl.contains(e.target) && !langDropdownButton.contains(e.target)) {
+            document.addEventListener('click', (e) => {
+                if (!dynamicLangControl.contains(e.target)) {
                     langDropdownContent.style.display = 'none';
                 }
             });
-            
-            // Programı Başlat
+
+            // İlk yüklemede menünün gizli olduğundan emin olun
             toggleMenuVisibility(false);
-            
-            // Başlık çevirisini ve mutfak bilgisini başlangıçta İngilizce yükle
-            document.getElementById('restaurant-name').textContent = translations.restaurantName['EN'];
-            document.getElementById('cuisine-text').textContent = translations.cuisineText['EN'];
+            initialLangSelect.style.display = 'flex';
         });
     </script>
 </body>
