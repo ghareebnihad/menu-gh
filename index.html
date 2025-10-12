@@ -35,23 +35,21 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden; /* Mobil yatay kaydırmayı engelle */
         }
 
         /* Sağdan Sola Desteği (AR ve KU için) */
         body.rtl { direction: rtl; font-family: 'Harmattan', serif; }
-        /* DİL SEÇİMİNİN YERİ SABİT KALDIĞI İÇİN SADECE SOLA HİZALA */
         body.rtl #dynamic-lang-control { right: auto; left: 10px; } 
         body.rtl #lang-dropdown-content { left: 0; right: auto; }
         
         body.rtl .contact-bar p i { margin-right: 0; margin-left: 6px; }
-        /* Görünüm butonu artık sağdan değil, ortada hizalanıyor */
         body.rtl .view-switch { margin-left: 0; margin-right: 0; } 
         body.rtl .grid-1x1 .price { margin-left: 0; margin-right: 10px; }
         body.rtl .tabs { justify-content: flex-end; }
         body.rtl .tab-button { margin-left: 8px; margin-right: 0; }
         body.rtl .grid-1x1 .menu-item { text-align: right; }
         body.rtl .item-details p { text-align: right; }
-        /* Kontroller artık dikey olduğu için flex-direction: column kalır */
         body.rtl .controls { align-items: center; } 
 
         .menu-container { 
@@ -75,333 +73,166 @@
         /* BAŞLIK VE KONTAK BİLGİLERİ */
         .menu-header { 
             text-align: center; 
-            padding: 30px 0 20px; 
-            margin-bottom: 20px; 
+            padding: 20px 0 15px; /* Mobil Başlık Paddingi Azaltıldı */
+            margin-bottom: 15px; 
             position: relative;
             border-bottom: 2px solid var(--border-color);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
         .menu-header h1 { 
             font-family: 'Cinzel Decorative', serif; 
-            font-size: 2.5em; 
+            font-size: 2em; /* Mobil için küçültüldü */
             color: var(--accent-color); 
-            letter-spacing: 5px; 
+            letter-spacing: 3px; /* Mobil için azaltıldı */
             margin-bottom: 5px;
             text-shadow: 0 0 10px rgba(184, 134, 11, 0.9);
             text-transform: uppercase;
         }
         #cuisine-text { 
             font-family: 'Merriweather', serif;
-            font-size: 1.1em; 
-            color: var(--secondary-text); 
-            margin-bottom: 0; 
-            display: block !important; 
-            letter-spacing: 1px;
-            font-style: italic;
+            font-size: 1em; 
         }
 
-        /* KONTAK BİLGİLERİ BAR STİLİ */
+        /* KONTAK BİLGİLERİ BAR STİLİ (MOBİL İÇİN YUVARLAK HAT) */
         .contact-bar {
-            display: flex; 
             flex-direction: column; 
-            justify-content: center; 
-            align-items: center;
-            gap: 8px; 
-            margin: 15px auto 20px; 
-            padding: 10px 0; 
-            max-width: 600px;
+            gap: 5px; /* Mobil gap azaltıldı */
+            margin: 10px auto 15px; 
+            padding: 8px 0; 
+            max-width: 90%;
             border-top: 1px dashed var(--border-color);
             border-bottom: 1px dashed var(--border-color);
         }
-        .contact-bar p {
-            font-size: 0.9em; 
-            color: var(--secondary-text); 
-            font-weight: 400; 
-            margin: 0;
-            display: flex; 
-            align-items: center; 
-            letter-spacing: 0.5px;
-        }
-        .contact-bar i { 
-            margin-right: 6px; 
-            color: var(--accent-color); 
-            font-size: 1.1em; 
-        }
-        .contact-bar strong { color: var(--text-color); }
-        
-        /* --- DİL SEÇİMİ EKANI --- */
-        #initial-lang-select {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            gap: 15px; padding: 30px 0 60px; 
-        }
-        .initial-lang-button {
-            background: none; 
-            border: 2px solid var(--accent-color); 
-            color: var(--accent-color);
-            padding: 12px 30px; 
-            font-size: 1.2em; 
-            cursor: pointer; 
-            transition: all 0.3s ease;
-            text-transform: uppercase; 
-            font-weight: 700; 
-            min-width: 220px; 
-            box-shadow: 0 0 10px rgba(184, 134, 11, 0.4);
-            font-family: 'Cinzel Decorative', serif;
-        }
-        .initial-lang-button:hover {
-            background-color: var(--accent-color); 
-            color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(184, 134, 11, 0.9);
-        }
+        .contact-bar p { font-size: 0.8em; } /* Mobil font boyutu küçültüldü */
 
-        /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ --- */
-        #dynamic-lang-control {
-            position: fixed; top: 10px; right: 10px; display: none; z-index: 100;
-        }
-        #lang-dropdown-button {
-            background: var(--vibrant-accent); /* Mor/Mürdüm renk */
-            border: 1px solid var(--accent-color); 
-            color: var(--text-color); 
-            padding: 8px 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center;
-            gap: 5px; 
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.8); 
-            font-size: 0.9em;
-        }
-        #lang-dropdown-content {
-            display: none; position: absolute; right: 0; background-color: var(--vibrant-accent);
-            min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 1;
-        }
-        #lang-dropdown-content .lang-item {
-            color: var(--text-color); padding: 8px 12px; text-decoration: none;
-            display: block; cursor: pointer; font-size: 0.9em;
-        }
-        #lang-dropdown-content .lang-item:hover {
-            background-color: var(--accent-color); color: var(--bg-color);
-        }
-
-        /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ --- */
+        /* --- ANA KONTROL VE SEKMELER --- */
         .controls { 
             display: none; 
             flex-direction: column; 
-            align-items: center; /* Kontrolleri ortala */
-            margin-bottom: 20px; 
-            padding: 0 5px;
+            align-items: center; 
+            margin-bottom: 15px; /* Mobil margin azaltıldı */
+            padding: 0 0px; /* Yatay padding kaldırıldı */
         }
         
         .tabs { 
             display: flex; 
-            overflow-x: auto; 
+            overflow-x: scroll; /* Mobil cihazlarda sekme kaydırma özelliği */
             white-space: nowrap; 
             gap: 8px; 
             width: 100%; 
             padding-bottom: 10px; 
             justify-content: flex-start; 
         }
+        /* Kaydırma çubuğunu gizle (daha şık bir mobil görünüm için) */
         .tabs::-webkit-scrollbar { display: none; }
         .tabs { -ms-overflow-style: none; scrollbar-width: none; } 
         
-        /* YENİ YERLEŞİM: Tabs altında ortalanmış görünüm butonu */
+        .tab-button { 
+            flex-shrink: 0; 
+            padding: 7px 12px; 
+            font-size: 0.8em; /* Mobil için küçültüldü */
+        }
+        
         .view-switch { 
             display: flex; 
             gap: 5px; 
             margin-top: 10px; 
-            margin-bottom: 5px;
+            margin-bottom: 0px;
         } 
-
-        /* Sekme Buton Stilleri */
-        .tab-button { 
-            background: var(--dark-border-color); 
-            border: 1px solid var(--accent-color); 
-            color: var(--secondary-text); 
-            flex-shrink: 0; 
-            padding: 8px 15px; 
-            font-family: 'Merriweather', serif; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            font-size: 0.9em;
-        }
-        .tab-button:hover, .tab-button.active { 
-            background-color: var(--accent-color); 
-            color: var(--bg-color); 
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(184, 134, 11, 0.8); 
-        }
-
-        /* Görünüm Buton Stilleri */
         .view-button { 
-            background-color: var(--item-bg); 
-            border: 1px solid var(--border-color); 
-            color: var(--accent-color); 
-            padding: 6px 10px; 
-            font-size: 1em; 
-            cursor: pointer; 
-            transition: all 0.2s ease;
-        }
-        .view-button:hover, .view-button.active { 
-            background-color: var(--accent-color); 
-            color: var(--bg-color); 
+            padding: 5px 8px; 
+            font-size: 0.9em; 
         }
 
         /* Menü İçeriği Stilleri */
-        #menu-content { display: none; } 
-        .menu-section { display: none; padding: 10px 0; }
-        .menu-section.active { display: block; }
         .menu-section h2 { 
-            font-family: 'Cinzel Decorative', serif; 
-            font-size: 1.8em; 
-            color: var(--text-color); 
-            text-align: center; 
-            margin-top: 25px;
-            margin-bottom: 20px; 
-            padding-bottom: 10px; 
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-            /* Art Deco Çizgi Efekti */
-            border-bottom: 1px solid var(--accent-color);
-            position: relative;
-        }
-        .menu-section h2::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -3px;
-            transform: translateX(-50%);
-            width: 30%;
-            height: 3px;
-            background-color: var(--accent-color);
-            box-shadow: 0 0 5px var(--accent-color);
+            font-size: 1.5em; /* Mobil için küçültüldü */
+            margin-top: 15px;
+            margin-bottom: 15px; 
         }
         
         /* IZGARA AYARLARI */
         .menu-grid { 
             display: grid; 
-            gap: 25px; 
-            padding: 10px 0;
+            gap: 15px; /* Mobil gap azaltıldı */
         }
         
-        /* 2x2 Görünümü (Mobil ve Tablet için 2 sütun) */
-        .grid-2x2 { 
-            grid-template-columns: repeat(2, 1fr); 
-        }
-        /* 1x1 Görünümü (Varsayılan Lüks Liste) */
+        /* Mobil: Varsayılan Liste Görünümü */
         .grid-1x1 { 
             grid-template-columns: 1fr; 
         }
 
-        .menu-item { 
-            background-color: var(--item-bg); 
-            border: 1px solid var(--dark-border-color); 
-            padding: 15px; 
-            position: relative; 
-            transition: all 0.3s ease;
-            /* Hafif İç Gölge */
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8), 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        .menu-item:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(184, 134, 11, 0.3);
+        /* Mobil: Opsiyonel Izgara Görünümü */
+        .grid-2x2 { 
+            grid-template-columns: repeat(2, 1fr); /* Mobil ızgarada 2 sütun */
         }
 
-        .item-image { 
-            width: 100%; 
-            height: 120px; 
-            object-fit: cover; 
-            margin-bottom: 10px; 
-            border: 1px solid var(--dark-border-color);
+        .menu-item { 
+            padding: 10px; /* Mobil padding azaltıldı */
         }
-        
-        /* Liste Görünümü (1x1) için özel düzen (Varsayılan) */
+
+        /* Liste Görünümü (1x1) için özel düzen (Mobil Standart) */
         .grid-1x1 .menu-item {
             display: flex; 
             flex-direction: row; 
-            text-align: left; 
-            padding: 15px;
-            gap: 20px; 
+            gap: 15px; 
             align-items: center;
         }
         .grid-1x1 .item-image {
-            width: 100px; 
-            height: 100px; 
-            flex-shrink: 0; 
-            margin-bottom: 0;
+            width: 80px; /* Mobil resim boyutu */
+            height: 80px; 
         }
-        .grid-1x1 .item-details { flex-grow: 1; }
         .grid-1x1 .price {
-            flex-shrink: 0; 
-            font-size: 1.8em; 
-            margin-left: 10px;
+            font-size: 1.3em; /* Mobil fiyat boyutu */
+            min-width: 90px; /* Fiyatın kaymasını önle */
         }
-
         .item-details h3 { 
-            font-family: 'Merriweather', serif; 
-            font-size: 1.3em; 
-            color: var(--accent-color); 
-            margin-bottom: 5px; 
-            font-weight: 700;
-            line-height: 1.2;
+            font-size: 1.1em; /* Mobil başlık boyutu */
         }
         .item-details p { 
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85em; 
-            color: var(--secondary-text); 
-            margin-bottom: 0; 
-            font-weight: 300;
-        }
-        .price { 
-            font-family: 'Cinzel Decorative', serif; 
-            font-size: 1.4em; 
-            color: var(--accent-color); 
-            font-weight: 700; 
-            display: block; 
-            margin-top: auto;
-            text-shadow: 0 0 3px rgba(184, 134, 11, 0.7);
+            font-size: 0.8em; /* Mobil açıklama boyutu */
         }
         
         .main-footer { 
-            max-width: var(--max-width); 
-            margin: 30px auto 0; 
-            padding: 15px 0; 
-            text-align: center; 
-            border-top: 1px solid var(--dark-border-color); 
-            font-size: 0.75em; 
-            color: var(--secondary-text); 
-            flex-shrink: 0;
+            font-size: 0.7em; /* Mobil footer küçültüldü */
         }
-        .main-footer strong { color: var(--accent-color); }
         
-        /* Tablet ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
+        /* TABLET ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
         @media (min-width: 768px) { 
             body { padding: 20px; }
             .menu-wrapper { padding: 40px; }
+            .menu-header { padding: 30px 0 20px; margin-bottom: 20px; }
             .menu-header h1 { font-size: 3.5em; letter-spacing: 8px; }
             
+            /* Kontak barı yatay yap */
             .contact-bar { flex-direction: row; gap: 40px; padding: 15px 0; } 
-            
-            /* Kontroller şimdi dikey listeleniyor */
-            .controls { flex-direction: column; justify-content: center; padding: 0 20px; } 
-            
-            /* Sekmeler yatayda ortalansın */
+            .contact-bar p { font-size: 0.9em; }
+
+            /* Kontrolleri daha geniş yap */
+            .controls { margin-bottom: 20px; } 
             .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; justify-content: center; } 
             
-            /* Görünüm butonu artık tabların altında ortalanıyor */
-            .view-switch { margin-top: 15px; margin-left: 0; } 
-            
-            /* Tabletler için 2x2'yi koru (büyük ekranlarda da 2x2 kalır) */
+            .tab-button { padding: 8px 15px; font-size: 0.9em; }
+
+            /* Tablette ızgara görünümü 2x2'yi korur */
             .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
             
+            /* Tablette liste görünümü detayları büyüt */
             .grid-1x1 .item-image {
                 width: 130px; 
                 height: 130px; 
             }
+            .grid-1x1 .price {
+                font-size: 1.8em; 
+            }
         }
+        
+        /* Masaüstü (1024px üzeri) */
         @media (min-width: 1024px) {
+            /* Masaüstü ızgara 3x3 olabilir */
             .grid-2x2 { grid-template-columns: repeat(3, 1fr); }
+            .menu-item { padding: 15px; }
+            .grid-1x1 .item-image { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -539,7 +370,7 @@
             const langKeys = ['EN', 'AR', 'KU'];
 
             let currentLang = 'EN';
-            // Yeni varsayılan liste görünümü
+            // Mobil için varsayılan liste görünümü
             let currentView = 'grid-1x1'; 
             let firstSectionId = '';
             
@@ -710,6 +541,7 @@
                                 section.classList.add('active');
                             }
                         });
+                        // Tıklanan sekmeyi ortala
                         button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     });
                 });
