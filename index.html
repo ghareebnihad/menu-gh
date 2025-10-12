@@ -1,63 +1,133 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duhok Rest & Caffe - Lüks Menü</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Harmattan:wght@400;700&display=swap" rel="stylesheet">
+    <title>Duhok Rest & Caffe - Golden Age Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Merriweather:wght@400;700&family=Montserrat:wght@300;400;600&family=Harmattan:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <style>
+        /* Renk Paleti ve Temel Ayarlar (Golden Age Tema) */
         :root {
-            --bg-color: #0d0d0d;
-            --text-color: #f0f0f0;
-            --accent-color: #ffd700; 
-            --secondary-text: #a0a0a0;
-            --border-color: #333;
+            --bg-color: #1C1C1C; /* Kömür Siyahı */
+            --text-color: #F8F8F8; /* Krem Beyazı */
+            --accent-color: #B8860B; /* Zengin Altın */
+            --secondary-text: #A9A9A9; /* Koyu Gri */
+            --border-color: rgba(184, 134, 11, 0.4); /* Altın rengi şeffaf */
+            --dark-border-color: #333; /* Daha koyu border */
+            --item-bg: #282828; /* Menü öğesi arka planı */
+            --vibrant-accent: #4B0082; /* Derin Mor/Mürdüm - Vurgu */
             --max-width: 1200px;
         }
 
-        /* GENEL STİLLER */
+        /* Genel Stiller */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Lora', serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding: 10px; 
-            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5); 
+            padding: 10px;
+            /* Art Deco Arka Plan Deseni (Hafif ve Opak) */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="artDecoPattern" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 0 10 L 10 0 L 20 10 L 10 20 Z" fill="none" stroke="%232d2d2d" stroke-width="0.5"/><circle cx="10" cy="10" r="2" fill="%232d2d2d"/></pattern></defs><rect width="100%" height="100%" fill="url(%23artDecoPattern)"/></svg>');
+            background-size: 80px 80px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* SAĞDAN SOLA DESTEĞİ (ARAPÇA İÇİN) */
+        /* Sağdan Sola Desteği (AR ve KU için) */
         body.rtl { direction: rtl; font-family: 'Harmattan', serif; }
-        body.rtl #dynamic-lang-control { right: auto; left: 10px; }
+        /* DİL SEÇİMİNİN YERİ SABİT KALDIĞI İÇİN SADECE SOLA HİZALA */
+        body.rtl #dynamic-lang-control { right: auto; left: 10px; } 
         body.rtl #lang-dropdown-content { left: 0; right: auto; }
         
-        .menu-container { max-width: var(--max-width); margin: 0 auto; }
+        body.rtl .contact-bar p i { margin-right: 0; margin-left: 6px; }
+        /* Görünüm butonu artık sağdan değil, ortada hizalanıyor */
+        body.rtl .view-switch { margin-left: 0; margin-right: 0; } 
+        body.rtl .grid-1x1 .price { margin-left: 0; margin-right: 10px; }
+        body.rtl .tabs { justify-content: flex-end; }
+        body.rtl .tab-button { margin-left: 8px; margin-right: 0; }
+        body.rtl .grid-1x1 .menu-item { text-align: right; }
+        body.rtl .item-details p { text-align: right; }
+        /* Kontroller artık dikey olduğu için flex-direction: column kalır */
+        body.rtl .controls { align-items: center; } 
+
+        .menu-container { 
+            max-width: var(--max-width); 
+            margin: 0 auto; 
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-wrapper {
+            background-color: rgba(0, 0, 0, 0.85); /* İçerik için hafif şeffaf arka plan */
+            padding: 20px 10px; /* Mobil padding */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 50px rgba(0, 0, 0, 0.5);
+            min-height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
         
         /* BAŞLIK VE KONTAK BİLGİLERİ */
         .menu-header { 
-            text-align: center; padding: 30px 0 20px; margin-bottom: 20px; position: relative;
+            text-align: center; 
+            padding: 30px 0 20px; 
+            margin-bottom: 20px; 
+            position: relative;
+            border-bottom: 2px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
         .menu-header h1 { 
-            font-family: 'Playfair Display', serif; font-size: 2.5em; color: var(--accent-color); 
-            letter-spacing: 4px; margin-bottom: 5px;
-            text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.7), 0 0 10px rgba(255, 215, 0, 0.3);
+            font-family: 'Cinzel Decorative', serif; 
+            font-size: 2.5em; 
+            color: var(--accent-color); 
+            letter-spacing: 5px; 
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(184, 134, 11, 0.9);
+            text-transform: uppercase;
+        }
+        #cuisine-text { 
+            font-family: 'Merriweather', serif;
+            font-size: 1.1em; 
+            color: var(--secondary-text); 
+            margin-bottom: 0; 
+            display: block !important; 
+            letter-spacing: 1px;
+            font-style: italic;
         }
 
         /* KONTAK BİLGİLERİ BAR STİLİ */
         .contact-bar {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            gap: 10px; margin: 15px auto 20px; border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color); padding: 10px 0; max-width: 600px;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            gap: 8px; 
+            margin: 15px auto 20px; 
+            padding: 10px 0; 
+            max-width: 600px;
+            border-top: 1px dashed var(--border-color);
+            border-bottom: 1px dashed var(--border-color);
         }
         .contact-bar p {
-            font-size: 1em; color: var(--accent-color); font-weight: 700; margin: 0;
-            display: flex; align-items: center; letter-spacing: 0.5px;
+            font-size: 0.9em; 
+            color: var(--secondary-text); 
+            font-weight: 400; 
+            margin: 0;
+            display: flex; 
+            align-items: center; 
+            letter-spacing: 0.5px;
         }
-        .contact-bar i { margin-right: 6px; color: var(--secondary-text); font-size: 1em; }
-        #cuisine-text { font-size: 1em; color: var(--secondary-text); margin-bottom: 5px; display: block !important; }
+        .contact-bar i { 
+            margin-right: 6px; 
+            color: var(--accent-color); 
+            font-size: 1.1em; 
+        }
+        .contact-bar strong { color: var(--text-color); }
         
         /* --- DİL SEÇİMİ EKANI --- */
         #initial-lang-select {
@@ -65,14 +135,23 @@
             gap: 15px; padding: 30px 0 60px; 
         }
         .initial-lang-button {
-            background: none; border: 2px solid var(--accent-color); color: var(--accent-color);
-            padding: 12px 30px; font-size: 1.2em; cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase; font-weight: 700; min-width: 200px; 
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            background: none; 
+            border: 2px solid var(--accent-color); 
+            color: var(--accent-color);
+            padding: 12px 30px; 
+            font-size: 1.2em; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            text-transform: uppercase; 
+            font-weight: 700; 
+            min-width: 220px; 
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.4);
+            font-family: 'Cinzel Decorative', serif;
         }
         .initial-lang-button:hover {
-            background-color: var(--accent-color); color: var(--bg-color);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            background-color: var(--accent-color); 
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.9);
         }
 
         /* --- MENÜ İÇİ DİL DEĞİŞTİRME KONTROLÜ --- */
@@ -80,13 +159,21 @@
             position: fixed; top: 10px; right: 10px; display: none; z-index: 100;
         }
         #lang-dropdown-button {
-            background: var(--bg-color); border: 1px solid var(--accent-color); color: var(--accent-color);
-            padding: 6px 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center;
-            gap: 5px; box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); font-size: 0.9em;
+            background: var(--vibrant-accent); /* Mor/Mürdüm renk */
+            border: 1px solid var(--accent-color); 
+            color: var(--text-color); 
+            padding: 8px 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center;
+            gap: 5px; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.8); 
+            font-size: 0.9em;
         }
         #lang-dropdown-content {
-            display: none; position: absolute; right: 0; background-color: #111;
-            min-width: 80px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 1;
+            display: none; position: absolute; right: 0; background-color: var(--vibrant-accent);
+            min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 1;
         }
         #lang-dropdown-content .lang-item {
             color: var(--text-color); padding: 8px 12px; text-decoration: none;
@@ -98,40 +185,67 @@
 
         /* --- ANA KONTROL VE SEKMELERİN YENİ STİLİ --- */
         .controls { 
-            display: none; flex-direction: column; align-items: center;
-            margin-bottom: 20px; padding: 0 5px;
+            display: none; 
+            flex-direction: column; 
+            align-items: center; /* Kontrolleri ortala */
+            margin-bottom: 20px; 
+            padding: 0 5px;
         }
+        
         .tabs { 
-            display: flex; overflow-x: auto; white-space: nowrap; gap: 8px; 
-            width: 100%; padding-bottom: 10px; justify-content: flex-start; 
+            display: flex; 
+            overflow-x: auto; 
+            white-space: nowrap; 
+            gap: 8px; 
+            width: 100%; 
+            padding-bottom: 10px; 
+            justify-content: flex-start; 
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tabs { -ms-overflow-style: none; scrollbar-width: none; } 
         
+        /* YENİ YERLEŞİM: Tabs altında ortalanmış görünüm butonu */
         .view-switch { 
-            display: flex; gap: 5px; margin-left: 0; margin-top: 10px; 
+            display: flex; 
+            gap: 5px; 
+            margin-top: 10px; 
+            margin-bottom: 5px;
         } 
 
         /* Sekme Buton Stilleri */
         .tab-button { 
-            background: none; border: 2px solid var(--accent-color); color: var(--accent-color); 
-            flex-shrink: 0; padding: 8px 15px; font-family: 'Lora', serif; cursor: pointer; 
-            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; 
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); font-size: 0.9em;
+            background: var(--dark-border-color); 
+            border: 1px solid var(--accent-color); 
+            color: var(--secondary-text); 
+            flex-shrink: 0; 
+            padding: 8px 15px; 
+            font-family: 'Merriweather', serif; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9em;
         }
         .tab-button:hover, .tab-button.active { 
-            background-color: var(--accent-color); color: var(--bg-color); 
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.8); 
         }
 
         /* Görünüm Buton Stilleri */
         .view-button { 
-            background-color: #ffffff; border: 1px solid var(--border-color); 
-            color: var(--bg-color); padding: 6px 10px; font-size: 1em; 
-            cursor: pointer; transition: all 0.2s ease;
+            background-color: var(--item-bg); 
+            border: 1px solid var(--border-color); 
+            color: var(--accent-color); 
+            padding: 6px 10px; 
+            font-size: 1em; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
         }
         .view-button:hover, .view-button.active { 
-            background-color: var(--accent-color); color: var(--bg-color); 
+            background-color: var(--accent-color); 
+            color: var(--bg-color); 
         }
 
         /* Menü İçeriği Stilleri */
@@ -139,137 +253,211 @@
         .menu-section { display: none; padding: 10px 0; }
         .menu-section.active { display: block; }
         .menu-section h2 { 
-            font-family: 'Playfair Display', serif; font-size: 2em; color: var(--accent-color); 
-            text-align: center; margin-bottom: 20px; padding-bottom: 10px; 
-            border-bottom: 1px dashed var(--border-color); 
+            font-family: 'Cinzel Decorative', serif; 
+            font-size: 1.8em; 
+            color: var(--text-color); 
+            text-align: center; 
+            margin-top: 25px;
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            /* Art Deco Çizgi Efekti */
+            border-bottom: 1px solid var(--accent-color);
+            position: relative;
+        }
+        .menu-section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -3px;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px var(--accent-color);
         }
         
-        /* IZGARA AYARLARI (Mobil için Optimize Edildi) */
+        /* IZGARA AYARLARI */
         .menu-grid { 
-            display: grid; gap: 15px; padding: 0;
+            display: grid; 
+            gap: 25px; 
+            padding: 10px 0;
         }
         
-        /* 2x2 Görünümü (Tüm Telefonlar için 2 sütun) */
+        /* 2x2 Görünümü (Mobil ve Tablet için 2 sütun) */
         .grid-2x2 { 
             grid-template-columns: repeat(2, 1fr); 
         }
-        /* 1x1 Görünümü (Tam sütun) */
+        /* 1x1 Görünümü (Varsayılan Lüks Liste) */
         .grid-1x1 { 
             grid-template-columns: 1fr; 
         }
 
         .menu-item { 
-            background-color: #1a1a1a; border: 1px solid rgba(255, 215, 0, 0.2); 
-            padding: 15px; text-align: center; display: flex; flex-direction: column; 
-            justify-content: space-between; position: relative; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); 
+            background-color: var(--item-bg); 
+            border: 1px solid var(--dark-border-color); 
+            padding: 15px; 
+            position: relative; 
+            transition: all 0.3s ease;
+            /* Hafif İç Gölge */
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8), 0 5px 15px rgba(0, 0, 0, 0.5);
         }
+        .menu-item:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.3);
+        }
+
         .item-image { 
-            width: 100%; height: 150px; object-fit: cover; border-radius: 3px; 
+            width: 100%; 
+            height: 120px; 
+            object-fit: cover; 
             margin-bottom: 10px; 
+            border: 1px solid var(--dark-border-color);
         }
         
-        /* Liste Görünümü (1x1) için özel düzen */
+        /* Liste Görünümü (1x1) için özel düzen (Varsayılan) */
         .grid-1x1 .menu-item {
-            display: flex; flex-direction: row; text-align: left; padding: 10px;
-            gap: 15px; align-items: center;
+            display: flex; 
+            flex-direction: row; 
+            text-align: left; 
+            padding: 15px;
+            gap: 20px; 
+            align-items: center;
         }
         .grid-1x1 .item-image {
-            width: 80px; height: 80px; flex-shrink: 0; margin-bottom: 0;
+            width: 100px; 
+            height: 100px; 
+            flex-shrink: 0; 
+            margin-bottom: 0;
         }
         .grid-1x1 .item-details { flex-grow: 1; }
         .grid-1x1 .price {
-            flex-shrink: 0; font-size: 1.6em; margin-left: 10px;
+            flex-shrink: 0; 
+            font-size: 1.8em; 
+            margin-left: 10px;
         }
 
         .item-details h3 { 
-            font-family: 'Playfair Display', serif; font-size: 1.2em; color: var(--accent-color); 
+            font-family: 'Merriweather', serif; 
+            font-size: 1.3em; 
+            color: var(--accent-color); 
             margin-bottom: 5px; 
+            font-weight: 700;
+            line-height: 1.2;
         }
         .item-details p { 
-            font-size: 0.85em; color: var(--secondary-text); margin-bottom: 10px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85em; 
+            color: var(--secondary-text); 
+            margin-bottom: 0; 
+            font-weight: 300;
         }
         .price { 
-            font-family: 'Playfair Display', serif; font-size: 1.4em; color: var(--accent-color); 
-            font-weight: 700; display: block; margin-top: auto;
+            font-family: 'Cinzel Decorative', serif; 
+            font-size: 1.4em; 
+            color: var(--accent-color); 
+            font-weight: 700; 
+            display: block; 
+            margin-top: auto;
+            text-shadow: 0 0 3px rgba(184, 134, 11, 0.7);
         }
         
         .main-footer { 
-            max-width: var(--max-width); margin: 30px auto 0; padding: 15px 0; 
-            text-align: center; border-top: 1px dashed var(--border-color); 
-            font-size: 0.7em; color: var(--secondary-text); 
+            max-width: var(--max-width); 
+            margin: 30px auto 0; 
+            padding: 15px 0; 
+            text-align: center; 
+            border-top: 1px solid var(--dark-border-color); 
+            font-size: 0.75em; 
+            color: var(--secondary-text); 
+            flex-shrink: 0;
         }
+        .main-footer strong { color: var(--accent-color); }
         
         /* Tablet ve Büyük Ekranlar İçin Medya Sorgusu (768px üzeri) */
         @media (min-width: 768px) { 
             body { padding: 20px; }
-            .menu-header h1 { font-size: 3.8em; letter-spacing: 6px; }
+            .menu-wrapper { padding: 40px; }
+            .menu-header h1 { font-size: 3.5em; letter-spacing: 8px; }
             
             .contact-bar { flex-direction: row; gap: 40px; padding: 15px 0; } 
-            .controls { flex-direction: row; justify-content: space-between; padding: 0 20px; }
-            .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; }
-            .view-switch { margin-top: 0; margin-left: 30px; }
+            
+            /* Kontroller şimdi dikey listeleniyor */
+            .controls { flex-direction: column; justify-content: center; padding: 0 20px; } 
+            
+            /* Sekmeler yatayda ortalansın */
+            .tabs { overflow-x: visible; white-space: normal; padding-bottom: 0; gap: 10px; justify-content: center; } 
+            
+            /* Görünüm butonu artık tabların altında ortalanıyor */
+            .view-switch { margin-top: 15px; margin-left: 0; } 
             
             /* Tabletler için 2x2'yi koru (büyük ekranlarda da 2x2 kalır) */
             .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
             
             .grid-1x1 .item-image {
-                width: 120px; height: 120px; 
+                width: 130px; 
+                height: 130px; 
             }
+        }
+        @media (min-width: 1024px) {
+            .grid-2x2 { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <header class="menu-header" id="menu-header">
-        
-        <h1 id="restaurant-name">DUHOK REST & CAFFE</h1>
-        
-        <p id="cuisine-text">Akdeniz & İtalyan Lüks Lezzetler</p>
-        
-        <div class="contact-bar" id="info-bar" style="display: none;">
-            <p id="reservation-text">
-                <i class="fas fa-phone-alt"></i> Rezervasyon: 0750 222 22 22
-            </p>
-            <p id="location-text">
-                <i class="fas fa-map-marker-alt"></i> Konum: <strong>Duhok KRO</strong>
-            </p>
-        </div>
-
-        <div id="initial-lang-select">
-            <button class="initial-lang-button" data-lang="EN">English</button>
-            <button class="initial-lang-button" data-lang="AR">العربية</button>
-            <button class="initial-lang-button" data-lang="KU">کوردی</button>
-        </div>
-
-        <div id="dynamic-lang-control">
-            <button id="lang-dropdown-button">
-                <span id="current-lang-display">EN</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <div id="lang-dropdown-content">
-            </div>
-        </div>
-        
-    </header>
-
     <main class="menu-container">
-        
-        <div class="controls" id="menu-controls">
-            <div class="tabs" id="menu-tabs">
-            </div>
-            
-            <div class="view-switch">
-                <button class="view-button active" data-view="grid-2x2" title="Izgara Görünümü"><i class="fas fa-th"></i></button>
-                <button class="view-button" data-view="grid-1x1" title="Liste Görünümü"><i class="fas fa-list"></i></button>
-            </div>
-        </div>
+        <div class="menu-wrapper">
+            <header class="menu-header" id="menu-header">
+                
+                <h1 id="restaurant-name">DUHOK REST & CAFFE</h1>
+                
+                <p id="cuisine-text">Mediterranean & Italian Luxury Cuisine</p>
+                
+                <div class="contact-bar" id="info-bar" style="display: none;">
+                    <p id="reservation-text">
+                        <i class="fas fa-phone-alt"></i> Reservation: 0750 222 22 22
+                    </p>
+                    <p id="location-text">
+                        <i class="fas fa-map-marker-alt"></i> Location: <strong>Duhok KRO</strong>
+                    </p>
+                </div>
 
-        <div id="menu-content">
+                <div id="initial-lang-select">
+                    <button class="initial-lang-button" data-lang="EN">English</button>
+                    <button class="initial-lang-button" data-lang="AR">العربية</button>
+                    <button class="initial-lang-button" data-lang="KU">کوردی</button>
+                </div>
+
+                <div id="dynamic-lang-control">
+                    <button id="lang-dropdown-button">
+                        <span id="current-lang-display">EN</span> <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="lang-dropdown-content">
+                    </div>
+                </div>
+                
+            </header>
+
+            
+            <div class="controls" id="menu-controls">
+                <div class="tabs" id="menu-tabs">
+                    </div>
+                
+                <div class="view-switch">
+                    <button class="view-button active" data-view="grid-1x1" title="Liste Görünümü"><i class="fas fa-list"></i></button>
+                    <button class="view-button" data-view="grid-2x2" title="Izgara Görünümü"><i class="fas fa-th"></i></button>
+                </div>
+            </div>
+
+            <div id="menu-content">
+                </div>
         </div>
     </main>
 
-    <footer class="main-footer">
-        Developed by | **Ghareeb**
-    </footer>
+    <footer class="main-footer" id="main-footer">
+        </footer>
 
     <script id="menu-data" type="application/json">
         {
@@ -277,31 +465,51 @@
                 "restaurantName": {"EN": "DUHOK REST & CAFFE", "AR": "مطعم وكافية دهوك", "KU": "رێستۆرانت و کافێ دهوک"},
                 "cuisineText": {"EN": "Mediterranean & Italian Luxury Cuisine", "AR": "مأكولات فاخرة متوسطية وإيطالية", "KU": "خواردنێن لوکس یێن دەریا ناڤین و ئیتاڵی"},
                 "locationText": {"EN": "<i class=\"fas fa-map-marker-alt\"></i> Location: <strong>Duhok KRO</strong>", "AR": "<i class=\"fas fa-map-marker-alt\"></i> الموقع: <strong>دهوك، طريق كرو</strong>", "KU": "<i class=\"fas fa-map-marker-alt\"></i> جهـ: <strong>دهوک کرۆ</strong>"},
-                "reservationText": {"EN": "<i class=\"fas fa-phone-alt\"></i> Reservation: 0750 222 22 22", "AR": "<i class=\"fas fa-phone-alt\"></i> للحجز: 0750 222 22 22", "KU": "<i class=\"fas fa-phone-alt\"></i> بۆ حجزکرنێ: 0750 222 22 22"}
+                "reservationText": {"EN": "<i class=\"fas fa-phone-alt\"></i> Reservation: 0750 222 22 22", "AR": "<i class=\"fas fa-phone-alt\"></i> للحجز: 0750 222 22 22", "KU": "<i class=\"fas fa-phone-alt\"></i> بۆ حجزکرنێ: 0750 222 22 22"},
+                "footerText": {"EN": "All rights reserved. Developed by | <strong>Ghareeb</strong>", "AR": "جميع الحقوق محفوظة. تم التطوير بواسطة | <strong>Ghareeb</strong>", "KU": "هەمی مافێن پاراستینە. ژ لایێ | <strong>Ghareeb</strong> ڤە هاتیە ئاڤا کرن"}
             },
             "menu": {
-                "Akdeniz": {
-                    "EN": "Mediterranean", "AR": "متوسطية", "KU": "دەریا ناڤین",
+                "Baslangiclar": {
+                    "EN": "Starters", "AR": "مقبلات", "KU": "دەستپێک",
                     "items": [
-                        {"id": "deniz", "name": {"EN": "Sea Breeze Carpaccio", "AR": "كارباتشيو نسيم البحر", "KU": "کارپاتشیۆیا گەنجی دەریاێ"}, "price": "35", "desc": {"EN": "Delicate scallop carpaccio marinated with citrus. The soul of the Aegean shores.", "AR": "كارباتشيو الإسكالوب المتبل بالحمضيات. روح شواطئ إيجة.", "KU": "کارپاتشیۆیا شەمالێ یا دەریاێ، ب تامێ ترشاتیێ. گیانێ کەنارێن ئیجەیێ."}, "img": "https://media.istockphoto.com/id/2148672887/photo/beef-patty-burger-with-vegetables-and-lettuce-on-white-background-file-contains-clipping-path.jpg?s=612x612&w=0&k=20&c=9HnGNZAv4PEvexEE6J4KIBNJFP_jK_qJ69fHt_sV7jU="},
-                        {"id": "kuzu", "name": {"EN": "Lavender Wind Lamb Shoulder", "AR": "كتف الضأن بريح الخزامى", "KU": "ملێ بەرازیێ بێهنا خوزامایێ"}, "price": "115", "desc": {"EN": "Tender lamb shoulder slow-cooked for 12 hours with lavender and red wine.", "AR": "كتف ضأن طري مطبوخ ببطء لمدة 12 ساعة مع اللافندر والنبيذ الأحمر.", "KU": "ملێ بەرازیێ نەرن و ب کێماتی دهێتە ئاڤا کرن بۆ ١٢ دەمژمێر ب تامێ خوزاما و شەربەتا سۆر."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Kuzu+Kol"},
-                        {"id": "bonfile", "name": {"EN": "Olive Tree Fillet Steak", "AR": "فيليه لحم شجرة الزيتون", "KU": "فیلێی دارا زەیتونێ"}, "price": "125", "desc": {"EN": "The highest quality beef fillet, smoked with olive tree branches for a unique aroma.", "AR": "أجود أنواع فيليه البقر، مدخن بأغصان الزيتون لنكهة فريدة.", "KU": "باشترین جۆرێ گۆشتێ فیلێ، ب تاڤگێن دارا زەیتونێ دهێتە دۆخانکرن بۆ تامەکا تایبەت."}, "img": "https://media.istockphoto.com/id/1879112733/photo/delicious-double-cheeseburger-close-up-on-a-black-background-delicious-cheeseburger-sandwich.jpg?s=612x612&w=0&k=20&c=kGhrhCmfrhlW_a--AA8Ey1A5d8AVthYiHhBR7SJdxBY="},
-                        {"id": "risotto", "name": {"EN": "Mother Earth Risotto", "AR": "ريزوتو أم الأرض", "KU": "رێزۆتۆیا دەیکا عەردی"}, "price": "85", "desc": {"EN": "A vegetarian masterpiece prepared with seasonal mushrooms and fresh white truffle shavings.", "AR": "تحفة نباتية محضرة بفطر الموسمي ورقائق الكمأة البيضاء الطازجة.", "KU": "شاکارەکێ رووەکی یە ب کاراڤکا زەمستانی و پاقژیا تڕفلا سپی یا نوی دهێتە ئاڤا کرن."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Risotto"}
+                        {"id": "deniz", "name": {"EN": "Sea Breeze Carpaccio", "AR": "كارباتشيو نسيم البحر", "KU": "کارپاتشیۆیا گەنجی دەریاێ"}, "price": "35000", "desc": {"EN": "Delicate scallop carpaccio marinated with citrus. The soul of the Aegean shores.", "AR": "كارباتشيو الإسكالوب المتبل بالحمضيات. روح شواطئ إيجة.", "KU": "کارپاتشیۆیا شەمالێ یا دەریاێ، ب تامێ ترشاتیێ. گیانێ کەنارێن ئیجەیێ."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Carpaccio"},
+                        {"id": "burrata", "name": {"EN": "Burrata with Kumato", "AR": "بوراتا مع طماطم كوميتو", "KU": "بۆڕاتایا ب گێزۆیا کووماتۆ"}, "price": "45000", "desc": {"EN": "Fresh Italian Burrata served with smoked Kumato tomatoes and basil oil.", "AR": "جبنة بوراتا إيطالية طازجة مع طماطم كوميتو مدخنة وزيت الريحان.", "KU": "پەنیرا بۆڕاتا یا نوی ب گێزۆیێن کووماتۆ یێن دۆخانکری و زەیتێ ریحانێ."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Burrata"},
+                        {"id": "prosciutto", "name": {"EN": "Prosciutto di Parma & Melon", "AR": "بروسكيوتو دي بارما والشمام", "KU": "پرۆسکیۆتۆ دی پاڕما و شەمام"}, "price": "55000", "desc": {"EN": "A classic pairing of aged Parma ham and fresh seasonal melon slices.", "AR": "تزاوج كلاسيكي بين لحم بارما المقدد وشرائح الشمام الموسمية الطازجة.", "KU": "تێکهەلکرنەکا کلاسیک د ناڤبەرا گۆشتێ پاڕما یێ کەڤن و شەمامێ نوی دهێتە پێشکێشکرن."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Prosciutto"}
+                    ]
+                },
+                "Salatalar": {
+                    "EN": "Salads", "AR": "سلطات", "KU": "زەلاتە",
+                    "items": [
+                        {"id": "roka", "name": {"EN": "Arugula & Parmesan Salad", "AR": "سلطة الجرجير والبارميزان", "KU": "زەلاتەیا ڕۆکا و پاڕمێزان"}, "price": "30000", "desc": {"EN": "Fresh arugula leaves with shaved Parmesan, walnuts, and balsamic reduction.", "AR": "أوراق الجرجير الطازجة مع رقائق البارميزان والجوز وصلصة الخل البلسمي.", "KU": "پەلگێن ڕۆکا یێن نوی ب پاقژیا پەنیرا پاڕمێزان، گۆز و دۆلما بالسامیکی."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=RokaSalad"}
+                    ]
+                },
+                "Akdeniz": {
+                    "EN": "Mediterranean Mains", "AR": "أطباق متوسطية رئيسية", "KU": "خواردنێن سەرەکی یێن دەریا ناڤین",
+                    "items": [
+                        {"id": "kuzu", "name": {"EN": "Lavender Wind Lamb Shoulder", "AR": "كتف الضأن بريح الخزامى", "KU": "ملێ بەرازیێ بێهنا خوزامایێ"}, "price": "115000", "desc": {"EN": "Tender lamb shoulder slow-cooked for 12 hours with lavender and red wine.", "AR": "كتف ضأن طري مطبوخ ببطء لمدة 12 ساعة مع اللافندر والنبيذ الأحمر.", "KU": "ملێ بەرازیێ نەرن و ب کێماتی دهێتە ئاڤا کرن بۆ ١٢ دەمژمێر ب تامێ خوزاما و شەربەتا سۆر."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Lamb+Shoulder"},
+                        {"id": "bonfile", "name": {"EN": "Olive Tree Fillet Steak", "AR": "فيليه لحم شجرة الزيتون", "KU": "فیلێی دارا زەیتونێ"}, "price": "125000", "desc": {"EN": "The highest quality beef fillet, smoked with olive tree branches for a unique aroma.", "AR": "أجود أنواع فيليه البقر، مدخن بأغصان الزيتون لنكهة فريدة.", "KU": "باشترین جۆرێ گۆشتێ فیلێ، ب تاڤگێن دارا زەیتونێ دهێتە دۆخانکرن بۆ تامەکا تایبەت."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Fillet+Steak"},
+                        {"id": "risotto", "name": {"EN": "Mother Earth Risotto", "AR": "ريزوتو أم الأرض", "KU": "رێزۆتۆیا دەیکا عەردی"}, "price": "85000", "desc": {"EN": "A vegetarian masterpiece prepared with seasonal mushrooms and fresh white truffle shavings.", "AR": "تحفة نباتية محضرة بفطر الموسمي ورقائق الكمأة البيضاء الطازجة.", "KU": "شاکارەکێ رووەکی یە ب کاراڤکا زەمستانی و پاقژیا تڕفلا سپی یا نوی دهێتە ئاڤا کرن."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Risotto"}
                     ]
                 },
                 "Pizza": {
-                    "EN": "Pizza", "AR": "بيتزا", "KU": "پیتزا",
+                    "EN": "Artisan Pizzas", "AR": "بيتزا حرفية", "KU": "پیتزایێن کارێ دەستی",
                     "items": [
-                        {"id": "margarita", "name": {"EN": "Vesuvio Margarita", "AR": "مارغريتا فيزوفيو", "KU": "مارگاریتایا ڤێسوڤیۆ"}, "price": "55", "desc": {"EN": "San Marzano tomato, fresh buffalo mozzarella, and basil. The pinnacle of Italian classics.", "AR": "طماطم سان مارزانو، موزاريلا بافلو طازجة وريحان. ذروة الكلاسيكيات الإيطالية.", "KU": "گێزوویا سان مارزانۆ، مۆززاریلایا گاڤا یا نوی، و ریحان. لوتکەیێ کلاسیکێن ئیتاڵی."}, "img": "https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-                        {"id": "truflu", "name": {"EN": "Truffle Funghi", "AR": "فطر الكمأة", "KU": "کاریڤکا تڕفلا"}, "price": "78", "desc": {"EN": "White truffle oil, porcini mushrooms, smoked beef, and provolone cheese. A feast of intense flavors.", "AR": "زيت الكمأة الأبيض، فطر البورشيني، لحم البقر المدخن، وجبنة بروفولوني. وليمة من النكهات الغنية.", "KU": "زەیتێ تڕفلا سپی، کاراڤکا پۆرچین، گۆشتێ گاڤا یێ دۆخانکری، و پەنیرا پرۆڤۆلۆنێ. شاییەک ژ تامێن زەنگین."}, "img": "https://media.istockphoto.com/id/2170408203/photo/pizza-with-prosciutto-cotto-ham-and-mushrooms.jpg?s=612x612&w=0&k=20&c=JpOFZYYLO1KmVJles1M-1QSA9zgxdyOTtfewCG84sAg="},
-                        {"id": "denizli", "name": {"EN": "Adriatic Seafood", "AR": "مأكولات بحرية أدريهاتيكية", "KU": "خواردنێن دەریایێ یێن ئەدریاتیکی"}, "price": "82", "desc": {"EN": "Calamari, shrimp, and mussels with fresh tomato sauce. All the flavors of the Adriatic in one pizza.", "AR": "كاليماري، روبيان، وبلح البحر بصلصة الطماطم الطازجة. كل نكهات البحر الأبيض المتوسط في بيتزا واحدة.", "KU": "قەلەماری، شریمپ، و سێل ب ئاڤا گێزۆییا نوی. هەمی تامێن دەریایێ د پیتزایەکێ دا."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Deniz+Ürünleri"}
+                        {"id": "margarita", "name": {"EN": "Vesuvio Margarita", "AR": "مارغريتا فيزوفيو", "KU": "مارگاریتایا ڤێسوڤیۆ"}, "price": "55000", "desc": {"EN": "San Marzano tomato, fresh buffalo mozzarella, and basil. The pinnacle of Italian classics.", "AR": "طماطم سان مارزانو، موزاريلا بافلو طازجة وريحان. ذروة الكلاسيكيات الإيطالية.", "KU": "گێزوویا سان مارزانۆ، مۆززاریلایا گاڤا یا نوی، و ریحان. لوتکەیێ کلاسیکێن ئیتاڵی."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Margarita"},
+                        {"id": "truflu", "name": {"EN": "Truffle Funghi", "AR": "فطر الكمأة", "KU": "کاریڤکا تڕفلا"}, "price": "78000", "desc": {"EN": "White truffle oil, porcini mushrooms, smoked beef, and provolone cheese. A feast of intense flavors.", "AR": "زيت الكمأة الأبيض، فطر البورشيني، لحم البقر المدخن، وجبنة بروفولوني. وليمة من النكهات الغنية.", "KU": "زەیتێ تڕفلا سپی، کاراڤکا پۆرچین، گۆشتێ گاڤا یێ دۆخانکری، و پەنیرا پرۆڤۆلۆنێ. شاییەک ژ تامێن زەنگین."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Truffle+Pizza"}
                     ]
                 },
                 "Tatlılar": {
                     "EN": "Desserts", "AR": "حلويات", "KU": "شیرینی",
                     "items": [
-                        {"id": "baklava", "name": {"EN": "Pistachio Lament", "AR": "أنين الفستق", "KU": "هێڤییا فستقی"}, "price": "38", "desc": {"EN": "A modern take on traditional baklava: Antep pistachio cream between crunchy layers.", "AR": "تفسير حديث للبقلاوة التقليدية: كريمة فستق عنتاب بين طبقات مقرمشة.", "KU": "خوەشخاندنەکا نوی بۆ باقلەواییا کەڤن: کڕێما فستقی د ناڤ بەرەنگێن خڕێن دا."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Baklava"},
-                        {"id": "cikolata", "name": {"EN": "Chocolate Crater", "AR": "فوهة الشوكولاتة", "KU": "کرێتەرا چکلێتێ"}, "price": "42", "desc": {"EN": "A warm soufflé with molten Valrhona chocolate flowing out like lava, balanced with salted caramel.", "AR": "سوفليه دافئ بشوكولاتة فالرونا المنصهرة تتدفق كالحمم، متوازنة بالكراميل المملح.", "KU": "سوفلێکا گەرم ب چکلێتێ ڤالرۆنا یێ تڤژی و کڕێما کەرەمەلێ یا خوەش تام."}, "img": "https://via.placeholder.com/200x180/444/ddd?text=Çikolata"}
+                        {"id": "baklava", "name": {"EN": "Pistachio Lament", "AR": "أنين الفستق", "KU": "هێڤییا فستقی"}, "price": "38000", "desc": {"EN": "A modern take on traditional baklava: Antep pistachio cream between crunchy layers.", "AR": "تفسير حديث للبقلاوة التقليدية: كريمة فستق عنتاب بين طبقات مقرمشة.", "KU": "خوەشخاندنەکا نوی بۆ باقلەواییا کەڤن: کڕێما فستقی د ناڤ بەرەنگێن خڕێن دا."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Baklava"},
+                        {"id": "cikolata", "name": {"EN": "Chocolate Crater", "AR": "فوهة الشوكولاتة", "KU": "کرێتەرا چکلێتێ"}, "price": "42000", "desc": {"EN": "A warm soufflé with molten Valrhona chocolate flowing out like lava, balanced with salted caramel.", "AR": "سوفليه دافئ بشوكولاتة فالرونا المنصهرة تتدفق كالحمم، متوازنة بالكراميل المملح.", "KU": "سوفلێکا گەرم ب چکلێتێ ڤالرۆنا یێ تڤژی و کڕێما کەرەمەلێ یا خوەش تام."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Chocolate"}
+                    ]
+                },
+                "Icecekler": {
+                    "EN": "Drinks & Coffee", "AR": "مشروبات وقهوة", "KU": "ڤەخوارن و قەهوە",
+                    "items": [
+                        {"id": "espresso", "name": {"EN": "Duhok Royal Espresso", "AR": "إسبريسو دهوك الملكي", "KU": "ئێسپرێسۆی شاهانە یێ دهوک"}, "price": "18000", "desc": {"EN": "A single shot of our signature blend, aged in oak barrels.", "AR": "جرعة واحدة من مزيجنا الخاص، معتقة في براميل البلوط.", "KU": "یەک جۆتا ژ تێکەلەیا مە یا تایبەت، د تڕوکا دارێ گەش دایە."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Espresso"},
+                        {"id": "limonata", "name": {"EN": "Fresh Mint Limonata", "AR": "ليموناضة بالنعناع الطازج", "KU": "شەربەتا لیمۆ و نێعناعا نوی"}, "price": "22000", "desc": {"EN": "Hand-squeezed fresh lemonade with crushed mint leaves.", "AR": "ليموناضة معصورة يدوياً مع أوراق النعناع المسحوقة.", "KU": "شەربەتا لیمۆیا ب دەست هاتیە فشارکرن ب پەلێن نێعناعێن خاشکری."}, "img": "https://via.placeholder.com/200x180/4B0082/ddd?text=Limonata"}
                     ]
                 }
             }
@@ -324,33 +532,27 @@
             const langDropdownButton = document.getElementById('lang-dropdown-button');
             const langDropdownContent = document.getElementById('lang-dropdown-content');
             const currentLangDisplay = document.getElementById('current-lang-display');
-            const infoBar = document.getElementById('info-bar'); 
+            const infoBar = document.getElementById('info-bar');
+            const mainFooter = document.getElementById('main-footer');
             
             const langMap = { 'EN': 'English', 'AR': 'العربية', 'KU': 'کوردی' };
             const langKeys = ['EN', 'AR', 'KU'];
 
-            let currentLang = 'EN'; 
-            let currentView = 'grid-2x2'; // Yeni varsayılan 2x2
-            let firstSectionId = ''; 
+            let currentLang = 'EN';
+            // Yeni varsayılan liste görünümü
+            let currentView = 'grid-1x1'; 
+            let firstSectionId = '';
             
-            // --- BAŞLANGIÇ GÖRÜNÜMÜNÜ AYARLA ---
-            const determineInitialView = () => {
-                // Sadece 2x2 ve 1x1 kaldığı için, başlangıç görünümü her zaman 2x2'dir.
-                currentView = 'grid-2x2';
-            };
-            
-            determineInitialView(); 
-
             // --- Arayüz Görünürlüğünü Ayarlama ---
             const toggleMenuVisibility = (isVisible) => {
                 if (isVisible) {
                     initialLangSelect.style.display = 'none';
-                    menuControls.style.display = 'flex'; 
+                    menuControls.style.display = 'flex';
                     menuContentContainer.style.display = 'block';
                     dynamicLangControl.style.display = 'block';
-                    infoBar.style.display = 'flex'; 
+                    infoBar.style.display = 'flex';
                 } else {
-                    infoBar.style.display = 'none'; 
+                    infoBar.style.display = 'none';
                     menuControls.style.display = 'none';
                     menuContentContainer.style.display = 'none';
                     dynamicLangControl.style.display = 'none';
@@ -385,8 +587,10 @@
                 
                 document.getElementById('location-text').innerHTML = translations.locationText[lang];
                 document.getElementById('reservation-text').innerHTML = translations.reservationText[lang];
+                mainFooter.innerHTML = translations.footerText[lang]; // Footer çevirisi
 
-                if (lang === 'AR') {
+                // RTL Yönetimi
+                if (lang === 'AR' || lang === 'KU') { // KU için RTL eklendi
                     document.body.classList.add('rtl');
                 } else {
                     document.body.classList.remove('rtl');
@@ -395,7 +599,7 @@
                 // Menü içeriğini yeniden render et
                 renderMenu(lang);
                 setupTabAndViews();
-                updateDynamicLangControl(lang); 
+                updateDynamicLangControl(lang);
             };
 
             // --- Dil Değiştirme Fonksiyonu ---
@@ -403,6 +607,7 @@
                 currentLang = targetLang;
                 applyTranslations(targetLang);
                 
+                // Aktif sekmeyi yeniden ayarla
                 const activeTab = document.querySelector(`.tab-button[data-tab="${firstSectionId}"]`);
                 const activeSection = document.getElementById(firstSectionId);
                 
@@ -413,33 +618,34 @@
                     activeTab.classList.add('active');
                     activeSection.classList.add('active');
                 }
-                
-                // Görünüm butonlarını doğru şekilde aktif et
+
+                // Görünüm butonlarını doğru şekilde aktif et (currentView'e göre)
                 document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
                 const activeViewButton = document.querySelector(`.view-button[data-view="${currentView}"]`);
                 if(activeViewButton) {
                     activeViewButton.classList.add('active');
                 } else {
-                    // Eğer currentView yanlışsa, varsayılanı (2x2) aktif et
-                    document.querySelector('.view-switch .view-button[data-view="grid-2x2"]').classList.add('active');
+                    // Varsayılanı (grid-1x1) aktif et
+                    document.querySelector('.view-switch .view-button[data-view="grid-1x1"]').classList.add('active');
                 }
             };
 
             // --- Menüyü Oluşturma ve Ekrana Basma Fonksiyonu ---
             const renderMenu = (lang = currentLang) => {
                 let isFirstSection = true;
-                menuContentContainer.innerHTML = ''; 
-                menuTabsContainer.innerHTML = ''; 
+                menuContentContainer.innerHTML = '';
+                menuTabsContainer.innerHTML = '';
 
                 for (const sectionKey in menuData) {
                     const sectionData = menuData[sectionKey];
-                    const sectionName = sectionData[lang] || sectionData['EN']; 
+                    // Çeviri yoksa İngilizce'yi yedekle
+                    const sectionName = sectionData[lang] || sectionData['EN'];
                     const sectionId = sectionKey.toLowerCase().replace(/ /g, '-');
                     const sectionItems = sectionData.items;
                     const isActive = isFirstSection ? ' active' : '';
 
                     if (isFirstSection) {
-                        firstSectionId = sectionId; 
+                        firstSectionId = sectionId;
                     }
 
                     const tabButton = document.createElement('button');
@@ -465,13 +671,19 @@
 
             // --- Menü Kartı Oluşturma Fonksiyonu ---
             const createMenuItem = (item, lang) => {
-                const priceText = item.price + '₺'; 
+                // Dinar para birimi son eki (suffix) ayarı
+                let currencySuffix = ' Dinnar';
+                if (lang === 'AR') {
+                    currencySuffix = ' دينار';
+                }
+                
+                const priceText = item.price + currencySuffix; // Fiyata birim ekleniyor
                 const itemName = item.name[lang] || item.name['EN'];
                 const itemDesc = item.desc[lang] || item.desc['EN'];
                 
                 return `
                     <div class="menu-item">
-                        <img src="${item.img}" alt="${itemName}" class="item-image"> 
+                        <img src="${item.img}" alt="${itemName}" class="item-image">
                         <div class="item-details">
                             <h3>${itemName}</h3>
                             <p>${itemDesc}</p>
@@ -506,18 +718,18 @@
                 document.querySelectorAll('.view-button').forEach(button => {
                     button.addEventListener('click', () => {
                         const targetView = button.getAttribute('data-view');
-                        currentView = targetView; 
+                        currentView = targetView;
                         
                         document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
 
-                        const activeSection = document.querySelector('.menu-section.active');
-                        if (activeSection) {
-                            const grid = activeSection.querySelector('.menu-grid');
-                            // Sadece 2x2 ve 1x1'i kaldırıp ekle
-                            grid.classList.remove('grid-2x2', 'grid-1x1'); 
-                            grid.classList.add(targetView);
-                        }
+                        document.querySelectorAll('.menu-section').forEach(activeSection => {
+                            if (activeSection) {
+                                const grid = activeSection.querySelector('.menu-grid');
+                                grid.classList.remove('grid-2x2', 'grid-1x1');
+                                grid.classList.add(targetView);
+                            }
+                        });
                     });
                 });
             };
@@ -529,10 +741,8 @@
                 button.addEventListener('click', () => {
                     const targetLang = button.getAttribute('data-lang');
                     
-                    determineInitialView(); 
-                    
-                    toggleMenuVisibility(true); 
-                    switchLanguage(targetLang); 
+                    toggleMenuVisibility(true);
+                    switchLanguage(targetLang);
                     
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
