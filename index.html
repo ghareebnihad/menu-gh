@@ -47,6 +47,31 @@
             padding: 20px 0;
             text-align: center;
             border-bottom: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        /* Yeni: Dil Değiştirme Düğmesi Stili */
+        #language-toggle-button {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: var(--header-bg);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        
+        #language-toggle-button i {
+            font-size: 1.2em;
+            color: var(--header-bg);
         }
 
         .restaurant-name {
@@ -183,8 +208,9 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
 
+        /* Yeni: 3x3 Görünümü - Büyük Ekranlarda 3, Mobilde 1 */
         .menu-grid.grid-view-3 {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
 
         .menu-grid.list-view {
@@ -263,20 +289,24 @@
         
         /* Liste Görünümü (Yatay) */
         .menu-grid.list-view .menu-item {
-            flex-direction: row;
+            flex-direction: row; /* Yatay düzen */
             align-items: center;
         }
 
+        /* YENİ: Listede Görüntü Solda, Detaylar Sağda */
         .menu-grid.list-view .item-image {
-            width: 100px;
-            height: 100px;
-            border-bottom: none;
-            border-right: 2px solid var(--accent-color);
+            order: 1; /* Görüntüyü sola taşır */
+            width: 150px; /* Daha büyük resim */
+            height: 150px;
+            border-bottom: none; /* Alt kenarlığı kaldır */
+            border-right: 2px solid var(--accent-color); /* Sağ kenarlık ekle */
+            border-left: none; /* Sol kenarlığı kaldır */
         }
 
         .menu-grid.list-view .item-details {
-            padding: 10px 15px;
-            width: calc(100% - 100px);
+            order: 2; /* Detayları sağa taşır */
+            padding: 15px;
+            width: calc(100% - 150px);
         }
 
         /* MODAL STYLES (Dil Seçim Ekranı) */
@@ -297,7 +327,7 @@
 
         #language-modal.hidden {
             opacity: 0;
-            pointer-events: none; /* Gizlendiğinde tıklamayı engeller */
+            pointer-events: none;
         }
 
         #language-selector-box {
@@ -335,43 +365,56 @@
             color: var(--bg-color);
             border-color: var(--accent-color);
         }
-
+        
         /* Mobil İyileştirmeler */
         @media (max-width: 600px) {
             .restaurant-name {
                 font-size: 1.8em;
             }
             
-            .menu-grid.grid-view-2, .menu-grid.grid-view-3 {
+            /* Mobil: Gridleri daima 1 sütun yap */
+            .menu-grid.grid-view-2, 
+            .menu-grid.grid-view-3 {
                 grid-template-columns: 1fr;
             }
-
+            
+            /* Mobil: Liste görünümü dikeyde kalmalı, fotoğraf üstte */
             .menu-grid.list-view .menu-item {
                 flex-direction: column;
             }
             
             .menu-grid.list-view .item-image {
+                order: 1; /* Görüntüyü tekrar üste taşır */
                 width: 100%;
-                height: 150px;
-                border-right: none;
-                border-bottom: 2px solid var(--accent-color);
+                height: 180px;
+                border-right: none; /* Sağ kenarlığı kaldır */
+                border-bottom: 2px solid var(--accent-color); /* Alt kenarlık ekle */
             }
             
             .menu-grid.list-view .item-details {
+                order: 2; /* Detayları alta taşır */
                 width: 100%;
             }
 
             .view-controls {
                 justify-content: center;
             }
+
+            /* Dil Değiştirme Düğmesini Küçült */
+            #language-toggle-button {
+                top: 15px;
+                padding: 7px 10px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="language-modal">
+    <div id="language-modal" class="hidden">
         <div id="language-selector-box">
             <h2>Lütfen Dil Seçiniz / Select Language</h2>
+            <button class="lang-option" data-lang="TR">Türkçe (Turkish)</button>
             <button class="lang-option" data-lang="EN">English</button>
             <button class="lang-option" data-lang="AR">العربية (Arabic)</button>
             <button class="lang-option" data-lang="KU">کوردی (Kurdish)</button>
@@ -384,7 +427,8 @@
                 "cuisineText": {"EN": "International Flavors & Signature Cafè", "AR": "أطباق عالمية ونكهات قهوة مميزة", "KU": "تامێن جیهانی و قەهوایا تایبەت", "TR": "Uluslararası Lezzetler & Özel Kahve"},
                 "locationText": {"EN": "<i class=\"fas fa-map-marker-alt\"></i> Location: <strong>Duhok KRO</strong>", "AR": "<i class=\"fas fa-map-marker-alt\"></i> الموقع: <strong>دهوك، طريق كرو</strong>", "KU": "<i class=\"fas fa-map-marker-alt\"></i> جهـ: <strong>دهوک کرۆ</strong>", "TR": "<i class=\"fas fa-map-marker-alt\"></i> Konum: <strong>Duhok KRO</strong>"},
                 "reservationText": {"EN": "<i class=\"fas fa-phone-alt\"></i> Reservation: 0750 222 22 22", "AR": "<i class=\"fas fa-phone-alt\"></i> للحجز: 0750 222 22 22", "KU": "<i class=\"fas fa-phone-alt\"></i> بۆ حجزکرنێ: 0750 222 22 22", "TR": "<i class=\"fas fa-phone-alt\"></i> Rezervasyon: 0750 222 22 22"},
-                "footerText": {"EN": "All rights reserved. Developed by | <strong>Ghareeb</strong>", "AR": "جميع الحقوق محفوظة. تم التطوير بواسطة | <strong>Ghareeb</strong>", "KU": "هەمی مافێن پاراستینە. ژ لایێ | <strong>Ghareeb</strong> ڤە هاتیە ئاڤا کرن", "TR": "Tüm hakları saklıdır. Geliştiren | <strong>Ghareeb</strong>"}
+                "footerText": {"EN": "All rights reserved. Developed by | <strong>Ghareeb</strong>", "AR": "جميع الحقوق محفوظة. تم التطوير بواسطة | <strong>Ghareeb</strong>", "KU": "هەمی مافێن پاراستینە. ژ لایێ | <strong>Ghareeb</strong> ڤە هاتیە ئاڤا کرن", "TR": "Tüm hakları saklıdır. Geliştiren | <strong>Ghareeb</strong>"},
+                "languageButton": {"EN": "Change Lang", "AR": "تغيير اللغة", "KU": "گۆهۆرینا زمان", "TR": "Dil Değiştir"}
             },
             "viewTexts": {
                 "list-view": {"EN": "List", "AR": "قائمة", "KU": "لیست", "TR": "Liste"},
@@ -418,7 +462,7 @@
                     "EN": "Sweets", "AR": "حلويات", "KU": "شیرینی", "TR": "Tatlılar",
                     "icon": "fas fa-ice-cream",
                     "items": [
-                        {"id": "lava", "name": {"EN": "Chocolate Lava Cake", "AR": "كيك الشوكولاتة الذائب", "KU": "کێکێ چکلێتێ یێ تڤزی", "TR": "Çikolatalı Lava Kek"}, "price": "42,000 IQD", "desc": {"EN": "Warm dark chocolate soufflé with a molten center, served with vanilla ice cream.", "AR": "سوفليه شوكولاتة داكنة دافئة مع آيس كريم فانيليا.", "KU": "سوفلێکا چکلێتێ یا رەش یا گەرم ب ناڤێ تڤزی، ب قەهوە یا ڤانێلا.", "TR": "Eriyen merkezli sıcak bitter çikolata sufle, vanilyalı dondurma ile servis edilir."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Lava+Cake"},
+                        {"id": "lava", "name": {"EN": "Chocolate Lava Cake", "AR": "كيك الشوكولاتة الذائب", "KU": "کێکێ چکلێتێ یێ تڤزی", "TR": "Çikolatalı Lava Kek"}, "price": "42,000 IQD", "desc": {"EN": "Warm dark chocolate soufflé with a molten center, served with vanilla ice cream.", "AR": "سوفليه شوكولاتة داكنة دافئة مع آيس كريم فانيليا.", "KU": "کێکێ چکلێتێ یێ تڤزی، ب قەهوە یا ڤانێلا.", "TR": "Eriyen merkezli sıcak bitter çikolata sufle, vanilyalı dondurma ile servis edilir."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Lava+Cake"},
                         {"id": "tiramisu", "name": {"EN": "Classic Tiramisu", "AR": "تيراميسو كلاسيك", "KU": "تیرامیسۆیا کلاسیک", "TR": "Klasik Tiramisu"}, "price": "38,000 IQD", "desc": {"EN": "Ladyfingers dipped in coffee, layered with whipped mascarpone cream and cocoa.", "AR": "أصابع السيدة مغموسة بالقهوة، كريمة الماسكاربوني المخفوقة والكاكاو.", "KU": "تێرامیسۆیا کەڤن ب تامێ قەهوە، کڕێما ماسکارپۆنێ و کاکاوێ.", "TR": "Kahveye batırılmış kedi dilleri, çırpılmış mascarpone kreması ve kakao ile katmanlanmış."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Tiramisu"},
                         {"id": "kunafa", "name": {"EN": "Pistachio Kunafa", "AR": "كنافة بالفستق", "KU": "کنافا ب فستق", "TR": "Fıstıklı Künefe"}, "price": "45,000 IQD", "desc": {"EN": "Crunchy threads of dough baked with sweet cheese and topped with crushed pistachio.", "AR": "خيوط عجين مقرمشة مع جبنة حلوة وفستق مطحون.", "KU": "پەتیێن تەنکێن قرمش ب پەنیرا شیرین و فستقێ خاشکری.", "TR": "Tatlı peynirle pişirilmiş çıtır hamur telleri ve üzerine çekilmiş fıstık."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Kunafa"},
                         {"id": "cheesecake", "name": {"EN": "San Sebastian Cheesecake", "AR": "كعكة الجبن سان سيباستيان", "KU": "کێکێ پەنیرا سان سێباستیان", "TR": "San Sebastian Cheesecake"}, "price": "40,000 IQD", "desc": {"EN": "Basque burnt cheesecake with a creamy center, served with berry sauce.", "AR": "كعكة الجبن الباسكية المحروقة بمركز كريمي وصلصة التوت.", "KU": "کێکێ پەنیرا یێ ئورۆپایی ب ناڤێ کڕێمی و سۆسا میوە.", "TR": "Kremalı merkeze sahip Bask usulü yanık cheesecake, kırmızı meyve sosu ile servis edilir."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Cheesecake"},
@@ -429,7 +473,7 @@
                     "EN": "Hot Drinks", "AR": "مشروبات ساخنة", "KU": "ڤەخوارنێن گەرم", "TR": "Sıcak İçecekler",
                     "icon": "fas fa-coffee",
                     "items": [
-                        {"id": "espresso", "name": {"EN": "Duhok Royal Espresso", "AR": "إسبريسو دهوك الملكي", "KU": "ئێسپرێسۆی شاهانە یێ دهوک", "TR": "Duhok Royal Espresso"}, "price": "18,000 IQD", "desc": {"EN": "A single shot of our signature blend, aged in oak barrels.", "AR": "جرعة واحدة من مزيجنا الخاص، معتقة في براميل البلوط.", "KU": "یەک جۆتا ژ تێکەلەیا مە یا تایبەت، د تڕوکا دارێ گەش دایە.", "TR": "Meşe fıçılarda dinlendirilmiş özel harmanımızdan tek shot."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Espresso"},
+                        {"id": "espresso", "name": {"EN": "Duhok Royal Espresso", "AR": "إسبريسو دهوك الملكي", "KU": "ئێسپرێسۆی شاهانە یێ دهوک", "TR": "Duhok Royal Espresso"}, "price": "18,000 IQD", "desc": {"EN": "A single shot of our signature blend, aged in oak barrels.", "AR": "جرعة واحدة من مزيجنا الخاص, معتقة في براميل البلوط.", "KU": "یەک جۆتا ژ تێکەلەیا مە یا تایبەت، د تڕوکا دارێ گەش دایە.", "TR": "Meşe fıçılarda dinlendirilmiş özel harmanımızdan tek shot."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Espresso"},
                         {"id": "cappuccino", "name": {"EN": "Caramel Macchiato", "AR": "كراميل ماكياتو", "KU": "کەرەمەل ماکیاتۆ", "TR": "Karamel Macchiato"}, "price": "25,000 IQD", "desc": {"EN": "Espresso with vanilla syrup, steamed milk, and a caramel drizzle.", "AR": "إسبريسو مع سيروب الفانيليا وحليب مبخر وصلصة الكراميل.", "KU": "ئێسپرێسۆ ب شەربەتا ڤانێلا، شیرێ گەرم و کەرەمەلێ.", "TR": "Vanilya şurubu, buharda ısıtılmış süt ve karamel sosu ile espresso."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Macchiato"},
                         {"id": "latte", "name": {"EN": "Pistachio Latte", "AR": "لاتيه فستق", "KU": "لاتێ فستق", "TR": "Fıstıklı Latte"}, "price": "28,000 IQD", "desc": {"EN": "Smooth latte infused with rich pistachio flavor and topped with crushed nuts.", "AR": "لاتيه ناعم بنكهة الفستق الغنية وفستق مطحون.", "KU": "لاتێ ب تامێ فستق و فستقێ خاشکری.", "TR": "Zengin fıstık aromalı ve çekilmiş fıstıkla süslenmiş yumuşak latte."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Pistachio+Latte"},
                         {"id": "hotchoco", "name": {"EN": "Luxury Hot Chocolate", "AR": "شوكولاتة ساخنة فاخرة", "KU": "چکلێتێ گەرم یێ لوکس", "TR": "Lüks Sıcak Çikolata"}, "price": "22,000 IQD", "desc": {"EN": "Velvety Belgian dark chocolate melted into hot milk.", "AR": "شوكولاتة بلجيكية داكنة مخملية مذابة في حليب ساخن.", "KU": "چکلێتێ بەلجیکی یێ رەش د شیرێ گەرم دا هاتیە تڤزین.", "TR": "Sıcak sütün içinde eritilmiş kadifemsi Belçika bitter çikolatası."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Hot+Choco"},
@@ -455,7 +499,7 @@
                         {"id": "oreo", "name": {"EN": "Oreo Crunch Milkshake", "AR": "ميلك شيك أوريو المقرمش", "KU": "مەلک شێکێ ئۆریۆ یێ قرمش", "TR": "Çıtır Oreo Milkshake"}, "price": "35,000 IQD", "desc": {"EN": "Thick vanilla ice cream blended with crushed Oreo cookies, topped with whipped cream.", "AR": "آيس كريم فانيليا سميك مخلوط مع بسكويت أوريو، يعلوه كريمة مخفوقة.", "KU": "قەهوە یا ڤانێلا یا قورس ب بسکویتێ ئۆریۆ، ب کڕێما لێدای.", "TR": "Ezilmiş Oreo bisküvileri ile karıştırılmış yoğun vanilyalı dondurma, üzerine krem şanti."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Oreo+Shake"},
                         {"id": "protein", "name": {"EN": "Power Protein Shake", "AR": "شيك البروتين القوي", "KU": "شێکێ پڕۆتین یێ هێز", "TR": "Güçlü Protein Shake"}, "price": "40,000 IQD", "desc": {"EN": "Your choice of whey or plant protein blended with banana, peanut butter, and milk.", "AR": "اختيارك من بروتين مصل اللبن أو النباتي مخلوط بالموز وزبدة الفول السوداني.", "KU": "پڕۆتینێ تە یێ ئاسایی یان رووەکی ب مۆز، پەنیرێ بەدەم، و شیر.", "TR": "Seçtiğiniz peynir altı suyu veya bitkisel protein, muz, fıstık ezmesi ve süt ile karıştırılmış."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Protein+Shake"},
                         {"id": "fruitpunch", "name": {"EN": "Tropical Punch Energy", "AR": "مشروب طاقة الفواكه الاستوائية", "KU": "ڤەخوارنێ ئێنەرژی یێ میوەێن ترۆپیکی", "TR": "Tropikal Meyve Enerjisi"}, "price": "30,000 IQD", "desc": {"EN": "A refreshing blend of mango, pineapple, and citrus for a natural energy boost.", "AR": "مزيج منعش من المانجو والأناناس والحمضيات لتعزيز الطاقة الطبيعية.", "KU": "تێکەلەکێ سار ژ مانگۆ، ئەنەناس، و ترشاتی بۆ زێدەکرنا ئێنەرژییا ئاسایی.", "TR": "Doğal enerji artışı için ferahlatıcı mango, ananas ve narenciye karışımı."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Tropical"},
-                        {"id": "vanilla", "name": {"EN": "Classic Vanilla Milkshake", "AR": "ميلك شيك فانيليا كلاسيك", "KU": "مەلک شێکێ ڤانێلا یێ کلاسیک", "TR": "Klasik Vanilyalı Milkshake"}, "price": "30,000 IQD", "desc": {"EN": "Creamy vanilla ice cream, milk, and a dash of pure vanilla extract.", "AR": "آيس كريم فانيليا كريمي، حليب، وقطرة من خلاصة الفانيليا النقية.", "KU": "قەهوە یا ڤانێلا یا کڕێمی، شیر، و تامەکا ڤانێلا یا پاک.", "TR": "Kremalı vanilyalı dondurma, süt ve bir tutam saf vanilya özü."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Vanilla+Shake"}
+                        {"id": "vanilla", "name": {"EN": "Classic Vanilla Milkshake", "AR": "ميلك شيك فانيليا كلاسيك", "KU": "مەلک شێکێ ڤانێلا یێ کلاسیک", "TR": "Klasik Vanilyalı Milkshake"}, "price": "30,000 IQD", "desc": {"EN": "Creamy vanilla ice cream, milk, and a dash of pure vanilla extract.", "AR": "آيس كريم فانيليا كريمي، حليب، وقطرة من خلاصة الفانيليا النقية.", "KU": "قەهوە یا ڤانێلا یا کڕێمی، شیر، و تامەکا ڤانێla ya پاک.", "TR": "Kremalı vanilyalı dondurma, süt ve bir tutam saf vanilya özü."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Vanilla+Shake"}
                     ]
                 },
                 "Wokah": {
@@ -463,214 +507,218 @@
                     "icon": "fas fa-smoking",
                     "items": [
                         {"id": "doubleapple", "name": {"EN": "Classic Double Apple", "AR": "تفاحتين كلاسيك", "KU": "سێڤا کلاسیک یا دوو", "TR": "Klasik Çift Elma"}, "price": "35,000 IQD", "desc": {"EN": "The time-honored blend of sweet and anise flavors. A traditional favorite.", "AR": "المزيج العريق من نكهات اليانسون الحلوة. المفضل التقليدي.", "KU": "تێکەلەکێ کەڤن ژ تامێن ئەنیسێ یێن شیرین. یێ کلاسیک و مروڤ گەلەک حەز ژێ دکەن.", "TR": "Tatlı ve anason lezzetlerinin köklü karışımı. Geleneksel bir favori."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Double+Apple"},
-                        {"id": "grapefruit", "name": {"EN": "Grapefruit Mint", "AR": "جريب فروت ونعناع", "KU": "تاما ترشێ گریپ و نێعناع", "TR": "Greyfurt Nane"}, "price": "40,000 IQD", "desc": {"EN": "Tangy grapefruit combined with cool, refreshing mint.", "AR": "جريب فروت حامض مع نعناع منعش وبارد.", "KU": "تامەکا گریپێ یا ترش ب نێعناعێ سار و ساخلەم.", "TR": "Ekşi greyfurt, serinletici nane ile birleştirildi."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Grapefruit+Mint"},
-                        {"id": "blue", "name": {"EN": "Blue Mist (Berry Mix)", "AR": "ضباب أزرق (مزيج توت)", "KU": "تامەکا شین (تێکەلێ توت)", "TR": "Blue Mist (Böğürtlen Karışımı)"}, "price": "45,000 IQD", "desc": {"EN": "A popular, sweet blend of blueberry and raspberry notes.", "AR": "مزيج حلو وشعبي من نكهات التوت الأزرق والأحمر.", "KU": "تێکەلەکێ شیرین و گەلەک ژێ حەزکری ژ تامێن توتێ شین و سۆر.", "TR": "Popüler, tatlı yaban mersini ve ahududu notalarının karışımı."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Blue+Mist"},
-                        {"id": "watermelon", "name": {"EN": "Watermelon Gum", "AR": "بطيخ وعلكة", "KU": "شەمام و ماسیتک", "TR": "Karpuz Sakız"}, "price": "40,000 IQD", "desc": {"EN": "The juicy flavor of watermelon mixed with a subtle, sweet gum finish.", "AR": "نكهة البطيخ العصيرية مخلوطة بنهاية علكة حلوة وخفيفة.", "KU": "تامەکا شەمامێ یا تڤزی ب تاما ماسیتکێ یا شیرین.", "TR": "Karpuzun sulu tadı, hafif tatlı sakız bitişiyle karıştırılmış."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Watermelon"},
-                        {"id": "pista", "name": {"EN": "Pistachio Dream", "AR": "حلم الفستق", "KU": "خەونا فستق", "TR": "Fıstık Rüyası"}, "price": "50,000 IQD", "desc": {"EN": "A unique, creamy, and sweet pistachio flavored hookah.", "AR": "نركيلة فريدة، كريمية، وحلوة بنكهة الفستق.", "KU": "نێرگەلەکا تایبەت، کڕێمی و شیرین ب تامێ فستق.", "TR": "Eşsiz, kremalı ve tatlı fıstık aromalı nargile."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Pistachio"}
+                        {"id": "grapefruit", "name": {"EN": "Grapefruit Mint", "AR": "جريب فروت ونعناع", "KU": "تاما ترشێ گریپ و نێعناع", "TR": "Greyfurt Nane"}, "price": "40,000 IQD", "desc": {"EN": "Tangy grapefruit combined with cool, refreshing mint.", "AR": "جريب فروت حامض مع نعناع منعش وبارد.", "KU": "تامەکا گریپێ یا ترش ب نێعناعێ سار و ساخلەم.", "TR": "Ekşi greyfurt, serinletici nane ile birleştirildi."}, "img": "https://via.placeholder.com/200x180/C5A030/1A1A1A?text=Grapefruit+Mint"}
                     ]
                 }
             }
         }
     </script>
+    
     <div class="header">
+        <button id="language-toggle-button">
+            <i class="fas fa-globe"></i>
+            <span id="lang-toggle-text">Dil Değiştir</span>
+        </button>
         <div class="container">
-            <div class="restaurant-name" id="restaurant-name"></div>
-            <div class="cuisine-text" id="cuisine-text"></div>
-            <div class="contact-info">
-                <span id="location-text"></span> | <span id="reservation-text"></span>
+            <h1 class="restaurant-name" id="restaurant-name">DUHOK REST & CAFFE</h1>
+            <p class="cuisine-text" id="cuisine-text">Uluslararası Lezzetler & Özel Kahve</p>
+            <div class="contact-info" id="contact-info">
+                <span id="location-text"><i class="fas fa-map-marker-alt"></i> Konum: <strong>Duhok KRO</strong></span>
+                <span style="margin-left: 20px;" id="reservation-text"><i class="fas fa-phone-alt"></i> Rezervasyon: 0750 222 22 22</span>
             </div>
         </div>
     </div>
 
-    <main class="container">
-        <div class="menu-tabs" id="menu-tabs-container">
+    <div class="container main-content">
+        <div class="menu-tabs" id="menu-tabs">
             </div>
 
-        <div class="view-controls" id="view-controls-container">
-            <button id="view-list" data-view="list-view"><i class="fas fa-list"></i> <span class="view-text">Liste</span></button>
-            <button id="view-grid-2" data-view="grid-view-2"><i class="fas fa-th-large"></i> <span class="view-text">2x2</span></button>
-            <button id="view-grid-3" data-view="grid-view-3" class="active"><i class="fas fa-th"></i> <span class="view-text">3x3</span></button>
+        <div class="view-controls">
+            <button class="view-button" data-view="list-view" id="list-view-btn"><i class="fas fa-list"></i> Liste</button>
+            <button class="view-button active" data-view="grid-view-2" id="grid-2-view-btn"><i class="fas fa-th-large"></i> 2x2 Izgara</button>
+            <button class="view-button" data-view="grid-view-3" id="grid-3-view-btn"><i class="fas fa-th"></i> 3x3 Izgara</button>
         </div>
-
-        <div class="menu-content" id="menu-content-container">
+        
+        <div class="menu-content" id="menu-content">
             </div>
-    </main>
+    </div>
 
-    <footer class="footer" id="footer">
-        </footer>
+    <div class="footer">
+        <div class="container">
+            <p id="footer-text">Tüm hakları saklıdır. Geliştiren | <strong>Ghareeb</strong></p>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuDataElement = document.getElementById('menu-data');
-            if (!menuDataElement) return;
+        const menuData = JSON.parse(document.getElementById('menu-data').textContent);
+        let currentLang = localStorage.getItem('menuLang') || 'TR'; // Varsayılan dil TR
+        let currentView = localStorage.getItem('menuView') || 'grid-view-2';
+        let isModalShown = false; // Modalın gösterilip gösterilmediğini takip eder
 
-            const data = JSON.parse(menuDataElement.textContent);
-            const menuData = data.menu;
-            const translations = data.translations;
-            const viewTexts = data.viewTexts; // Yeni eklenen çeviriler
+        const elements = {
+            modal: document.getElementById('language-modal'),
+            langOptions: document.querySelectorAll('.lang-option'),
+            langToggleBtn: document.getElementById('language-toggle-button'),
+            langToggleText: document.getElementById('lang-toggle-text'),
+            restaurantName: document.getElementById('restaurant-name'),
+            cuisineText: document.getElementById('cuisine-text'),
+            locationText: document.getElementById('location-text'),
+            reservationText: document.getElementById('reservation-text'),
+            footerText: document.getElementById('footer-text'),
+            menuTabs: document.getElementById('menu-tabs'),
+            menuContent: document.getElementById('menu-content'),
+            viewButtons: document.querySelectorAll('.view-button'),
+            listViewBtn: document.getElementById('list-view-btn'),
+            grid2ViewBtn: document.getElementById('grid-2-view-btn'),
+            grid3ViewBtn: document.getElementById('grid-3-view-btn')
+        };
 
-            const langModal = document.getElementById('language-modal');
-            const langButtons = document.querySelectorAll('.lang-option');
-            const menuTabsContainer = document.getElementById('menu-tabs-container');
-            const menuContentContainer = document.getElementById('menu-content-container');
-            const viewButtons = document.querySelectorAll('#view-controls-container button[data-view]');
+        // --- Dil Yönetimi Fonksiyonları ---
 
-            // TR dil seçeneğini JSON'a ekledim ve default olarak 'TR'yi kontrol ediyorum
-            let currentLang = localStorage.getItem('menuLang') || 'TR'; 
-            let currentView = localStorage.getItem('menuView') || 'grid-view-3';
-            let firstSectionId = Object.keys(menuData)[0]; // İlk kategori ID'si
+        function updateTexts(lang) {
+            // Genel metinleri güncelle
+            elements.restaurantName.textContent = menuData.translations.restaurantName[lang];
+            elements.cuisineText.textContent = menuData.translations.cuisineText[lang];
+            elements.locationText.innerHTML = menuData.translations.locationText[lang];
+            elements.reservationText.innerHTML = menuData.translations.reservationText[lang];
+            elements.footerText.innerHTML = menuData.translations.footerText[lang];
+            elements.langToggleText.textContent = menuData.translations.languageButton[lang];
+            
+            // Görünüm butonlarını güncelle
+            elements.listViewBtn.innerHTML = `<i class="fas fa-list"></i> ${menuData.viewTexts['list-view'][lang]}`;
+            elements.grid2ViewBtn.innerHTML = `<i class="fas fa-th-large"></i> ${menuData.viewTexts['grid-view-2'][lang]}`;
+            elements.grid3ViewBtn.innerHTML = `<i class="fas fa-th"></i> ${menuData.viewTexts['grid-view-3'][lang]}`;
+        }
 
-            const updateTexts = (lang) => {
-                // Ana Başlıklar
-                document.getElementById('restaurant-name').textContent = translations.restaurantName[lang] || translations.restaurantName.EN;
-                document.getElementById('cuisine-text').textContent = translations.cuisineText[lang] || translations.cuisineText.EN;
-                document.getElementById('location-text').innerHTML = translations.locationText[lang] || translations.locationText.EN;
-                document.getElementById('reservation-text').innerHTML = translations.reservationText[lang] || translations.reservationText.EN;
-                document.getElementById('footer').innerHTML = translations.footerText[lang] || translations.footerText.EN;
+        function renderMenu(lang, view) {
+            elements.menuTabs.innerHTML = '';
+            elements.menuContent.innerHTML = '';
+            
+            let firstCategoryKey = null;
 
-                // Görünüm Butonları Metinleri
-                document.getElementById('view-list').querySelector('.view-text').textContent = viewTexts['list-view'][lang] || 'List';
-                document.getElementById('view-grid-2').querySelector('.view-text').textContent = viewTexts['grid-view-2'][lang] || '2x2';
-                document.getElementById('view-grid-3').querySelector('.view-text').textContent = viewTexts['grid-view-3'][lang] || '3x3';
-
-
-                // Menü İçeriklerini ve Sekmeleri Yenile
-                renderMenu(lang);
-            };
-
-            const renderMenu = (lang) => {
-                menuTabsContainer.innerHTML = '';
-                menuContentContainer.innerHTML = '';
-                
-                Object.keys(menuData).forEach((key, index) => {
-                    const category = menuData[key];
-                    const categoryName = category[lang] || category.EN;
-                    const categoryIcon = category.icon;
-                    const sectionId = 'section-' + key.toLowerCase().replace(/\s/g, '-');
-                    
-                    // 1. Sekme Butonlarını Oluştur
-                    const tabButton = document.createElement('button');
-                    tabButton.className = 'tab-button';
-                    tabButton.setAttribute('data-target', sectionId);
-                    tabButton.innerHTML = `<i class="${categoryIcon}"></i> <span>${categoryName}</span>`;
-                    menuTabsContainer.appendChild(tabButton);
-                    
-                    // 2. İçerik Bölümünü Oluştur
-                    const menuSection = document.createElement('div');
-                    menuSection.className = 'menu-section';
-                    menuSection.id = sectionId;
-                    
-                    menuSection.innerHTML = `<h2>${categoryName}</h2><div class="menu-grid ${currentView}"></div>`;
-                    
-                    const menuGrid = menuSection.querySelector('.menu-grid');
-                    
-                    // 3. Menü Öğelerini Ekle
-                    category.items.forEach(item => {
-                        const itemName = item.name[lang] || item.name.EN;
-                        const itemDesc = item.desc[lang] || item.desc.EN;
-                        
-                        const itemHTML = `
-                            <div class="menu-item">
-                                <img src="${item.img}" alt="${itemName}" class="item-image">
-                                <div class="item-details">
-                                    <div class="item-header">
-                                        <div class="item-name">${itemName}</div>
-                                        <div class="price">${item.price}</div>
-                                    </div>
-                                    <p class="description">${itemDesc}</p>
-                                </div>
-                            </div>
-                        `;
-                        menuGrid.innerHTML += itemHTML;
-                    });
-                    
-                    menuContentContainer.appendChild(menuSection);
-                    
-                    // İlk kategoriyi varsayılan olarak aktif et
-                    if (index === 0) {
-                        tabButton.classList.add('active');
-                        menuSection.classList.add('active');
-                        firstSectionId = sectionId; // İlk kategori ID'sini kaydet
-                    }
-                });
-
-                // Görünüm Ayarını Tekrar Uygula
-                updateView(currentView);
-            };
-
-            const updateView = (viewName) => {
-                currentView = viewName;
-                localStorage.setItem('menuView', viewName);
-                
-                // Butonları güncelle
-                viewButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.getAttribute('data-view') === viewName) {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                // Menü ızgaralarını güncelle
-                document.querySelectorAll('.menu-grid').forEach(grid => {
-                    grid.classList.remove('list-view', 'grid-view-2', 'grid-view-3');
-                    grid.classList.add(viewName);
-                });
-            };
-
-            const switchCategory = (targetId) => {
-                // Aktif sekmeyi ve içeriği değiştir
-                document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
-                document.getElementById(targetId).classList.add('active');
-                
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelector(`.tab-button[data-target="${targetId}"]`).classList.add('active');
-            };
-
-            // --- Event Dinleyiciler ---
-
-            // Dil Seçimi
-            langButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const lang = e.currentTarget.getAttribute('data-lang');
-                    currentLang = lang;
-                    localStorage.setItem('menuLang', lang);
-                    langModal.classList.add('hidden'); // Modalı gizle
-                    updateTexts(lang);
-                });
-            });
-
-            // Sekme Değişimi
-            menuTabsContainer.addEventListener('click', (e) => {
-                if (e.target.closest('.tab-button')) {
-                    const targetId = e.target.closest('.tab-button').getAttribute('data-target');
-                    switchCategory(targetId);
+            // Kategori Sekmelerini ve İçeriğini Oluştur
+            for (const key in menuData.menu) {
+                if (!firstCategoryKey) {
+                    firstCategoryKey = key;
                 }
-            });
+                
+                const category = menuData.menu[key];
+                const categoryName = category[lang];
+                const categoryIcon = category.icon;
 
-            // Görünüm Değişimi
-            viewButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const viewName = e.currentTarget.getAttribute('data-view');
-                    updateView(viewName);
+                // Sekme Butonu
+                const tabButton = document.createElement('button');
+                tabButton.className = 'tab-button';
+                tabButton.setAttribute('data-category', key);
+                tabButton.innerHTML = `<i class="${categoryIcon}"></i> <span>${categoryName}</span>`;
+                tabButton.addEventListener('click', () => switchCategory(key, lang, view));
+                elements.menuTabs.appendChild(tabButton);
+
+                // Menü Bölümü
+                const section = document.createElement('div');
+                section.className = 'menu-section';
+                section.id = `section-${key}`;
+                section.innerHTML = `<h2>${categoryName}</h2><div class="menu-grid ${view}"></div>`;
+                elements.menuContent.appendChild(section);
+
+                const grid = section.querySelector('.menu-grid');
+                
+                // Menü Öğelerini Doldur
+                category.items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'menu-item';
+                    itemElement.innerHTML = `
+                        <img src="${item.img}" alt="${item.name[lang]}" class="item-image">
+                        <div class="item-details">
+                            <div class="item-header">
+                                <span class="item-name">${item.name[lang]}</span>
+                                <span class="price">${item.price}</span>
+                            </div>
+                            <p class="description">${item.desc[lang]}</p>
+                        </div>
+                    `;
+                    grid.appendChild(itemElement);
                 });
+            }
+
+            // İlk kategoriye aktif sınıfı ekle ve göster
+            if (firstCategoryKey) {
+                switchCategory(firstCategoryKey, lang, view);
+            }
+        }
+
+        function switchCategory(key, lang, view) {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
+
+            document.querySelector(`.tab-button[data-category="${key}"]`).classList.add('active');
+            const activeSection = document.getElementById(`section-${key}`);
+            activeSection.classList.add('active');
+            
+            // Yeni görünüm sınıfını uygula
+            activeSection.querySelector('.menu-grid').className = `menu-grid ${view}`;
+        }
+
+        function switchView(view) {
+            currentView = view;
+            localStorage.setItem('menuView', view);
+            
+            elements.viewButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.view-button[data-view="${view}"]`).classList.add('active');
+
+            // Tüm menü bölümlerinin grid sınıfını güncelle
+            document.querySelectorAll('.menu-grid').forEach(grid => {
+                grid.className = `menu-grid ${view}`;
             });
+        }
+        
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('menuLang', lang);
+            updateTexts(lang);
+            renderMenu(lang, currentView);
+            elements.modal.classList.add('hidden');
+        }
 
-            // --- Başlangıç Yüklemesi ---
-            
-            // Kaydedilmiş Dil Kontrolü
-            if (localStorage.getItem('menuLang')) {
-                langModal.classList.add('hidden');
-            }
+        // --- Olay Dinleyicileri ---
 
-            // Başlangıçta menüyü ve görünümü oluştur/güncelle
-            updateTexts(currentLang);
-            updateView(currentView); 
-            
-            // Eğer dil seçili değilse, modalı göster (CSS'te initial display: flex olduğu için sadece hidden class'ını kaldırırız)
-            if (!localStorage.getItem('menuLang')) {
-                langModal.classList.remove('hidden');
-            }
+        // Dil Seçimi Modal Düğmeleri
+        elements.langOptions.forEach(button => {
+            button.addEventListener('click', (e) => {
+                applyLanguage(e.target.dataset.lang);
+            });
         });
+
+        // Üst Kısımdaki Dil Değiştirme Düğmesi
+        elements.langToggleBtn.addEventListener('click', () => {
+            elements.modal.classList.remove('hidden');
+        });
+
+        // Görünüm Düğmeleri
+        elements.viewButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const view = e.currentTarget.dataset.view;
+                switchView(view);
+            });
+        });
+
+        // --- Başlangıç Kontrolü ---
+
+        function init() {
+            // Eğer dil seçimi yapılmamışsa (localStorage boşsa), modalı göster
+            if (!localStorage.getItem('menuLang')) {
+                elements.modal.classList.remove('hidden');
+            } else {
+                elements.modal.classList.add('hidden');
+                // Kaydedilmiş dile ve görünüme göre menüyü yükle
+                updateTexts(currentLang);
+                renderMenu(currentLang, currentView);
+                // Başlangıç görünüm butonunu aktif et
+                document.querySelector(`.view-button[data-view="${currentView}"]`).classList.add('active');
+            }
+        }
+
+        init();
     </script>
 </body>
 </html>
