@@ -117,70 +117,146 @@
       }
       .menu-grid.list-view .item-details {width: 100%;}
     }
+    /* Dil seçim ekranı */
+    #language-selection {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.95);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 20px;
+      z-index: 9999; font-size: 1.2em;
+      color: var(--text-color);
+    }
+    #language-selection button {
+      padding: 12px 24px; font-size: 1em; border: 2px solid var(--accent-color);
+      background-color: #333; color: var(--text-color); cursor: pointer;
+      border-radius: 8px; transition: 0.3s;
+    }
+    #language-selection button:hover {
+      background-color: var(--accent-color); color: var(--bg-color);
+    }
   </style>
 </head>
 <body>
+
+<!-- Dil Seçim Ekranı -->
+<div id="language-selection">
+  <h2>اختر اللغة / Select Language</h2>
+  <button data-lang="en">English</button>
+  <button data-lang="ar">العربية</button>
+</div>
+
 <script id="menu-data" type="application/json">
 {
-  "translations": {
-    "restaurantName": "DUHOK REST & CAFFE",
-    "cuisineText": "International Flavors & Signature Café",
-    "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
-    "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
-    "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
+  "en": {
+    "translations": {
+      "restaurantName": "DUHOK REST & CAFFE",
+      "cuisineText": "International Flavors & Signature Café",
+      "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
+      "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+      "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
+    },
+    "menu": {
+      "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice","items":[
+        {"name":"Vesuvio Margarita","price":"55,000 IQD","desc":"San Marzano tomato, mozzarella, basil.","img":"https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"},
+        {"name":"Pepperoni Delight","price":"60,000 IQD","desc":"Pepperoni, mozzarella, tomato sauce.","img":"https://images.unsplash.com/photo-1594007650077-180e69b3aa12"},
+        {"name":"Vegetarian Special","price":"50,000 IQD","desc":"Mixed veggies, mozzarella, tomato sauce.","img":"https://images.unsplash.com/photo-1601924638873-5f2e2a0c5d97"},
+        {"name":"BBQ Chicken Pizza","price":"65,000 IQD","desc":"Grilled chicken, BBQ sauce, mozzarella.","img":"https://images.unsplash.com/photo-1594007650077-180e69b3aa12"},
+        {"name":"Four Cheese","price":"70,000 IQD","desc":"Mozzarella, cheddar, parmesan, gorgonzola.","img":"https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"}
+      ]},
+      "Burger": {"title": "Burgers", "icon": "fas fa-hamburger","items":[
+        {"name":"Signature Burger","price":"60,000 IQD","desc":"Beef patty, truffle mayo, caramelized onions.","img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd"},
+        {"name":"Cheeseburger","price":"55,000 IQD","desc":"Beef patty, cheddar cheese, lettuce.","img":"https://images.unsplash.com/photo-1550547660-d9450f859349"},
+        {"name":"Chicken Burger","price":"50,000 IQD","desc":"Grilled chicken, mayo, lettuce, tomato.","img":"https://images.unsplash.com/photo-1598514983094-2f16d8ef3f44"},
+        {"name":"Veggie Burger","price":"45,000 IQD","desc":"Grilled vegetables, cheese, lettuce.","img":"https://images.unsplash.com/photo-1604908177524-8c36e0476ef2"},
+        {"name":"Double Beef Burger","price":"70,000 IQD","desc":"Double beef patties, cheddar, bacon.","img":"https://images.unsplash.com/photo-1550547660-d9450f859349"}
+      ]},
+      "Cold Drinks": {"title":"Cold Drinks","icon":"fas fa-cocktail","items":[
+        {"name":"Iced Tea","price":"10,000 IQD","desc":"Refreshing iced black tea with lemon.","img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
+        {"name":"Lemonade","price":"12,000 IQD","desc":"Freshly squeezed lemon juice.","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+        {"name":"Cola","price":"8,000 IQD","desc":"Classic cold soft drink.","img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
+        {"name":"Mojito Mocktail","price":"15,000 IQD","desc":"Mint, lime, soda water, sugar.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"Fruit Punch","price":"14,000 IQD","desc":"Mixed fruit juice with soda.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+      ]},
+      "Hot Drinks": {"title":"Hot Drinks","icon":"fas fa-coffee","items":[
+        {"name":"Espresso","price":"10,000 IQD","desc":"Strong and bold coffee shot.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"Cappuccino","price":"12,000 IQD","desc":"Espresso with steamed milk and foam.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"Latte","price":"13,000 IQD","desc":"Espresso with steamed milk.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"Hot Chocolate","price":"15,000 IQD","desc":"Rich chocolate with milk.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"Herbal Tea","price":"9,000 IQD","desc":"Soothing herbal infusion.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
+      ]},
+      "Wookah": {"title":"Wookah","icon":"fas fa-smoking","items":[
+        {"name":"Classic Apple","price":"35,000 IQD","desc":"Traditional apple flavor.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"Mint","price":"35,000 IQD","desc":"Refreshing mint flavor.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"Watermelon","price":"35,000 IQD","desc":"Sweet watermelon aroma.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"Grape","price":"35,000 IQD","desc":"Classic grape flavor.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"Peach","price":"35,000 IQD","desc":"Juicy peach taste.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+      ]},
+      "Sweets": {"title":"Sweets","icon":"fas fa-ice-cream","items":[
+        {"name":"Chocolate Cake","price":"20,000 IQD","desc":"Rich chocolate sponge cake.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"Cheesecake","price":"22,000 IQD","desc":"Creamy cheesecake with berries.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"Ice Cream Sundae","price":"18,000 IQD","desc":"Vanilla ice cream with toppings.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"Baklava","price":"25,000 IQD","desc":"Sweet pastry with nuts and syrup.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"Chocolate Brownie","price":"20,000 IQD","desc":"Rich and fudgy chocolate brownie.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
+      ]}
+    }
   },
-  "menu": {
-    "Pizza": {
-      "title": "Pizza", "icon": "fas fa-pizza-slice",
-      "items": [
-        {"name": "Vesuvio Margarita", "price": "55,000 IQD", "desc": "San Marzano tomato, mozzarella, basil.", "img": "https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"},
-        {"name": "Pepperoni Deluxe", "price": "60,000 IQD", "desc": "Double pepperoni, melted cheese.", "img": "https://images.unsplash.com/photo-1601924638867-3ec3aa45a7c7"},
-        {"name": "Truffle Mushroom", "price": "65,000 IQD", "desc": "Cream sauce, mushrooms, truffle oil.", "img": "https://images.unsplash.com/photo-1594007654729-407eedc4be65"}
-      ]
+  "ar": {
+    "translations": {
+      "restaurantName": "دهوك رست و كافيه",
+      "cuisineText": "نكهات عالمية و مقهى مميز",
+      "locationText": "<i class='fas fa-map-marker-alt'></i> دهوك KRO",
+      "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+      "footerText": "جميع الحقوق محفوظة | <strong>تم التطوير بواسطة Ghareeb</strong>"
     },
-    "Burger": {
-      "title": "Burgers", "icon": "fas fa-hamburger",
-      "items": [
-        {"name": "Signature Burger", "price": "60,000 IQD", "desc": "Beef patty, truffle mayo, caramelized onions.", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd"},
-        {"name": "Chicken Burger", "price": "50,000 IQD", "desc": "Crispy chicken, lettuce, spicy sauce.", "img": "https://images.unsplash.com/photo-1606756790138-208e13ef05a3"},
-        {"name": "Cheese Smash Burger", "price": "58,000 IQD", "desc": "Melted cheddar, double patty.", "img": "https://images.unsplash.com/photo-1626198394411-5b9e7e1c39b1"}
-      ]
-    },
-    "Sweet": {
-      "title": "Sweets", "icon": "fas fa-ice-cream",
-      "items": [
-        {"name": "Chocolate Lava Cake", "price": "35,000 IQD", "desc": "Warm chocolate cake with molten center.", "img": "https://images.unsplash.com/photo-1608219959300-47d7eaa65f46"},
-        {"name": "Cheesecake", "price": "30,000 IQD", "desc": "Classic New York style cheesecake.", "img": "https://images.unsplash.com/photo-1551024601-bec78aea704b"},
-        {"name": "Tiramisu", "price": "32,000 IQD", "desc": "Italian espresso layered dessert.", "img": "https://images.unsplash.com/photo-1589308078055-61a9dc35e28f"}
-      ]
-    },
-    "ColdDrink": {
-      "title": "Cold Drinks", "icon": "fas fa-glass-whiskey",
-      "items": [
-        {"name": "Iced Latte", "price": "25,000 IQD", "desc": "Cold espresso, milk, and ice.", "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
-        {"name": "Fresh Lemonade", "price": "20,000 IQD", "desc": "Homemade lemonade with mint.", "img": "https://images.unsplash.com/photo-1551022378-0a52bca9f6fa"},
-        {"name": "Cold Mocha", "price": "27,000 IQD", "desc": "Iced coffee with chocolate.", "img": "https://images.unsplash.com/photo-1571689936118-53a4ebc2aa1b"}
-      ]
-    },
-    "HotDrink": {
-      "title": "Hot Drinks", "icon": "fas fa-mug-hot",
-      "items": [
-        {"name": "Espresso", "price": "15,000 IQD", "desc": "Strong Italian coffee shot.", "img": "https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name": "Cappuccino", "price": "20,000 IQD", "desc": "Espresso, steamed milk, and foam.", "img": "https://images.unsplash.com/photo-1527169402691-a3d12fd53f8d"},
-        {"name": "Hot Chocolate", "price": "22,000 IQD", "desc": "Rich cocoa with cream.", "img": "https://images.unsplash.com/photo-1602526219047-752f6dfcb66a"}
-      ]
-    },
-    "Wookah": {
-      "title": "Wookah", "icon": "fas fa-smoking",
-      "items": [
-        {"name": "Apple Mint", "price": "40,000 IQD", "desc": "Refreshing mix of apple and mint.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"},
-        {"name": "Blue Mist", "price": "45,000 IQD", "desc": "Blueberry and mint aroma.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"},
-        {"name": "Double Apple", "price": "42,000 IQD", "desc": "Classic wookah favorite.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"}
-      ]
+    "menu": {
+      "Pizza": {"title": "بيتزا", "icon": "fas fa-pizza-slice","items":[
+        {"name":"ڤيسوفيو مارجريتا","price":"55,000 IQD","desc":"طماطم سان مارزانو، موتزاريلا، ريحان.","img":"https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"},
+        {"name":"بيبروني دلايت","price":"60,000 IQD","desc":"بيبروني، موتزاريلا، صلصة الطماطم.","img":"https://images.unsplash.com/photo-1594007650077-180e69b3aa12"},
+        {"name":"الخضروات الخاصة","price":"50,000 IQD","desc":"خضار متنوعة، موتزاريلا، صلصة الطماطم.","img":"https://images.unsplash.com/photo-1601924638873-5f2e2a0c5d97"},
+        {"name":"بيتزا دجاج باربيكيو","price":"65,000 IQD","desc":"دجاج مشوي، صلصة باربيكيو، موتزاريلا.","img":"https://images.unsplash.com/photo-1594007650077-180e69b3aa12"},
+        {"name":"أربعة أجبان","price":"70,000 IQD","desc":"موتزاريلا، شيدر، بارميزان، جورجونزولا.","img":"https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"}
+      ]},
+      "Burger": {"title": "برجر", "icon": "fas fa-hamburger","items":[
+        {"name":"برجر مميز","price":"60,000 IQD","desc":"لحم بقري، مايونيز الكمأ، بصل كاراميل.","img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd"},
+        {"name":"تشيز برجر","price":"55,000 IQD","desc":"لحم بقري، جبنة شيدر، خس.","img":"https://images.unsplash.com/photo-1550547660-d9450f859349"},
+        {"name":"برجر دجاج","price":"50,000 IQD","desc":"دجاج مشوي، مايونيز، خس، طماطم.","img":"https://images.unsplash.com/photo-1598514983094-2f16d8ef3f44"},
+        {"name":"برجر خضار","price":"45,000 IQD","desc":"خضروات مشوية، جبنة، خس.","img":"https://images.unsplash.com/photo-1604908177524-8c36e0476ef2"},
+        {"name":"برجر لحم مزدوج","price":"70,000 IQD","desc":"قطعتا لحم، شيدر، بيكون.","img":"https://images.unsplash.com/photo-1550547660-d9450f859349"}
+      ]},
+      "Cold Drinks": {"title":"مشروبات باردة","icon":"fas fa-cocktail","items":[
+        {"name":"شاي مثلج","price":"10,000 IQD","desc":"شاي أسود مثلج منعش مع الليمون.","img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
+        {"name":"عصير ليمون","price":"12,000 IQD","desc":"عصير ليمون طازج.","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+        {"name":"كولا","price":"8,000 IQD","desc":"مشروب غازي بارد كلاسيكي.","img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
+        {"name":"موهيتو بدون كحول","price":"15,000 IQD","desc":"نعناع، ليمون، صودا، سكر.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"بانش فواكه","price":"14,000 IQD","desc":"عصير فواكه مع صودا.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+      ]},
+      "Hot Drinks": {"title":"مشروبات ساخنة","icon":"fas fa-coffee","items":[
+        {"name":"إسبريسو","price":"10,000 IQD","desc":"قهوة قوية ومركزة.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"كابتشينو","price":"12,000 IQD","desc":"إسبريسو مع حليب مبخر ورغوة.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"لاتيه","price":"13,000 IQD","desc":"إسبريسو مع حليب مبخر.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"هوت شوكليت","price":"15,000 IQD","desc":"شوكولاتة غنية مع الحليب.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name":"شاي أعشاب","price":"9,000 IQD","desc":"شاي أعشاب مهدئ.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
+      ]},
+      "Wookah": {"title":"الوكه","icon":"fas fa-smoking","items":[
+        {"name":"تفاح كلاسيكي","price":"35,000 IQD","desc":"نكهة التفاح التقليدية.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"نعناع","price":"35,000 IQD","desc":"نكهة منعشة.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"بطيخ","price":"35,000 IQD","desc":"نكهة البطيخ الحلوة.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"عنب","price":"35,000 IQD","desc":"نكهة العنب الكلاسيكية.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+        {"name":"خوخ","price":"35,000 IQD","desc":"نكهة الخوخ العصيري.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+      ]},
+      "Sweets": {"title":"حلويات","icon":"fas fa-ice-cream","items":[
+        {"name":"كيك شوكولاتة","price":"20,000 IQD","desc":"كيك إسفنجي غني بالشوكولاتة.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"تشيز كيك","price":"22,000 IQD","desc":"تشيز كيك كريمي مع التوت.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"آيس كريم صن داي","price":"18,000 IQD","desc":"آيس كريم فانيلا مع إضافات.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"بقلاوة","price":"25,000 IQD","desc":"معجنات حلوة بالمكسرات والشراب.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+        {"name":"براوني شوكولاتة","price":"20,000 IQD","desc":"براوني غني ولذيذ بالشوكولاتة.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
+      ]}
     }
   }
 }
 </script>
+
 
 <header class="header">
   <div class="container">
@@ -195,12 +271,8 @@
 <main class="container">
   <div class="menu-tabs" id="menu-tabs"></div>
   <div class="view-controls">
-    <button class="view-button active" data-view="list-view">
-      <i class="fas fa-list"></i> List
-    </button>
-    <button class="view-button" data-view="grid-view-2">
-      <i class="fas fa-th"></i> 2x2 Grid
-    </button>
+    <button class="view-button active" data-view="list-view"><i class="fas fa-list"></i> List</button>
+    <button class="view-button" data-view="grid-view-2"><i class="fas fa-th"></i> 2x2 Grid</button>
   </div>
   <div class="menu-content" id="menu-content"></div>
 </main>
@@ -210,18 +282,35 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const data = JSON.parse(document.getElementById("menu-data").textContent);
-  const { translations, menu } = data;
-  document.getElementById("restaurant-name").textContent = translations.restaurantName;
-  document.getElementById("cuisine-text").textContent = translations.cuisineText;
-  document.getElementById("location-text").innerHTML = translations.locationText;
-  document.getElementById("reservation-text").innerHTML = translations.reservationText;
-  document.getElementById("footer-text").innerHTML = translations.footerText;
+  let selectedLang = null;
+  const langSelection = document.getElementById("language-selection");
 
-  const menuTabs = document.getElementById("menu-tabs");
-  const menuContent = document.getElementById("menu-content");
-  let activeView = "list-view";
+  // Dil seçimi
+  langSelection.addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    selectedLang = btn.dataset.lang;
+    langSelection.style.display = "none"; // Dil ekranını gizle
+    loadMenu(selectedLang);
+  });
 
-  function buildMenu() {
+  function loadMenu(lang) {
+    const translations = data[lang].translations;
+    const menu = data[lang].menu;
+
+    document.getElementById("restaurant-name").textContent = translations.restaurantName;
+    document.getElementById("cuisine-text").textContent = translations.cuisineText;
+    document.getElementById("location-text").innerHTML = translations.locationText;
+    document.getElementById("reservation-text").innerHTML = translations.reservationText;
+    document.getElementById("footer-text").innerHTML = translations.footerText;
+
+    const menuTabs = document.getElementById("menu-tabs");
+    const menuContent = document.getElementById("menu-content");
+    let activeView = "list-view";
+
+    menuTabs.innerHTML = "";
+    menuContent.innerHTML = "";
+
     Object.keys(menu).forEach((key, i) => {
       const cat = menu[key];
       const tab = document.createElement("button");
@@ -236,59 +325,48 @@ document.addEventListener("DOMContentLoaded", () => {
       section.className = "menu-section";
       if (i === 0) section.classList.add("active");
       section.innerHTML = `<h2>${cat.title}</h2><div class="menu-grid ${activeView}"></div>`;
-      const grid = section.querySelector(".menu-grid");
-      cat.items.forEach((item) => {
-        grid.innerHTML += `
-          <div class="menu-item">
-            <img src="${item.img}" alt="${item.name}" class="item-image">
-            <div class="item-details">
-              <div class="item-header">
-                <span class="item-name">${item.name}</span>
-                <span class="price">${item.price}</span>
-              </div>
-              <p class="description">${item.desc}</p>
+      cat.items.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "menu-item";
+        itemDiv.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" class="item-image"/>
+          <div class="item-details">
+            <div class="item-header">
+              <span class="item-name">${item.name}</span>
+              <span class="price">${item.price}</span>
             </div>
-          </div>`;
+            <p class="description">${item.desc}</p>
+          </div>
+        `;
+        section.querySelector(".menu-grid").appendChild(itemDiv);
       });
       menuContent.appendChild(section);
     });
-  }
 
-  menuTabs.addEventListener("click", (e) => {
-    const btn = e.target.closest(".tab-button");
-    if (!btn) return;
-    document.querySelector(".tab-button.active")?.classList.remove("active");
-    btn.classList.add("active");
-    document.querySelector(".menu-section.active")?.classList.remove("active");
-    document.getElementById(`section-${btn.dataset.category}`).classList.add("active");
-  });
-
-  document.querySelector(".view-controls").addEventListener("click", (e) => {
-    const btn = e.target.closest(".view-button");
-    if (!btn) return;
-    const newView = btn.dataset.view;
-    document.querySelector(".view-button.active")?.classList.remove("active");
-    btn.classList.add("active");
-    document.querySelectorAll(".menu-grid").forEach((g) => {
-      g.classList.remove(activeView);
-      g.classList.add(newView);
+    // Tab geçişleri
+    document.querySelectorAll(".tab-button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(".menu-section").forEach(sec => sec.classList.remove("active"));
+        document.getElementById(`section-${btn.dataset.category}`).classList.add("active");
+      });
     });
-    activeView = newView;
-  });
 
-  buildMenu();
-
-  // Mobilde otomatik liste görünümü
-  if (window.innerWidth <= 600) {
-    activeView = "list-view";
-    document.querySelectorAll(".menu-grid").forEach((grid) => {
-      grid.classList.remove("grid-view-2");
-      grid.classList.add("list-view");
+    // Görünüm değişimi
+    document.querySelectorAll(".view-button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".view-button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeView = btn.dataset.view;
+        document.querySelectorAll(".menu-grid").forEach(grid => {
+          grid.className = `menu-grid ${activeView}`;
+        });
+      });
     });
-    document.querySelectorAll(".view-button").forEach((btn) => btn.classList.remove("active"));
-    document.querySelector('.view-button[data-view="list-view"]').classList.add("active");
   }
 });
 </script>
+
 </body>
 </html>
