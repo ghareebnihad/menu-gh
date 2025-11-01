@@ -1,431 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DUHOK REST & CAFFE - Digital Menu</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<style>
-:root {
-  --bg-color: #1a1a1a;
-  --text-color: #ffffff;
-  --accent-color: #C5A030;
-  --secondary-text: #aaaaaa;
-  --card-bg: #2b2b2b;
-  --header-bg: #111111;
-  --font-family: 'Arial', sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  zoom: 1.2; /* 🔍 Genel yakınlaştırma */
-}
-
-.container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 0;
-}
-
-/* Header */
-.header {
-  background-color: var(--header-bg);
-  padding: 20px 0;
-  text-align: center;
-  border-bottom: 3px solid var(--accent-color);
-  position: relative;
-}
-
-.restaurant-name {
-  font-size: 2.5em;
-  font-weight: bold;
-  color: var(--accent-color);
-  margin-bottom: 5px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.cuisine-text {
-  font-size: 1.1em;
-  color: var(--secondary-text);
-  margin-bottom: 15px;
-}
-
-.contact-info {
-  font-size: 0.9em;
-  color: var(--text-color);
-}
-
-.contact-info i {
-  color: var(--accent-color);
-  margin-right: 5px;
-}
-
-/* Category Tabs */
-.menu-tabs {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding: 10px 0;
-  margin-bottom: 10px;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--card-bg);
-}
-
-.tab-button {
-  flex-shrink: 0;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.85em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
-}
-
-.tab-button i {
-  font-size: 1.3em;
-  margin-bottom: 3px;
-  color: var(--accent-color);
-  transition: color 0.3s ease;
-}
-
-.tab-button.active {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-}
-
-.tab-button.active i {
-  color: var(--bg-color);
-}
-
-/* View Controls */
-.view-controls {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 5px 0 15px 0;
-}
-
-.view-controls button {
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid var(--accent-color);
-  background-color: #3a3a3a;
-  color: var(--secondary-text);
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  font-size: 0.9em;
-}
-
-.view-controls button:hover, 
-.view-controls button.active {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-}
-
-/* Menu Section */
-.menu-content {
-  padding-top: 10px;
-}
-
-.menu-section {
-  display: none;
-}
-
-.menu-section.active {
-  display: block;
-}
-
-.menu-section h2 {
-  font-size: 1.8em;
-  color: var(--accent-color);
-  margin-bottom: 20px;
-  border-left: 4px solid var(--accent-color);
-  padding-left: 10px;
-}
-
-/* Menu Grid Layouts */
-.menu-grid {
-  display: grid;
-  gap: 20px;
-  transition: transform 0.3s ease, zoom 0.3s ease;
-}
-
-.menu-grid.grid-view-2 {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  zoom: 0.75; /* 🔹 Grid görünümünde uzaklaştırma */
-}
-
-.menu-grid.list-view {
-  grid-template-columns: 1fr;
-  zoom: 1; /* Liste görünümü orijinal */
-}
-
-/* Menu Item */
-.menu-item {
-  background-color: var(--card-bg);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s;
-}
-
-.menu-item:hover {
-  transform: translateY(-3px);
-}
-
-.item-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 3px solid var(--accent-color);
-}
-
-.item-details {
-  padding: 15px;
-}
-
-.item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-
-.item-name {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: var(--text-color);
-}
-
-.price {
-  font-size: 1.3em;
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-.description {
-  font-size: 0.9em;
-  color: var(--secondary-text);
-  margin-top: 5px;
-}
-
-/* Footer */
-.footer {
-  margin-top: auto;
-  padding: 15px 0;
-  background-color: var(--header-bg);
-  text-align: center;
-  font-size: 0.8em;
-  color: var(--secondary-text);
-  border-top: 1px solid #333;
-}
-
-.footer strong {
-  color: var(--accent-color);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .menu-grid.grid-view-2 {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUHOK REST & CAFFE - Digital Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --accent-color: #c5a030;
+      --secondary-text: #aaaaaa;
+      --card-bg: #2b2b2b;
+      --header-bg: #111111;
+      --font-family: "Arial", sans-serif;
+    }
+    * {box-sizing: border-box; margin: 0; padding: 0;}
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {width: 95%; max-width: 1200px; margin: 0 auto; padding: 20px 0;}
+    .header {
+      background-color: var(--header-bg);
+      padding: 20px 0;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-color);
+    }
+    .restaurant-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .cuisine-text {font-size: 1.1em; color: var(--secondary-text); margin-bottom: 15px;}
+    .contact-info {font-size: 0.9em; color: var(--text-color);}
+    .contact-info i {color: var(--accent-color); margin-right: 5px;}
+    .menu-tabs {
+      display: flex; overflow-x: auto; gap: 10px; padding: 10px 0; margin-bottom: 10px;
+      white-space: nowrap; border-bottom: 1px solid var(--card-bg);
+    }
+    .tab-button {
+      flex-shrink: 0; background-color: var(--card-bg); color: var(--text-color);
+      border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      text-transform: uppercase; font-weight: bold; font-size: 0.85em;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-width: 90px;
+    }
+    .tab-button i {font-size: 1.3em; margin-bottom: 3px; color: var(--accent-color);}
+    .tab-button.active {background-color: var(--accent-color); color: var(--bg-color);}
+    .tab-button.active i {color: var(--bg-color);}
+    .tab-button:hover:not(.active) {background-color: #3a3a3a;}
+    .view-controls {
+      display: flex; justify-content: flex-start; gap: 10px; padding: 5px 0 15px 0;
+    }
+    .view-controls button {
+      padding: 8px 12px; border-radius: 5px; border: 1px solid var(--accent-color);
+      background-color: #3a3a3a; color: var(--secondary-text); cursor: pointer;
+      transition: background-color 0.2s, color 0.2s; font-size: 0.9em;
+    }
+    .view-controls button:hover, .view-controls button.active {
+      background-color: var(--accent-color); color: var(--bg-color);
+    }
+    .menu-section {display: none;}
+    .menu-section.active {display: block;}
+    .menu-section h2 {
+      font-size: 1.8em; color: var(--accent-color); margin-bottom: 20px;
+      border-left: 4px solid var(--accent-color); padding-left: 10px;
+    }
+    .menu-grid {display: grid; gap: 20px;}
+    .menu-grid.grid-view-2 {grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));}
+    .menu-grid.list-view {grid-template-columns: 1fr;}
+    .menu-item {
+      display: flex; flex-direction: column; background-color: var(--card-bg);
+      border-radius: 10px; overflow: hidden; transition: transform 0.2s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    .menu-item:hover {transform: translateY(-3px);}
+    .item-image {
+      width: 100%; height: 180px; object-fit: cover;
+      border-bottom: 3px solid var(--accent-color);
+    }
+    .item-details {padding: 15px; flex-grow: 1;}
+    .item-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .item-name {font-size: 1.2em; font-weight: bold;}
+    .price {font-size: 1.3em; font-weight: bold; color: var(--accent-color);}
+    .description {font-size: 0.9em; color: var(--secondary-text); margin-top: 5px;}
+    .footer {
+      margin-top: auto; padding: 15px 0; background-color: var(--header-bg);
+      text-align: center; font-size: 0.8em; color: var(--secondary-text);
+      border-top: 1px solid #333;
+    }
+    .footer strong {color: var(--accent-color);}
+    .menu-grid.list-view .menu-item {flex-direction: row; align-items: center;}
+    .menu-grid.list-view .item-image {
+      width: 150px; height: 150px; border-bottom: none; border-right: 2px solid var(--accent-color);
+    }
+    .menu-grid.list-view .item-details {padding: 15px; width: calc(100% - 150px);}
+    @media (max-width: 600px) {
+      body {zoom: 0.8; -moz-transform: scale(0.8); -moz-transform-origin: top center;}
+      .menu-grid.grid-view-2 {grid-template-columns: 1fr;}
+      .menu-grid.list-view .menu-item {flex-direction: column;}
+      .menu-grid.list-view .item-image {
+        width: 100%; height: 180px; border-right: none; border-bottom: 2px solid var(--accent-color);
+      }
+      .menu-grid.list-view .item-details {width: 100%;}
+    }
+  </style>
 </head>
 <body>
+<script id="menu-data" type="application/json">
+{
+  "translations": {
+    "restaurantName": "DUHOK REST & CAFFE",
+    "cuisineText": "International Flavors & Signature Café",
+    "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
+    "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+    "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
+  },
+  "menu": {
+    "Pizza": {
+      "title": "Pizza", "icon": "fas fa-pizza-slice",
+      "items": [
+        {"name": "Vesuvio Margarita", "price": "55,000 IQD", "desc": "San Marzano tomato, mozzarella, basil.", "img": "https://images.unsplash.com/photo-1601924582971-c9c3e47e3d67"},
+        {"name": "Pepperoni Deluxe", "price": "60,000 IQD", "desc": "Double pepperoni, melted cheese.", "img": "https://images.unsplash.com/photo-1601924638867-3ec3aa45a7c7"},
+        {"name": "Truffle Mushroom", "price": "65,000 IQD", "desc": "Cream sauce, mushrooms, truffle oil.", "img": "https://images.unsplash.com/photo-1594007654729-407eedc4be65"}
+      ]
+    },
+    "Burger": {
+      "title": "Burgers", "icon": "fas fa-hamburger",
+      "items": [
+        {"name": "Signature Burger", "price": "60,000 IQD", "desc": "Beef patty, truffle mayo, caramelized onions.", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd"},
+        {"name": "Chicken Burger", "price": "50,000 IQD", "desc": "Crispy chicken, lettuce, spicy sauce.", "img": "https://images.unsplash.com/photo-1606756790138-208e13ef05a3"},
+        {"name": "Cheese Smash Burger", "price": "58,000 IQD", "desc": "Melted cheddar, double patty.", "img": "https://images.unsplash.com/photo-1626198394411-5b9e7e1c39b1"}
+      ]
+    },
+    "Sweet": {
+      "title": "Sweets", "icon": "fas fa-ice-cream",
+      "items": [
+        {"name": "Chocolate Lava Cake", "price": "35,000 IQD", "desc": "Warm chocolate cake with molten center.", "img": "https://images.unsplash.com/photo-1608219959300-47d7eaa65f46"},
+        {"name": "Cheesecake", "price": "30,000 IQD", "desc": "Classic New York style cheesecake.", "img": "https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+        {"name": "Tiramisu", "price": "32,000 IQD", "desc": "Italian espresso layered dessert.", "img": "https://images.unsplash.com/photo-1589308078055-61a9dc35e28f"}
+      ]
+    },
+    "ColdDrink": {
+      "title": "Cold Drinks", "icon": "fas fa-glass-whiskey",
+      "items": [
+        {"name": "Iced Latte", "price": "25,000 IQD", "desc": "Cold espresso, milk, and ice.", "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
+        {"name": "Fresh Lemonade", "price": "20,000 IQD", "desc": "Homemade lemonade with mint.", "img": "https://images.unsplash.com/photo-1551022378-0a52bca9f6fa"},
+        {"name": "Cold Mocha", "price": "27,000 IQD", "desc": "Iced coffee with chocolate.", "img": "https://images.unsplash.com/photo-1571689936118-53a4ebc2aa1b"}
+      ]
+    },
+    "HotDrink": {
+      "title": "Hot Drinks", "icon": "fas fa-mug-hot",
+      "items": [
+        {"name": "Espresso", "price": "15,000 IQD", "desc": "Strong Italian coffee shot.", "img": "https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+        {"name": "Cappuccino", "price": "20,000 IQD", "desc": "Espresso, steamed milk, and foam.", "img": "https://images.unsplash.com/photo-1527169402691-a3d12fd53f8d"},
+        {"name": "Hot Chocolate", "price": "22,000 IQD", "desc": "Rich cocoa with cream.", "img": "https://images.unsplash.com/photo-1602526219047-752f6dfcb66a"}
+      ]
+    },
+    "Wookah": {
+      "title": "Wookah", "icon": "fas fa-smoking",
+      "items": [
+        {"name": "Apple Mint", "price": "40,000 IQD", "desc": "Refreshing mix of apple and mint.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"},
+        {"name": "Blue Mist", "price": "45,000 IQD", "desc": "Blueberry and mint aroma.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"},
+        {"name": "Double Apple", "price": "42,000 IQD", "desc": "Classic wookah favorite.", "img": "https://images.unsplash.com/photo-1620228896065-4c986a359b37"}
+      ]
+    }
+  }
+}
+</script>
 
 <header class="header">
   <div class="container">
-    <h1 class="restaurant-name">DUHOK REST & CAFFE</h1>
-    <p class="cuisine-text">International Flavors & Signature Café</p>
+    <h1 class="restaurant-name" id="restaurant-name"></h1>
+    <p class="cuisine-text" id="cuisine-text"></p>
     <div class="contact-info">
-      <i class="fas fa-map-marker-alt"></i> Duhok KRO | 
-      <i class="fas fa-phone-alt"></i> 0750 222 22 22
+      <span id="location-text"></span> | <span id="reservation-text"></span>
     </div>
   </div>
 </header>
 
 <main class="container">
-  <div class="menu-tabs">
-    <button class="tab-button active" data-category="sweet"><i class="fas fa-ice-cream"></i> Sweet</button>
-    <button class="tab-button" data-category="cold"><i class="fas fa-cocktail"></i> Cold Drinks</button>
-    <button class="tab-button" data-category="hot"><i class="fas fa-coffee"></i> Hot Drinks</button>
-    <button class="tab-button" data-category="wookah"><i class="fas fa-smoking"></i> Wookah</button>
-  </div>
-
+  <div class="menu-tabs" id="menu-tabs"></div>
   <div class="view-controls">
-    <button class="view-button active" data-view="list-view"><i class="fas fa-list"></i> List</button>
-    <button class="view-button" data-view="grid-view-2"><i class="fas fa-th"></i> 2x2 Grid</button>
+    <button class="view-button active" data-view="list-view">
+      <i class="fas fa-list"></i> List
+    </button>
+    <button class="view-button" data-view="grid-view-2">
+      <i class="fas fa-th"></i> 2x2 Grid
+    </button>
   </div>
-
-  <div class="menu-content">
-    <!-- SWEET -->
-    <div class="menu-section active" id="sweet">
-      <h2>Sweets</h2>
-      <div class="menu-grid list-view">
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/2030549106/photo/chocolate-lava-cake.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Chocolate Lava Cake</span><span class="price">35,000 IQD</span></div>
-            <p class="description">Warm chocolate cake with molten center.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/1134778606/photo/fresh-tiramisu-cake-white-background.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Classic Tiramisu</span><span class="price">32,000 IQD</span></div>
-            <p class="description">Italian espresso layered dessert.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/1299749598/photo/portion-of-the-traditional-basque-burnt-cheesecake.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">San Sebastian Cheesecake</span><span class="price">38,000 IQD</span></div>
-            <p class="description">Creamy burnt cheesecake with berry sauce.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- COLD DRINKS -->
-    <div class="menu-section" id="cold">
-      <h2>Cold Drinks</h2>
-      <div class="menu-grid list-view">
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/980280776/photo/iced-coffee.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Iced Latte</span><span class="price">28,000 IQD</span></div>
-            <p class="description">Chilled espresso with milk and ice.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/2158241260/photo/green-lemon-drink.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Mint Lemonade</span><span class="price">22,000 IQD</span></div>
-            <p class="description">Freshly squeezed lemon with mint.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/157311412/photo/mojito-cocktail.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Passion Mojito</span><span class="price">30,000 IQD</span></div>
-            <p class="description">Passion fruit, mint, lime, and soda.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HOT DRINKS -->
-    <div class="menu-section" id="hot">
-      <h2>Hot Drinks</h2>
-      <div class="menu-grid list-view">
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/1479379012/photo/espresso-coffee-cup-top-view-on-white-background.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Espresso</span><span class="price">18,000 IQD</span></div>
-            <p class="description">Strong and aromatic single shot espresso.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/1397676276/photo/hot-macchiato-coffee.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Caramel Macchiato</span><span class="price">25,000 IQD</span></div>
-            <p class="description">Espresso with vanilla syrup and caramel drizzle.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://media.istockphoto.com/id/92065101/photo/mug-of-hot-chocolate-with-marshmallows.jpg" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Hot Chocolate</span><span class="price">22,000 IQD</span></div>
-            <p class="description">Belgian dark chocolate melted in hot milk.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WOOKAH -->
-    <div class="menu-section" id="wookah">
-      <h2>Wookah</h2>
-      <div class="menu-grid list-view">
-        <div class="menu-item">
-          <img src="https://images.unsplash.com/photo-1629159308552-9e163cf73a26" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Blue Mist</span><span class="price">35,000 IQD</span></div>
-            <p class="description">Classic mint and blueberry blend.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://images.unsplash.com/photo-1604586401453-74a1a83b9e50" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Double Apple</span><span class="price">38,000 IQD</span></div>
-            <p class="description">Traditional flavor with crisp apple notes.</p>
-          </div>
-        </div>
-        <div class="menu-item">
-          <img src="https://images.unsplash.com/photo-1583225201708-18d6d7cc59c3" class="item-image">
-          <div class="item-details">
-            <div class="item-header"><span class="item-name">Grape Mint</span><span class="price">40,000 IQD</span></div>
-            <p class="description">Refreshing grape and mint fusion.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="menu-content" id="menu-content"></div>
 </main>
 
-<footer class="footer">
-  <div class="container">All rights reserved. Developed by | <strong>Ghareeb</strong></div>
-</footer>
+<footer class="footer"><div class="container"><p id="footer-text"></p></div></footer>
 
 <script>
-const tabs = document.querySelectorAll('.tab-button');
-const sections = document.querySelectorAll('.menu-section');
-const viewButtons = document.querySelectorAll('.view-button');
-let activeView = 'list-view';
+document.addEventListener("DOMContentLoaded", () => {
+  const data = JSON.parse(document.getElementById("menu-data").textContent);
+  const { translations, menu } = data;
+  document.getElementById("restaurant-name").textContent = translations.restaurantName;
+  document.getElementById("cuisine-text").textContent = translations.cuisineText;
+  document.getElementById("location-text").innerHTML = translations.locationText;
+  document.getElementById("reservation-text").innerHTML = translations.reservationText;
+  document.getElementById("footer-text").innerHTML = translations.footerText;
 
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    sections.forEach(s => s.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.category).classList.add('active');
-  });
-});
+  const menuTabs = document.getElementById("menu-tabs");
+  const menuContent = document.getElementById("menu-content");
+  let activeView = "list-view";
 
-viewButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    viewButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeView = btn.dataset.view;
-    document.querySelectorAll('.menu-grid').forEach(grid => {
-      grid.classList.remove('list-view', 'grid-view-2');
-      grid.classList.add(activeView);
+  function buildMenu() {
+    Object.keys(menu).forEach((key, i) => {
+      const cat = menu[key];
+      const tab = document.createElement("button");
+      tab.className = "tab-button";
+      tab.dataset.category = key;
+      tab.innerHTML = `<i class="${cat.icon}"></i><span>${cat.title}</span>`;
+      if (i === 0) tab.classList.add("active");
+      menuTabs.appendChild(tab);
+
+      const section = document.createElement("div");
+      section.id = `section-${key}`;
+      section.className = "menu-section";
+      if (i === 0) section.classList.add("active");
+      section.innerHTML = `<h2>${cat.title}</h2><div class="menu-grid ${activeView}"></div>`;
+      const grid = section.querySelector(".menu-grid");
+      cat.items.forEach((item) => {
+        grid.innerHTML += `
+          <div class="menu-item">
+            <img src="${item.img}" alt="${item.name}" class="item-image">
+            <div class="item-details">
+              <div class="item-header">
+                <span class="item-name">${item.name}</span>
+                <span class="price">${item.price}</span>
+              </div>
+              <p class="description">${item.desc}</p>
+            </div>
+          </div>`;
+      });
+      menuContent.appendChild(section);
     });
+  }
+
+  menuTabs.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab-button");
+    if (!btn) return;
+    document.querySelector(".tab-button.active")?.classList.remove("active");
+    btn.classList.add("active");
+    document.querySelector(".menu-section.active")?.classList.remove("active");
+    document.getElementById(`section-${btn.dataset.category}`).classList.add("active");
   });
+
+  document.querySelector(".view-controls").addEventListener("click", (e) => {
+    const btn = e.target.closest(".view-button");
+    if (!btn) return;
+    const newView = btn.dataset.view;
+    document.querySelector(".view-button.active")?.classList.remove("active");
+    btn.classList.add("active");
+    document.querySelectorAll(".menu-grid").forEach((g) => {
+      g.classList.remove(activeView);
+      g.classList.add(newView);
+    });
+    activeView = newView;
+  });
+
+  buildMenu();
+
+  // Mobilde otomatik liste görünümü
+  if (window.innerWidth <= 600) {
+    activeView = "list-view";
+    document.querySelectorAll(".menu-grid").forEach((grid) => {
+      grid.classList.remove("grid-view-2");
+      grid.classList.add("list-view");
+    });
+    document.querySelectorAll(".view-button").forEach((btn) => btn.classList.remove("active"));
+    document.querySelector('.view-button[data-view="list-view"]').classList.add("active");
+  }
 });
 </script>
 </body>
