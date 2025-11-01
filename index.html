@@ -77,7 +77,10 @@
       border-left: 4px solid var(--accent-color); padding-left: 10px;
     }
     .menu-grid {display: grid; gap: 20px;}
-    .menu-grid.grid-view-2 {grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));}
+   .menu-grid.grid-view-2 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 300px -> 220px */
+  gap: 15px; /* 20px -> 15px */
+}
     .menu-grid.list-view {grid-template-columns: 1fr;}
     .menu-item {
       display: flex; flex-direction: column; background-color: var(--card-bg);
@@ -86,17 +89,17 @@
     }
     .menu-item:hover {transform: translateY(-3px);}
     .item-image {
-      width: 100%; height: 180px; object-fit: cover;
+      width: 100%; height: 140px; object-fit: cover;
       border-bottom: 3px solid var(--accent-color);
     }
-    .item-details {padding: 15px; flex-grow: 1;}
+    .item-details {padding: 10px; flex-grow: 1;}
     .item-header {
       display: flex; justify-content: space-between; align-items: flex-start;
       margin-bottom: 8px;
     }
-    .item-name {font-size: 1.2em; font-weight: bold;}
-    .price {font-size: 1.3em; font-weight: bold; color: var(--accent-color);}
-    .description {font-size: 0.9em; color: var(--secondary-text); margin-top: 5px;}
+    .item-name {font-size: 1.1em; font-weight: bold;}
+    .price {font-size: 1.2em; font-weight: bold; color: var(--accent-color);}
+    .description {font-size: 0.8em; color: var(--secondary-text); margin-top: 5px;}
     .footer {
       margin-top: auto; padding: 15px 0; background-color: var(--header-bg);
       text-align: center; font-size: 0.8em; color: var(--secondary-text);
@@ -107,7 +110,7 @@
     .menu-grid.list-view .item-image {
       width: 150px; height: 150px; border-bottom: none; border-right: 2px solid var(--accent-color);
     }
-    .menu-grid.list-view .item-details {padding: 15px; width: calc(100% - 150px);}
+    .menu-grid.list-view .item-details {padding: 10px; width: calc(100% - 120px);}
     @media (max-width: 600px) {
       body {zoom: 0.8; -moz-transform: scale(0.8); -moz-transform-origin: top center;}
       .menu-grid.grid-view-2 {grid-template-columns: 1fr;}
@@ -370,3 +373,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
