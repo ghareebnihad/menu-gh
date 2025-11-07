@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,7 @@
   <title>DUHOK REST & CAFFE - Digital Menu</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
+    /* Reset and Base Styles */
     :root {
       --bg-color: #1a1a1a;
       --text-color: #ffffff;
@@ -15,6 +15,7 @@
       --card-bg: #2b2b2b;
       --header-bg: #111111;
       --font-family: "Arial", sans-serif;
+      --orange-active: #ff8c00; /* New Orange variable */
     }
     * {box-sizing: border-box; margin: 0; padding: 0;}
     body {
@@ -25,7 +26,10 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
+
+    /* --- Core Menu Styles --- */
     .container {width: 95%; max-width: 1200px; margin: 0 auto; padding: 20px 0;}
     .header {
       background-color: var(--header-bg);
@@ -60,6 +64,14 @@
     .tab-button.active {background-color: var(--accent-color); color: var(--bg-color);}
     .tab-button.active i {color: var(--bg-color);}
     .tab-button:hover:not(.active) {background-color: #3a3a3a;}
+
+    /* Menu Text Direction for Arabic */
+    body[dir="rtl"] .header { text-align: right; }
+    body[dir="rtl"] .menu-section h2 { border-left: none; border-right: 4px solid var(--accent-color); padding-left: 0; padding-right: 10px; }
+    body[dir="rtl"] .menu-grid.list-view .item-image { border-right: none; border-left: 2px solid var(--accent-color); }
+    body[dir="rtl"] .item-header { direction: rtl; }
+
+
     .view-controls {
       display: flex; justify-content: flex-start; gap: 10px; padding: 5px 0 15px 0;
     }
@@ -74,15 +86,18 @@
     .menu-section {display: none;}
     .menu-section.active {display: block;}
     .menu-section h2 {
-      font-size: 1.8em; color: var(--accent-color); margin-bottom: 20px;
+      font-size: 1.6em; color: var(--accent-color); margin-bottom: 20px;
       border-left: 4px solid var(--accent-color); padding-left: 10px;
     }
     .menu-grid {display: grid; gap: 20px;}
-   .menu-grid.grid-view-2 {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 300px -> 220px */
-  gap: 15px; /* 20px -> 15px */
-}
+    
+    /* PC/Tablet Grid View (Desktop Default) */
+    .menu-grid.grid-view-2 {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
     .menu-grid.list-view {grid-template-columns: 1fr;}
+    
     .menu-item {
       display: flex; flex-direction: column; background-color: var(--card-bg);
       border-radius: 10px; overflow: hidden; transition: transform 0.2s;
@@ -107,90 +122,189 @@
       border-top: 1px solid #333;
     }
     .footer strong {color: var(--accent-color);}
+    
+    /* List View Styles (Applies to all screens) */
     .menu-grid.list-view .menu-item {flex-direction: row; align-items: center;}
     .menu-grid.list-view .item-image {
       width: 150px; height: 150px; border-bottom: none; border-right: 2px solid var(--accent-color);
     }
     .menu-grid.list-view .item-details {padding: 10px; width: calc(100% - 120px);}
-    @media (max-width: 600px) {
-      body {zoom: 0.8; -moz-transform: scale(0.8); -moz-transform-origin: top center;}
-      .menu-grid.grid-view-2 {grid-template-columns: 1fr;}
-      .menu-grid.list-view .menu-item {flex-direction: column;}
-      .menu-grid.list-view .item-image {
-        width: 100%; height: 180px; border-right: none; border-bottom: 2px solid var(--accent-color);
+
+    /* --- Responsive Design (MOBILE FIX) --- */
+    @media (max-width: 768px) {
+      /* Remove zoom for better native mobile sizing, rely on minmax() */
+      body {zoom: 1; -moz-transform: none; -moz-transform-origin: top center;} 
+      
+      /* FIX: Ensure Grid View is Responsive on Phones */
+      .menu-grid.grid-view-2 {
+        /* On small screens, force 2 columns with smaller min width, 
+           or simply auto-fit 1 column if necessary */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
       }
-      .menu-grid.list-view .item-details {width: 100%;}
+      
+      /* Make list view vertical stacking on very small screens for better detail visibility */
+      .menu-grid.list-view .menu-item {
+          flex-direction: column;
+      }
+      .menu-grid.list-view .item-image {
+          width: 100%; 
+          height: 180px; 
+          border-right: none; 
+          border-left: none; /* Correct for RTL in list view mobile */
+          border-bottom: 2px solid var(--accent-color);
+      }
+      .menu-grid.list-view .item-details {
+          width: 100%;
+      }
+      
+      /* Arabic List View Fix on Mobile */
+      body[dir="rtl"] .menu-grid.list-view .item-image {
+          border-right: none;
+          border-left: none; 
+      }
     }
 
-/* Dil seçim ekranı */
-#language-selection {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 16px 60px rgba(0,0,0,0.5);
-  border-radius: 25px;
-  padding: 60px 80px;
-  z-index: 9999;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  color: #fff;
-  text-align: center;
-  animation: fadeScaleIn 0.8s ease forwards;
-}
-
-/* Buton stili */
-#language-selection button {
-  padding: 16px 40px;
-  font-size: 1.6em;
-  font-weight: 700;
-  border: 2px solid rgba(255,255,255,0.7);
-  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2));
-  color: #fff;
-  cursor: pointer;
-  border-radius: 14px;
-  transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 12px rgba(255,255,255,0.2);
-}
-
-/* Hover efekti */
-#language-selection button:hover {
-  background: linear-gradient(135deg, #FFD700, #FFB800);
-  color: #111;
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 20px #FFD700;
-  text-shadow: 0 0 8px #FFD700;
-}
-
-/* Başlık stili (opsiyonel) */
-#language-selection h1 {
-  font-size: 2.2em;
-  font-weight: 800;
-  color: #FFD700;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-  margin-bottom: 30px;
-}
-
-/* Açılma animasyonu */
-@keyframes fadeScaleIn {
-  0% { opacity: 0; transform: scale(7); }
-  100% { opacity: 1; transform: scale(1.1); }
-}
-
-
+    /* --- Language Selection Screen Styles (Grey & Orange) --- */
+    #language-selection {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      background: #333333; /* Dark grey background */
+      z-index: 9999;
+      font-family: 'Arial', sans-serif;
+      color: #ffffff;
+      text-align: center;
+      transition: opacity 0.5s ease; /* Fade out effect */
+    }
+    #language-selection.hidden {
+      opacity: 0;
+      pointer-events: none; /* Make it unclickable when hidden */
+    }
+    #language-selection .logo {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    #language-selection h2 {
+      font-size: 1.8em;
+      color: #eeeeee;
+      margin-bottom: 20px;
+    }
+    #language-selection .buttons {
+      display: flex;
+      gap: 25px;
+    }
+    #language-selection button {
+      position: relative;
+      padding: 18px 45px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: 2px solid #555555; /* Grey border */
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      background: #444444; /* Darker grey for buttons */
+      color: #fff;
+      overflow: hidden;
+    }
+    /* Orange Hover and Active Effect */
+    #language-selection button:hover,
+    #language-selection button.active {
+      background: var(--orange-active); /* Vibrant orange */
+      border-color: var(--orange-active);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+      color: #fff;
+    }
+    #language-selection button:hover::after,
+    #language-selection button.active::after {
+      border-color: var(--orange-active);
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+    }
+    #language-selection button::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+    /* Hide/Show Logic for Main Content */
+    .menu-wrapper {
+      display: none; /* Initially hide the menu wrapper */
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    }
+    body.lang-selected .menu-wrapper {
+      display: flex; /* Show the menu wrapper when language is selected */
+    }
+    /* Responsive Language Selection */
+    @media(max-width: 600px) {
+      #language-selection {
+        padding: 30px 15px;
+        gap: 20px;
+      }
+      #language-selection .logo {
+        font-size: 2.5em;
+      }
+      #language-selection h2 {
+        font-size: 1.5em;
+      }
+      .buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      #language-selection button {
+        padding: 15px 30px;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- Dil Seçim Ekranı -->
 <div id="language-selection">
+  <div class="logo">Duhok Rest & Caffe</div>
   <h2>اختر اللغة / Select Language</h2>
-  <button data-lang="en">English</button>
-  <button data-lang="ar">العربية</button>
+  <div class="buttons">
+    <button data-lang="en">English</button>
+    <button data-lang="ar">العربية</button>
+  </div>
 </div>
+
+<div class="menu-wrapper">
+    <header class="header">
+      <div class="container">
+        <h1 class="restaurant-name" id="restaurant-name"></h1>
+        <p class="cuisine-text" id="cuisine-text"></p>
+        <div class="contact-info">
+          <span id="location-text"></span> | <span id="reservation-text"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="menu-tabs" id="menu-tabs"></div>
+      <div class="view-controls">
+          <button class="view-button active" data-view="grid-view-2"><i class="fas fa-th-large"></i></button>
+          <button class="view-button" data-view="list-view"><i class="fas fa-list"></i></button>
+      </div>
+      <div class="menu-content" id="menu-content"></div>
+    </main>
+
+    <footer class="footer"><div class="container"><p id="footer-text"></p></div></footer>
+</div>
+
 
 <script id="menu-data" type="application/json">
 {
@@ -202,45 +316,147 @@
       "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
       "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
     },
-    "menu": {
+    "menu":
+	{
       "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice","items":[
-        {"name":"Vesuvio Margarita","price":"5,000 IQD","desc":"San Marzano tomato, mozzarella, basil.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"Pepperoni Delight","price":"6,000 IQD","desc":"Pepperoni, mozzarella, tomato sauce.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"Vegetarian Special","price":"5,000 IQD","desc":"Mixed veggies, mozzarella, tomato sauce.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"BBQ Chicken Pizza","price":"5,000 IQD","desc":"Grilled chicken, BBQ sauce, mozzarella.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"Four Cheese","price":"7,000 IQD","desc":"Mozzarella, cheddar, parmesan, gorgonzola.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="}
+        {"name":"Vesuvio Margarita",
+		"price":"5,000 IQD",
+		"desc":"San Marzano tomato, mozzarella, basil.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+        {"name":"Pepperoni Delight",
+		"price":"6,000 IQD",
+		"desc":"Pepperoni, mozzarella, tomato sauce.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"Vegetarian Special",
+		"price":"5,000 IQD",
+		"desc":"Mixed veggies, mozzarella, tomato sauce.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"BBQ Chicken Pizza",
+		"price":"5,000 IQD",
+		"desc":"Grilled chicken, BBQ sauce, mozzarella.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"Four Cheese",
+		"price":"7,000 IQD",
+		"desc":"Mozzarella, cheddar, parmesan, gorgonzola.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="}
       ]},
+
+
       "Burger": {"title": "Burgers", "icon": "fas fa-hamburger","items":[
-        {"name":"Signature Burger","price":"6,000 IQD","desc":"Beef patty, truffle mayo, caramelized onions.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+        {"name":"Signature Burger",
+		"price":"6,000 IQD",
+		"desc":"Beef patty, truffle mayo, caramelized onions.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
         {"name":"Cheeseburger","price":"5,000 IQD","desc":"Beef patty, cheddar cheese, lettuce.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"Chicken Burger","price":"5,000 IQD","desc":"Grilled chicken, mayo, lettuce, tomato.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"Veggie Burger","price":"4,000 IQD","desc":"Grilled vegetables, cheese, lettuce.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"Double Beef Burger","price":"7,000 IQD","desc":"Double beef patties, cheddar, bacon.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="}
+
+	   {"name":"Chicken Burger"
+	   ,"price":"5,000 IQD",
+	   "desc":"Grilled chicken, mayo, lettuce, tomato.",
+	   "img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+        {"name":"Veggie Burger",
+		"price":"4,000 IQD",
+		"desc":"Grilled vegetables, cheese, lettuce.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+        {"name":"Double Beef Burger",
+		"price":"7,000 IQD",
+		"desc":"Double beef patties, cheddar, bacon.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="}
       ]},
+
+
       "Cold Drinks": {"title":"Cold Drinks","icon":"fas fa-cocktail","items":[
-        {"name":"Iced Tea","price":"10,000 IQD","desc":"Refreshing iced black tea with lemon.","img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
-        {"name":"Lemonade","price":"12,000 IQD","desc":"Freshly squeezed lemon juice.","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
-        {"name":"Cola","price":"8,000 IQD","desc":"Classic cold soft drink.","img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
-        {"name":"Mojito Mocktail","price":"15,000 IQD","desc":"Mint, lime, soda water, sugar.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
-        {"name":"Fruit Punch","price":"14,000 IQD","desc":"Mixed fruit juice with soda.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+
+        {"name":"Iced Tea",
+		"price":"10,000 IQD",
+		"desc":"Refreshing iced black tea with lemon.",
+		"img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
+
+        {"name":"Lemonade",
+		"price":"12,000 IQD",
+		"desc":"Freshly squeezed lemon juice.",
+		"img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+
+		{"name":"Cola",
+		"price":"8,000 IQD",
+		"desc":"Classic cold soft drink.",
+		"img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
+
+        {"name":"Mojito Mocktail",
+		"price":"15,000 IQD",
+		"desc":"Mint, lime, soda water, sugar.",
+		"img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+
+        {"name":"Fruit Punch",
+		"price":"14,000 IQD",
+		"desc":"Mixed fruit juice with soda.",
+		"img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
       ]},
+
       "Hot Drinks": {"title":"Hot Drinks","icon":"fas fa-coffee","items":[
-        {"name":"Espresso","price":"10,000 IQD","desc":"Strong and bold coffee shot.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"Cappuccino","price":"12,000 IQD","desc":"Espresso with steamed milk and foam.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"Latte","price":"13,000 IQD","desc":"Espresso with steamed milk.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"Hot Chocolate","price":"15,000 IQD","desc":"Rich chocolate with milk.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"Herbal Tea","price":"9,000 IQD","desc":"Soothing herbal infusion.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
+
+        {"name":"Espresso",
+		"price":"10,000 IQD",
+		"desc":"Strong and bold coffee shot.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"Cappuccino",
+		"price":"12,000 IQD",
+		"desc":"Espresso with steamed milk and foam.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"Latte",
+		"price":"13,000 IQD",
+		"desc":"Espresso with steamed milk.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"Hot Chocolate",
+		"price":"15,000 IQD",
+		"desc":"Rich chocolate with milk.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"Herbal Tea",
+		"price":"9,000 IQD",
+		"desc":"Soothing herbal infusion.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
       ]},
 
       "Sweets": {"title":"Sweets","icon":"fas fa-ice-cream","items":[
-        {"name":"Chocolate Cake","price":"20,000 IQD","desc":"Rich chocolate sponge cake.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"Cheesecake","price":"2,000 IQD","desc":"Creamy cheesecake with berries.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"Ice Cream Sundae","price":"18,000 IQD","desc":"Vanilla ice cream with toppings.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"Baklava","price":"5,000 IQD","desc":"Sweet pastry with nuts and syrup.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"Chocolate Brownie","price":"20,000 IQD","desc":"Rich and fudgy chocolate brownie.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
+
+        {"name":"Chocolate Cake",
+		"price":"20,000 IQD",
+		"desc":"Rich chocolate sponge cake.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"Cheesecake",
+		"price":"2,000 IQD",
+		"desc":"Creamy cheesecake with berries.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"Ice Cream Sundae",
+		"price":"18,000 IQD",
+		"desc":"Vanilla ice cream with toppings.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"Baklava",
+		"price":"5,000 IQD",
+		"desc":"Sweet pastry with nuts and syrup.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"Chocolate Brownie",
+		"price":"20,000 IQD",
+		"desc":"Rich and fudgy chocolate brownie.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
       ]}
     }
   },
+
+
   "ar": {
     "translations": {
       "restaurantName": "دهوك رست و كافيه",
@@ -251,40 +467,145 @@
     },
     "menu": {
       "Pizza": {"title": "بيتزا", "icon": "fas fa-pizza-slice","items":[
-        {"name":"ڤيسوفيو مارجريتا","price":"5,000 IQD","desc":"طماطم سان مارزانو، موتزاريلا، ريحان.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"بيبروني دلايت","price":"6,000 IQD","desc":"بيبروني، موتزاريلا، صلصة الطماطم.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"الخضروات الخاصة","price":"5,000 IQD","desc":"خضار متنوعة، موتزاريلا، صلصة الطماطم.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"بيتزا دجاج باربيكيو","price":"6,000 IQD","desc":"دجاج مشوي، صلصة باربيكيو، موتزاريلا.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
-        {"name":"أربعة أجبان","price":"7,000 IQD","desc":"موتزاريلا، شيدر، بارميزان، جورجونزولا.","img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="}
-      ]},
+
+        {"name":"ڤيسوفيو مارجريتا",
+		"price":"5,000 IQD",
+		"desc":"طماطم سان مارزانو، موتزاريلا، ريحان.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"بيبروني دلايت",
+		"price":"6,000 IQD",
+		"desc":"بيبروني، موتزاريلا، صلصة الطماطم.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"الخضروات الخاصة",
+		"price":"5,000 IQD",
+		"desc":"خضار متنوعة، موتزاريلا، صلصة الطماطم.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"بيتزا دجاج باربيكيو",
+		"price":"6,000 IQD",
+		"desc":"دجاج مشوي، صلصة باربيكيو، موتزاريلا.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="},
+
+		{"name":"أربعة أجبان",
+		"price":"7,000 IQD",
+		"desc":"موتزاريلا، شيدر، بارميزان، جورجونزولا.",
+		"img":"https://media.istockphoto.com/id/2023102269/photo/pizza-topped-with-fresh-basil-tomato-and-cheese-on-top-of-wooden-platter.jpg?s=612x612&w=0&k=20&c=3oxyQVNkMGuKF57X4yUUoDNTYFc04TM1jN0RyeJ5qPE="}
+
+	 ]},
       "Burger": {"title": "برجر", "icon": "fas fa-hamburger","items":[
-        {"name":"برجر مميز","price":"6,000 IQD","desc":"لحم بقري، مايونيز الكمأ، بصل كاراميل.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"تشيز برجر","price":"5,000 IQD","desc":"لحم بقري، جبنة شيدر، خس.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"برجر دجاج","price":"5,000 IQD","desc":"دجاج مشوي، مايونيز، خس، طماطم.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"برجر خضار","price":"4,000 IQD","desc":"خضروات مشوية، جبنة، خس.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
-        {"name":"برجر لحم مزدوج","price":"7,000 IQD","desc":"قطعتا لحم، شيدر، بيكون.","img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="}
-      ]},
+        {"name":"برجر مميز",
+		"price":"6,000 IQD",
+		"desc":"لحم بقري، مايونيز الكمأ، بصل كاراميل.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+
+		{"name":"تشيز برجر",
+		"price":"5,000 IQD",
+		"desc":"لحم بقري، جبنة شيدر، خس.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+		{"name":"برجر دجاج",
+		"price":"5,000 IQD",
+		"desc":"دجاج مشوي، مايونيز، خس، طماطم.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+		{"name":"برجر خضار",
+		"price":"4,000 IQD",
+		"desc":"خضروات مشوية، جبنة، خس.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="},
+
+		{"name":"برجر لحم مزدوج",
+		"price":"7,000 IQD",
+		"desc":"قطعتا لحم، شيدر، بيكون.",
+		"img":"https://media.istockphoto.com/id/617759204/photo/steakhouse-double-bacon-cheeseburger.jpg?s=612x612&w=0&k=20&c=QRaHtrxJsmNKOlOTkvxyE-o-3kM-Me1zU320yPT8ycI="}
+
+	  ]},
       "Cold Drinks": {"title":"مشروبات باردة","icon":"fas fa-cocktail","items":[
-        {"name":"شاي مثلج","price":"10,000 IQD","desc":"شاي أسود مثلج منعش مع الليمون.","img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
-        {"name":"عصير ليمون","price":"12,000 IQD","desc":"عصير ليمون طازج.","img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
-        {"name":"كولا","price":"8,000 IQD","desc":"مشروب غازي بارد كلاسيكي.","img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
-        {"name":"موهيتو بدون كحول","price":"15,000 IQD","desc":"نعناع، ليمون، صودا، سكر.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
-        {"name":"بانش فواكه","price":"14,000 IQD","desc":"عصير فواكه مع صودا.","img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
+
+        {"name":"شاي مثلج",
+		"price":"10,000 IQD",
+		"desc":"شاي أسود مثلج منعش مع الليمون.",
+		"img":"https://images.unsplash.com/photo-1562007902-5b13d7be5e99"},
+
+        {"name":"عصير ليمون",
+		"price":"12,000 IQD",
+		"desc":"عصير ليمون طازج.",
+		"img":"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+
+		{"name":"كولا",
+		"price":"8,000 IQD",
+		"desc":"مشروب غازي بارد كلاسيكي.",
+		"img":"https://images.unsplash.com/photo-1590080870590-b57f6bcf58b7"},
+
+        {"name":"موهيتو بدون كحول",
+		"price":"15,000 IQD",
+		"desc":"نعناع، ليمون، صودا، سكر.",
+		"img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"},
+
+        {"name":"بانش فواكه",
+		"price":"14,000 IQD",
+		"desc":"عصير فواكه مع صودا.",
+		"img":"https://images.unsplash.com/photo-1617196036186-4178e68d0492"}
       ]},
+
+
       "Hot Drinks": {"title":"مشروبات ساخنة","icon":"fas fa-coffee","items":[
-        {"name":"إسبريسو","price":"10,000 IQD","desc":"قهوة قوية ومركزة.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"كابتشينو","price":"12,000 IQD","desc":"إسبريسو مع حليب مبخر ورغوة.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"لاتيه","price":"13,000 IQD","desc":"إسبريسو مع حليب مبخر.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"هوت شوكليت","price":"15,000 IQD","desc":"شوكولاتة غنية مع الحليب.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
-        {"name":"شاي أعشاب","price":"9,000 IQD","desc":"شاي أعشاب مهدئ.","img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
+
+		{"name":"إسبريسو",
+		"price":"10,000 IQD",
+		"desc":"قهوة قوية ومركزة.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"كابتشينو",
+		"price":"12,000 IQD",
+		"desc":"إسبريسو مع حليب مبخر ورغوة.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"لاتيه",
+		"price":"13,000 IQD",
+		"desc":"إسبريسو مع حليب مبخر.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+
+	{"name":"هوت شوكليت",
+	"price":"15,000 IQD",
+	"desc":"شوكولاتة غنية مع الحليب.",
+	"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+
+        {"name":"شاي أعشاب",
+		"price":"9,000 IQD",
+		"desc":"شاي أعشاب مهدئ.",
+		"img":"https://images.unsplash.com/photo-1511920170033-f8396924c348"}
       ]},
 
       "Sweets": {"title":"حلويات","icon":"fas fa-ice-cream","items":[
-        {"name":"كيك شوكولاتة","price":"20,000 IQD","desc":"كيك إسفنجي غني بالشوكولاتة.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"تشيز كيك","price":"22,000 IQD","desc":"تشيز كيك كريمي مع التوت.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"آيس كريم صن داي","price":"18,000 IQD","desc":"آيس كريم فانيلا مع إضافات.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"بقلاوة","price":"25,000 IQD","desc":"معجنات حلوة بالمكسرات والشراب.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
-        {"name":"براوني شوكولاتة","price":"20,000 IQD","desc":"براوني غني ولذيذ بالشوكولاتة.","img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
+
+    {"name":"كيك شوكولاتة",
+	"price":"20,000 IQD",
+	"desc":"كيك إسفنجي غني بالشوكولاتة.",
+	"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"تشيز كيك",
+		"price":"22,000 IQD",
+		"desc":"تشيز كيك كريمي مع التوت.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"آيس كريم صن داي",
+		"price":"18,000 IQD",
+		"desc":"آيس كريم فانيلا مع إضافات.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"بقلاوة",
+		"price":"25,000 IQD",
+		"desc":"معجنات حلوة بالمكسرات والشراب.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"},
+
+        {"name":"براوني شوكولاتة",
+		"price":"20,000 IQD",
+		"desc":"براوني غني ولذيذ بالشوكولاتة.",
+		"img":"https://images.unsplash.com/photo-1606755962774-bf8e5e5ed360"}
       ]}
     }
   }
@@ -292,40 +613,34 @@
 </script>
 
 
-<header class="header">
-  <div class="container">
-    <h1 class="restaurant-name" id="restaurant-name"></h1>
-    <p class="cuisine-text" id="cuisine-text"></p>
-    <div class="contact-info">
-      <span id="location-text"></span> | <span id="reservation-text"></span>
-    </div>
-  </div>
-</header>
-
-<main class="container">
-  <div class="menu-tabs" id="menu-tabs"></div>
-  <div class="view-controls">
-    <button class="view-button active" data-view="list-view"><i class="fas fa-list"></i> List</button>
-    <button class="view-button" data-view="grid-view-2"><i class="fas fa-th"></i> 2x2 Grid</button>
-  </div>
-  <div class="menu-content" id="menu-content"></div>
-</main>
-
-<footer class="footer"><div class="container"><p id="footer-text"></p></div></footer>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const data = JSON.parse(document.getElementById("menu-data").textContent);
-  let selectedLang = null;
   const langSelection = document.getElementById("language-selection");
+  const body = document.body;
 
   // Dil seçimi
   langSelection.addEventListener("click", e => {
     const btn = e.target.closest("button");
     if (!btn) return;
-    selectedLang = btn.dataset.lang;
-    langSelection.style.display = "none"; // Dil ekranını gizle
-    loadMenu(selectedLang);
+
+    // Add active class to clicked button
+    document.querySelectorAll('#language-selection button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const selectedLang = btn.dataset.lang;
+    
+    // Set Direction (RTL for Arabic)
+    body.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+
+    // Fade out language selection screen
+    langSelection.classList.add('hidden');
+
+    // After fade-out, show the menu (using a small timeout for visual effect)
+    setTimeout(() => {
+        body.classList.add('lang-selected'); 
+        loadMenu(selectedLang);
+    }, 500); // 500ms matches the CSS transition time
   });
 
   function loadMenu(lang) {
@@ -340,7 +655,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const menuTabs = document.getElementById("menu-tabs");
     const menuContent = document.getElementById("menu-content");
-    let activeView = "list-view";
+    let activeView = "grid-view-2"; 
 
     menuTabs.innerHTML = "";
     menuContent.innerHTML = "";
@@ -387,14 +702,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Görünüm değişimi
+    // Görünüm değişimini tab butonlarının yanında bulunan butona bağlama
     document.querySelectorAll(".view-button").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".view-button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         activeView = btn.dataset.view;
         document.querySelectorAll(".menu-grid").forEach(grid => {
-          grid.className = `menu-grid ${activeView}`;
+          grid.classList.remove('grid-view-2', 'list-view');
+          grid.classList.add(activeView);
         });
       });
     });
