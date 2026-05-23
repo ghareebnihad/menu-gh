@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- initial-scale 0.65 yapılarak mobil cihazlarda %35 uzaklaştırma sağlandı -->
+  <meta name="viewport" content="width=device-width, initial-scale=0.65, maximum-scale=5.0" />
   <title>DUHOK REST & CAFFE - Digital Menu</title>
   <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,306 +12,244 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
   <style>
-    /* Premium Design System */
-    :root {
-      --bg-color: #0b0c10;
-      --surface-color: #1f2833;
-      --card-bg: #151a21;
-      --text-color: #f5f5f7;
-      --accent-color: #c5a030; /* Premium Gold */
-      --accent-hover: #e5c158;
-      --secondary-text: #9ca3af;
-      --orange-active: #ff7a00;
-      --glass-bg: rgba(21, 26, 33, 0.85);
-      --font-sans: 'Inter', sans-serif;
-      --font-serif: 'Playfair Display', serif;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+   /* Premium Design System */
+:root {
+  --bg-color: #0b0c10;
+  --surface-color: #1f2833;
+  --card-bg: #151a21;
+  --text-color: #f5f5f7;
+  --accent-color: #c5a030; /* Premium Gold */
+  --accent-hover: #e5c158;
+  --secondary-text: #9ca3af;
+  --orange-active: #ff7a00;
+  --glass-bg: rgba(21, 26, 33, 0.85);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* --- Core Menu Layout --- */
-    .container { width: 92%; max-width: 1000px; margin: 0 auto; }
-    
-    .header {
-      background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, var(--bg-color) 100%);
-      padding: 50px 0 30px 0;
-      text-align: center;
-      position: relative;
-    }
+body {
+  zoom: 0.65; /* Masaüstü ve destekleyen tarayıcılar için %35 Zoom out eklendi */
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-    .restaurant-name {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--accent-color);
-      margin-bottom: 8px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+/* --- Core Menu Layout --- */
+.container { width: 92%; max-width: 1000px; margin: 0 auto; }
 
-    .cuisine-text {
-      font-size: 1rem;
-      color: var(--secondary-text);
-      margin-bottom: 25px;
-      font-weight: 300;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
+.header {
+  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, var(--bg-color) 100%);
+  padding: 50px 0 30px 0;
+  text-align: center;
+  position: relative;
+}
 
-    /* Clean, Borderless Contact Info Style */
-    .contact-info {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      font-size: 0.95rem;
-      color: var(--text-color);
-      opacity: 0.9;
-    }
+.restaurant-name {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 400;
-    }
+.cuisine-text {
+  font-size: 1rem;
+  color: var(--secondary-text);
+  margin-bottom: 25px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
 
-    .contact-item i { 
-      color: var(--accent-color); 
-      font-size: 1.05rem;
-    }
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  opacity: 0.9;
+}
 
-    /* Sticky Tab Navigation */
-    .sticky-nav {
-      position: sticky;
-      top: 0;
-      background: var(--glass-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 12px 0;
-    }
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
 
-    .menu-tabs {
-      display: flex;
-      overflow-x: auto;
-      gap: 12px;
-      padding: 5px 0;
-      white-space: nowrap;
-      scrollbar-width: none; /* Firefox */
-    }
+.contact-item i { color: var(--accent-color); font-size: 1.05rem; }
 
-    .menu-tabs::-webkit-scrollbar { display: none; /* Chrome, Safari */ }
+/* Sticky Tab Navigation - Güncellenmiş Kare Tasarım */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 15px 0;
+}
 
-    .tab-button {
-      flex-shrink: 0;
-      background-color: var(--card-bg);
-      color: var(--secondary-text);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 12px 20px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--transition);
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.menu-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 5px 0;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
 
-    .tab-button i { font-size: 1rem; color: var(--accent-color); transition: var(--transition); }
-    .tab-button:hover { background-color: rgba(255,255,255,0.05); color: var(--text-color); }
-    
-    .tab-button.active {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(197, 160, 48, 0.3);
-      border-color: transparent;
-    }
-    .tab-button.active i { color: var(--bg-color); }
+.menu-tabs::-webkit-scrollbar { display: none; }
 
-    /* View Controls */
-    .view-controls {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      padding: 20px 0;
-    }
+.tab-button {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95px;
+  height: 95px;
+  flex-shrink: 0;
+  background-color: var(--card-bg);
+  color: var(--secondary-text);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+  font-size: 0.8rem;
+  gap: 10px;
+  display: flex;
+}
 
-    .view-button {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background-color: var(--card-bg);
-      color: var(--secondary-text);
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.tab-button i { font-size: 1.6rem; color: var(--accent-color); transition: var(--transition); }
+.tab-button:hover { background-color: rgba(255,255,255,0.08); color: var(--text-color); }
 
-    .view-button:hover, .view-button.active {
-      background-color: var(--surface-color);
-      color: var(--accent-color);
-      border-color: var(--accent-color);
-    }
+.tab-button.active {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(197, 160, 48, 0.3);
+  border-color: transparent;
+}
+.tab-button.active i { color: var(--bg-color); }
 
-    /* Menu Sections */
-    .menu-section { display: none; animation: fadeIn 0.4s ease; }
-    .menu-section.active { display: block; }
-    
-    .menu-section h2 {
-      font-family: var(--font-serif);
-      font-size: 1.8rem;
-      color: var(--accent-color);
-      margin-bottom: 25px;
-      position: relative;
-      padding-bottom: 8px;
-    }
-    
-    .menu-section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 2px;
-      background-color: var(--accent-color);
-    }
-    body[dir="rtl"] .menu-section h2::after { left: auto; right: 0; }
+/* View Controls */
+.view-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px 0;
+}
 
-    /* Grid Architecture */
-    .menu-grid { display: grid; gap: 20px; margin-bottom: 5px; }
-    
-    .menu-grid.grid-view-2 {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
+.view-button {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--card-bg);
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .menu-item {
-      display: flex;
-      flex-direction: column;
-      background-color: var(--card-bg);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-    }
+.view-button:hover, .view-button.active {
+  background-color: var(--surface-color);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
 
-    .menu-item:hover {
-      transform: translateY(-5px);
-      border-color: rgba(197, 160, 48, 0.3);
-    }
+/* Menu Sections */
+.menu-section { display: none; animation: fadeIn 0.4s ease; }
+.menu-section.active { display: block; }
 
-    .item-image-wrapper {
-      position: relative;
-      width: 100%;
-      height: 180px;
-      overflow: hidden;
-    }
+.menu-section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 8px;
+}
 
-    .item-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-    .menu-item:hover .item-image { transform: scale(1.06); }
+.menu-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+body[dir="rtl"] .menu-section h2::after { left: auto; right: 0; }
 
-    .item-details {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
+/* Grid Architecture */
+.menu-grid { display: grid; gap: 20px; margin-bottom: 5px; }
 
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
+.menu-grid.grid-view-2 {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
 
-    .item-name {
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-    }
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
 
-    .price {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent-color);
-      white-space: nowrap;
-    }
+.menu-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(197, 160, 48, 0.3);
+}
 
-    .description {
-      font-size: 0.88rem;
-      color: var(--secondary-text);
-      font-weight: 300;
-    }
+.item-image-wrapper { position: relative; width: 100%; height: 180px; overflow: hidden; }
 
-    /* List View Configuration */
-    .menu-grid.list-view .menu-item {
-      flex-direction: row;
-      align-items: center;
-    }
-    
-    .menu-grid.list-view .item-image-wrapper {
-      width: 130px;
-      height: 130px;
-      flex-shrink: 0;
-    }
+.item-image { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+.menu-item:hover .item-image { transform: scale(1.06); }
 
-    .menu-grid.list-view .item-details {
-      padding: 15px 20px;
-    }
+.item-details { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
 
-    /* --- Responsive Fixes --- */
-    @media (max-width: 768px) {
-      .restaurant-name { font-size: 2.3rem; }
-      .contact-info { gap: 15px; font-size: 0.88rem; }
-      .menu-grid.grid-view-2 {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
-      }
-      .item-image-wrapper { height: 150px; }
-      
-      .menu-grid.list-view .item-image-wrapper {
-        width: 100px;
-        height: 100px;
-      }
-      .menu-grid.list-view .item-details { padding: 12px; }
-      .menu-grid.list-view .item-name { font-size: 1rem; }
-      .menu-grid.list-view .price { font-size: 0.95rem; }
-    }
+.item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
 
-    @media (max-width: 480px) {
-      .menu-grid.list-view .menu-item { flex-direction: column; }
-      .menu-grid.list-view .item-image-wrapper { width: 100%; height: 160px; }
-    }
+.item-name { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.3px; }
+
+.price { font-size: 1.1rem; font-weight: 700; color: var(--accent-color); white-space: nowrap; }
+
+.description { font-size: 0.88rem; color: var(--secondary-text); font-weight: 300; }
+
+/* List View Configuration */
+.menu-grid.list-view .menu-item { flex-direction: row; align-items: center; }
+.menu-grid.list-view .item-image-wrapper { width: 130px; height: 130px; flex-shrink: 0; }
+.menu-grid.list-view .item-details { padding: 15px 20px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .restaurant-name { font-size: 2.3rem; }
+  .menu-grid.grid-view-2 { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+  .item-image-wrapper { height: 150px; }
+}
 
     /* Language Welcoming Overlay */
     #language-selection {
@@ -358,16 +297,20 @@
       margin-bottom: 30px;
     }
 
+    /* Dil Seçimi Butonlarını Düzenleyen CSS Kısmı */
     .buttons-container {
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 250px;
     }
 
     #language-selection button {
-      padding: 16px 45px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      font-family: var(--font-sans);
+      padding: 29px 20px;
+      width: 100%;
+      font-size: 1.35rem;
+      font-weight: 640;
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -382,31 +325,11 @@
       transform: translateY(-4px);
       box-shadow: 0 10px 25px rgba(255, 122, 0, 0.35);
     }
+.menu-wrapper { display: none; flex-direction: column; min-height: 100vh; }
+body.lang-selected .menu-wrapper { display: flex; }
 
-    /* Main Application Display Logic */
-    .menu-wrapper {
-      display: none;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    body.lang-selected .menu-wrapper { display: flex; }
-
-    .footer {
-      margin-top: auto;
-      padding: 30px 0;
-      background-color: #060709;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--secondary-text);
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
-    }
-    .footer strong { color: var(--accent-color); font-weight: 500; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.footer { margin-top: auto; padding: 30px 0; background-color: #060709; text-align: center; font-size: 0.85rem; color: var(--secondary-text); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -414,10 +337,10 @@
 <div id="language-selection">
   <div class="logo">Duhok</div>
   <div class="sub-logo">Rest & Caffe</div>
-  <h2>اختر اللغة / Select Language</h2>
-  <div class="buttons-container">
-    <button data-lang="en">English</button>
-    <button data-lang="ar">العربية</button>
+  <div class="buttons-container" style="flex-direction: column; width: 100%; max-width: 280px;">
+    <button data-lang="en" style="width: 100%;">English</button>
+    <button data-lang="ar" style="width: 100%;">العربية</button>
+    
   </div>
 </div>
 
@@ -459,52 +382,64 @@
   "en": {
     "translations": {
       "restaurantName": "DUHOK REST & CAFFE",
-      "cuisineText": "Mediterranean Fusion, Premium Coffee & Shisha",
+      "cuisineText": "Mediterranean cuisine, premium coffee & hookah",
       "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
       "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
       "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
     },
     "menu": {
-      "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice","items":[
-        {"name":"Vesuvio Margarita", "price":"5,000 IQD", "desc":"San Marzano tomato, fresh mozzarella, aromatic basil.", "img":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Pepperoni Delight", "price":"6,000 IQD", "desc":"Premium pepperoni, melted mozzarella, house artisan tomato sauce.", "img":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Vegetarian Special", "price":"5,000 IQD", "desc":"Seasonal mixed veggies, mozzarella, signature sauce.", "img":"https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
-        {"name":"BBQ Chicken Pizza", "price":"5,000 IQD", "desc":"Tender grilled chicken, smoky BBQ glaze, golden mozzarella.", "img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Four Cheese", "price":"7,000 IQD", "desc":"A rich blend of mozzarella, classic cheddar, parmesan, and earthy gorgonzola.", "img":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
+      "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice", "items": [
+        {"name": "Vesuvio Margarita", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Pepperoni Delight", "price": "6,000 IQD", "img": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Vegetarian Special", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
+        {"name": "BBQ Chicken Pizza", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Four Cheese", "price": "7,000 IQD", "img": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Burger": {"title": "Burgers", "icon": "fas fa-hamburger","items":[
-        {"name":"Signature Burger", "price":"6,000 IQD", "desc":"Flame-grilled beef patty, exquisite truffle mayo, sweet caramelized onions.", "img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Cheeseburger", "price":"5,000 IQD", "desc":"Juicy beef patty, melted cheddar cheese, crisp lettuce.", "img":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Chicken Burger", "price":"5,000 IQD", "desc":"Crispy grilled chicken breast, smooth mayo, fresh lettuce, tomatoes.", "img":"https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Veggie Burger", "price":"4,000 IQD", "desc":"Handcrafted vegetable patty, cheese, organic lettuce mix.", "img":"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Double Beef Burger", "price":"7,000 IQD", "desc":"Double stacked beef patties, sharp cheddar, crispy bacon strips.", "img":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
+      "Burger": {"title": "Burgers", "icon": "fas fa-hamburger", "items": [
+        {"name": "Signature Burger", "price": "6,000 IQD", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Cheeseburger", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Chicken Burger", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Veggie Burger", "price": "4,000 IQD", "img": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Double Beef Burger", "price": "7,000 IQD", "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Cold Drinks": {"title":"Cold Drinks","icon":"fas fa-cocktail","items":[
-        {"name":"Classic Mojito", "price":"15,000 IQD", "desc":"Muddled refreshing mint leaves, freshly squeezed lime, pure cane sugar and bubbly soda water.", "img":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Strawberry Mojito", "price":"16,000 IQD", "desc":"Fresh sweet strawberries combined with cool mint, lime juice and a fizzy splash.", "img":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Iced Tea", "price":"10,000 IQD", "desc":"Refreshing brewed black tea infused with zesty fresh lemon.", "img":"https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Lemonade", "price":"12,000 IQD", "desc":"Freshly squeezed premium lemon juice chilled to perfection.", "img":"https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Cola", "price":"8,000 IQD", "desc":"Classic, icy cold soft drink.", "img":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
+      "Cold Drinks": {"title": "Cold Drinks", "icon": "fas fa-cocktail", "items": [
+        {"name": "Classic Mojito", "price": "15,000 IQD", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Strawberry Mojito", "price": "16,000 IQD", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Iced Tea", "price": "10,000 IQD", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Lemonade", "price": "12,000 IQD", "img": "https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Cola", "price": "8,000 IQD", "img": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Hot Drinks": {"title":"Hot Drinks","icon":"fas fa-coffee","items":[
-        {"name":"Espresso", "price":"10,000 IQD", "desc":"Intense, aromatic espresso shot brewed from premium beans.", "img":"https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Cappuccino", "price":"12,000 IQD", "desc":"Rich espresso balanced with perfectly velvety steamed milk and thick foam.", "img":"https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Latte", "price":"13,000 IQD", "desc":"Smooth espresso canvas topped with delicate steamed milk wrapper.", "img":"https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Hot Chocolate", "price":"15,000 IQD", "desc":"Decadent dark chocolate melted into warm whole milk.", "img":"https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Herbal Tea", "price":"9,000 IQD", "desc":"A selection of premium, deeply soothing aromatic herbs.", "img":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
+      "Hot Drinks": {"title": "Hot Drinks", "icon": "fas fa-coffee", "items": [
+        {"name": "Espresso", "price": "10,000 IQD", "img": "https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Cappuccino", "price": "12,000 IQD", "img": "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Latte", "price": "13,000 IQD", "img": "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Hot Chocolate", "price": "15,000 IQD", "img": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Herbal Tea", "price": "9,000 IQD", "img": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
       ]},
       "Shisha": {"title": "Shisha & Hookah", "icon": "fas fa-wind", "items": [
-        {"name":"Classic Double Apple", "price":"10,000 IQD", "desc":"The globally celebrated classic anise and sweet double apple premium flavor.", "img":"https://images.unsplash.com/photo-1527156217449-69f1a2162ca2?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Love 66 Special", "price":"10,000 IQD", "desc":"A popular tropical passion fruit, sweet melon and cooling mint recipe.", "img":"https://images.unsplash.com/photo-1610136611440-b6058d92948f?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Zesty Lemon Mint", "price":"9,000 IQD", "desc":"Crisp and refreshing citrus blend combined with a cool icy finish.", "img":"https://images.unsplash.com/photo-1542332213-9b5a5a3fab35?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Premium Grape Mint", "price":"9,000 IQD", "desc":"Deeply rich, sweet red grape base balanced elegantly with fresh garden mint.", "img":"https://images.unsplash.com/photo-1601275211244-432318d17fcf?auto=format&fit=crop&w=600&q=80"}
+        {"name": "Classic Double Apple", "price": "10,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "Love 66 Special", "price": "10,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "Zesty Lemon Mint", "price": "9,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "Premium Grape Mint", "price": "9,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="}
       ]},
-      "Sweets": {"title":"Sweets","icon":"fas fa-ice-cream","items":[
-        {"name":"Chocolate Cake", "price":"20,000 IQD", "desc":"Layered rich chocolate sponge cake with elegant fudge.", "img":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Cheesecake", "price":"22,000 IQD", "desc":"Creamy New York style cheesecake topped with wild berries syrup.", "img":"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Ice Cream Sundae", "price":"18,000 IQD", "desc":"Gourmet vanilla bean ice cream loaded with premium toppings.", "img":"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Baklava", "price":"25,000 IQD", "desc":"Flaky traditional pastry layered with crushed nuts and sweet honey syrup.", "img":"https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
-        {"name":"Chocolate Brownie", "price":"20,000 IQD", "desc":"Fudgy dark chocolate brownie served delightfully warm.", "img":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
+      "Sweets": {"title": "Sweets", "icon": "fas fa-ice-cream", "items": [
+        {"name": "Chocolate Cake", "price": "20,000 IQD", "desc": "Layered rich chocolate sponge cake with elegant fudge.", "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Cheesecake", "price": "22,000 IQD", "desc": "Creamy New York style cheesecake topped with wild berries syrup.", "img": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Ice Cream Sundae", "price": "18,000 IQD", "desc": "Gourmet vanilla bean ice cream loaded with premium toppings.", "img": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Baklava", "price": "25,000 IQD", "desc": "Flaky traditional pastry layered with crushed nuts and sweet honey syrup.", "img": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Chocolate Brownie", "price": "20,000 IQD", "desc": "Fudgy dark chocolate brownie served delightfully warm.", "img": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
+      ]},
+      "Mojito": {"title": "Mojitos", "icon": "fas fa-leaf", "items": [
+        {"name": "Mint Mojito", "price": "15,000 IQD", "desc": "Refreshing classic mint mojito with pure cane sugar and bubbly soda water.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Special Mojito", "price": "18,000 IQD", "desc": "Our signature special mojito blend for a unique taste.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Strawberry Mojito", "price": "16,000 IQD", "desc": "Fresh sweet strawberries combined with cool mint and a fizzy splash.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Blue Hawaii Mojito", "price": "17,000 IQD", "desc": "Tropical blue hawaii flavors perfectly mixed with our classic mojito base.", "img": "https://images.unsplash.com/photo-1525268323446-0505b6efa779?auto=format&fit=crop&w=600&q=80"}
+      ]},
+      "Milkshake": {"title": "Milkshakes", "icon": "fas fa-blender", "items": [
+        {"name": "Strawberry Milkshake", "price": "12,000 IQD", "desc": "Creamy and sweet strawberry milkshake topped with whipped cream.", "img": "https://media.istockphoto.com/id/179767576/photo/strawberry-milkshake.jpg?s=612x612&w=0&k=20&c=Si5hnn7jn3IKj7nA_SXqEQcwigGqrvNQ-c9-jbxwdDg="},
+        {"name": "Oreo Milkshake", "price": "14,000 IQD", "desc": "Thick milkshake blended with classic Oreo cookies and chocolate syrup.", "img": "https://images.unsplash.com/photo-1579954115545-a95f9d2e1327?auto=format&fit=crop&w=600&q=80"},
+        {"name": "Kinder Milkshake", "price": "15,000 IQD", "desc": "Premium milkshake crafted with smooth Kinder chocolate.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="},
+        {"name": "Nutella Milkshake", "price": "15,000 IQD", "desc": "Indulgent and rich Nutella milkshake for chocolate lovers.", "img": "https://images.unsplash.com/photo-1595991209266-5af5fe113d09?auto=format&fit=crop&w=600&q=80"}
       ]}
     }
   },
@@ -517,46 +452,58 @@
       "footerText": "جميع الحقوق محفوظة | <strong>تم التطوير بواسطة Ghareeb</strong>"
     },
     "menu": {
-      "Pizza": {"title": "بيتزا", "icon": "fas fa-pizza-slice","items":[
-        {"name":"ڤيسوفيو مارجريتا", "price":"5,000 IQD", "desc":"طماطم سان مارزانو، موتزاريلا طازجة، ريحان عطري.", "img":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
-        {"name":"بيبروني دلايت", "price":"6,000 IQD", "desc":"بيبروني ممتاز، موتزاريلا ذائبة، صلصة الطماطم المصنوعة منزلياً.", "img":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
-        {"name":"الخضروات الخاصة", "price":"5,000 IQD", "desc":"خضار موسمية متنوعة، موتزاريلا، صلصتنا الخاصة.", "img":"https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
-        {"name":"بيتزا دجاج باربيكيو", "price":"6,000 IQD", "desc":"دجاج مشوي طري، صوص باربيكيو مدخن، موتزاريلا ذهبية.", "img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
-        {"name":"أربعة أجبان", "price":"7,000 IQD", "desc":"مزيج غني من الموتزاريلا، الشيدر الكلاسيكي، البارميزان، والجورجونزولا.", "img":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
+      "Pizza": {"title": "بيتزا", "icon": "fas fa-pizza-slice", "items": [
+        {"name": "ڤيسوفيو مارجريتا", "price": "5,000 IQD", "desc": "طماطم سان مارزانو، موتزاريلا طازجة، ريحان عطري.", "img": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
+        {"name": "بيبروني دلايت", "price": "6,000 IQD", "desc": "بيبروني ممتاز، موتزاريلا ذائبة، صلصة الطماطم المصنوعة منزلياً.", "img": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
+        {"name": "الخضروات الخاصة", "price": "5,000 IQD", "desc": "خضار موسمية متنوعة، موتزاريلا، صلصتنا الخاصة.", "img": "https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
+        {"name": "بيتزا دجاج باربيكيو", "price": "6,000 IQD", "desc": "دجاج مشوي طري، صوص باربيكيو مدخن، موتزاريلا ذهبية.", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
+        {"name": "أربعة أجبان", "price": "7,000 IQD", "desc": "مزيج غني من الموتزاريلا، الشيدر الكلاسيكي، البارميزان، والجورجونزولا.", "img": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Burger": {"title": "برجر", "icon": "fas fa-hamburger","items":[
-        {"name":"برجر مميز", "price":"6,000 IQD", "desc":"لحm بقري مشوي على اللهب، مايونيز الكمأ الفاخر، بصل مكرمل حلو.", "img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
-        {"name":"تشيز برجر", "price":"5,000 IQD", "desc":"قطعة لحم بقري عصيرية، جبنة شيدر ذائبة، خس مقرمش.", "img":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
-        {"name":"برجر دجاج", "price":"5,000 IQD", "desc":"صدر دجاج مشوي مقرمش، مايونيز ناعم، خس طازج، طماطم.", "img":"https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
-        {"name":"برجر خضار", "price":"4,000 IQD", "desc":"أقراص خضروات مصنوعة يدوياً، جبنة، مزيج الخس العضوي.", "img":"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
-        {"name":"برجر لحم مزدوج", "price":"7,000 IQD", "desc":"قطعتان من اللحم البقري، شيدر حاد، شرائح لحم مقدد مقرمشة.", "img":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
+      "Burger": {"title": "برجر", "icon": "fas fa-hamburger", "items": [
+        {"name": "برجر مميز", "price": "6,000 IQD", "desc": "لحم بقري مشوي على اللهب، مايونيز الكمأ الفاخر، بصل مكرمل حلو.", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "تشيز برجر", "price": "5,000 IQD", "desc": "قطعة لحم بقري عصيرية، جبنة شيدر ذائبة، خس مقرمش.", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
+        {"name": "برجر دجاج", "price": "5,000 IQD", "desc": "صدر دجاج مشوي مقرمش، مايونيز ناعم، خس طازج، طماطم.", "img": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
+        {"name": "برجر خضار", "price": "4,000 IQD", "desc": "أقراص خضروات مصنوعة يدوياً، جبنة، مزيج الخس العضوي.", "img": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
+        {"name": "برجر لحم مزدوج", "price": "7,000 IQD", "desc": "قطعتان من اللحم البقري، شيدر حاد، شرائح لحم مقدد مقرمشة.", "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Cold Drinks": {"title":"مشروبات باردة","icon":"fas fa-cocktail","items":[
-        {"name":"موهيتو كلاسيك", "price":"15,000 IQD", "desc":"أوراق النعناع الطازجة المهروسة، ليمون حامض معصور، سكر قصب نقي ومياه صودا فوارة.", "img":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-        {"name":"موهيتو الفراولة", "price":"16,000 IQD", "desc":"الفراولة الحلوة الطازجة مع النعناع البارد وعصير الليمون المنعش مع الصودا.", "img":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-        {"name":"شاي مثلج", "price":"10,000 IQD", "desc":"شاي أسود مثلج منعش مع الليمون الحامض.", "img":"https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-        {"name":"عصير ليمون", "price":"12,000 IQD", "desc":"عصير ليمون طازج ومبرد بشكل مثالي.", "img":"https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
-        {"name":"كولا", "price":"8,000 IQD", "desc":"مشروب غازي كلاسيكي بارد ومثلج.", "img":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
+      "Cold Drinks": {"title": "مشروبات باردة", "icon": "fas fa-cocktail", "items": [
+        {"name": "موهيتو كلاسيك", "price": "15,000 IQD", "desc": "أوراق النعناع الطازجة المهروسة، ليمون حامض معصور، سكر قصب نقي ومياه صودا فوارة.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
+        {"name": "موهيتو الفراولة", "price": "16,000 IQD", "desc": "الفراولة الحلوة الطازجة مع النعناع البارد وعصير الليمون المنعش مع الصودا.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "شاي مثلج", "price": "10,000 IQD", "desc": "شاي أسود مثلج منعش مع الليمون الحامض.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
+        {"name": "عصير ليمون", "price": "12,000 IQD", "desc": "عصير ليمون طازج ومبرد بشكل مثالي.", "img": "https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
+        {"name": "كولا", "price": "8,000 IQD", "desc": "مشروب غازي كلاسيكي بارد ومثلج.", "img": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
       ]},
-      "Hot Drinks": {"title":"مشروبات ساخنة","icon":"fas fa-coffee","items":[
-        {"name":"إسبريسو", "price":"10,000 IQD", "desc":"جرعة إسبريسو قوية ومركزة ومستخلصة من حبوب بن ممتازة.", "img":"https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
-        {"name":"كابتشينو", "price":"12,000 IQD", "desc":"إسبريسو غني متوازن مع حليب مبخر مخملي ورغوة كثيفة.", "img":"https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
-        {"name":"لاتيه", "price":"13,000 IQD", "desc":"إسبريسو ناعم يعلوه حليب مبخر رقيق.", "img":"https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
-        {"name":"هوت شوكليت", "price":"15,000 IQD", "desc":"شوكولاتة داكنة ذائبة في حليب دافئ كامل الدسم.", "img":"https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
-        {"name":"شاي أعشاب", "price":"9,000 IQD", "desc":"مجموعة مختارة من الأعشاب العطرية الفاخرة والمهدئة للغاية.", "img":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
+      "Hot Drinks": {"title": "مشروبات ساخنة", "icon": "fas fa-coffee", "items": [
+        {"name": "إسبريسو", "price": "10,000 IQD", "desc": "جرعة إسبريسو قوية ومركزة ومستخلصة من حبوب بن ممتازة.", "img": "https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
+        {"name": "كابتشينو", "price": "12,000 IQD", "desc": "إسبريسو غني متوازن مع حليب مبخر مخملي ورغوة كثيفة.", "img": "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
+        {"name": "لاتيه", "price": "13,000 IQD", "desc": "إسبريسو ناعم يعلوه حليب مبخر رقيق.", "img": "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
+        {"name": "هوت شوكليت", "price": "15,000 IQD", "desc": "شوكولاتة داكنة ذائبة في حليب دافئ كامل الدسم.", "img": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
+        {"name": "شاي أعشاب", "price": "9,000 IQD", "desc": "مجموعة مختارة من الأعشاب العطرية الفاخرة والمهدئة للغاية.", "img": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
       ]},
       "Shisha": {"title": "الأرجيلة والشيشة", "icon": "fas fa-wind", "items": [
-        {"name":"تفاحتين كلاسيك فاخر", "price":"10,000 IQD", "desc":"النكهة التقليدية الأشهر عالمياً بمزيج التفاح المزدوج الفاخر والينسون.", "img":"https://images.unsplash.com/photo-1527156217449-69f1a2162ca2?auto=format&fit=crop&w=600&q=80"},
-        {"name":"عشق 66 المميز", "price":"10,000 IQD", "desc":"مزيج الفواكه الاستوائية الحلوة، البطيخ والنعناع البارد المنعش.", "img":"https://images.unsplash.com/photo-1610136611440-b6058d92948f?auto=format&fit=crop&w=600&q=80"},
-        {"name":"ليمون نعناع منعش", "price":"9,000 IQD", "desc":"مزيج الحمضيات القوي مع طبقة من النعناع لتدخين بارد ومنعش.", "img":"https://images.unsplash.com/photo-1542332213-9b5a5a3fab35?auto=format&fit=crop&w=600&q=80"},
-        {"name":"عنب نعناع فاخر", "price":"9,000 IQD", "desc":"نكهة العنب الأحمر الغنية والحلوة مع النعناع البري الطازج.", "img":"https://images.unsplash.com/photo-1601275211244-432318d17fcf?auto=format&fit=crop&w=600&q=80"}
+        {"name": "تفاحتين كلاسيك فاخر", "price": "10,000 IQD", "desc": "النكهة التقليدية الأشهر عالمياً بمزيج التفاح المزدوج الفاخر والينسون.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "عشق 66 المميز", "price": "10,000 IQD", "desc": "مزيج الفواكه الاستوائية الحلوة، البطيخ والنعناع البارد المنعش.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "ليمون نعناع منعش", "price": "9,000 IQD", "desc": "مزيج الحمضيات القوي مع طبقة من النعناع لتدخين بارد ومنعش.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
+        {"name": "عنب نعناع فاخر", "price": "9,000 IQD", "desc": "نكهة العنب الأحمر الغنية والحلوة مع النعناع البري الطازج.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="}
       ]},
-      "Sweets": {"title":"حلويات","icon":"fas fa-ice-cream","items":[
-        {"name":"كيك شوكولاتة", "price":"20,000 IQD", "desc":"كيك إسفنجي غني بالشوكولاتة مع فودج أنيق.", "img":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
-        {"name":"تشيز كيك", "price":"22,000 IQD", "desc":"تشيز كيك كريمي على طريقة نيويورك مغطى بشراب التوت البري.", "img":"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
-        {"name":"آيس كريم صن داي", "price":"18,000 IQD", "desc":"آيس كريم فانيليا فاخر غني بالإضافات اللذيذة.", "img":"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-        {"name":"بقلاوة", "price":"25,000 IQD", "desc":"معجنات تقليدية مقرمشة ومورقة محشوة بالمكسرات وشراب العسل الحلو.", "img":"https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
-        {"name":"براوني شوكولاتة", "price":"20,000 IQD", "desc":"براوني غني بالشوكولاتة الداكنة يقدم دافئاً بشكل رائع.", "img":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
+      "Sweets": {"title": "حلويات", "icon": "fas fa-ice-cream", "items": [
+        {"name": "كيك شوكولاتة", "price": "20,000 IQD", "desc": "كيك إسفنجي غني بالشوكولاتة مع فودج أنيق.", "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
+        {"name": "تشيز كيك", "price": "22,000 IQD", "desc": "تشيز كيك كريمي على طريقة نيويورك مغطى بشراب التوت البري.", "img": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
+        {"name": "آيس كريم صن داي", "price": "18,000 IQD", "desc": "آيس كريم فانيليا فاخر غني بالإضافات اللذيذة.", "img": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
+        {"name": "بقلاوة", "price": "25,000 IQD", "desc": "معجنات تقليدية مقرمشة ومورقة محشوة بالمكسرات وشراب العسل الحلو.", "img": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
+        {"name": "براوني شوكولاتة", "price": "20,000 IQD", "desc": "براوني غني بالشوكولاتة الداكنة يقدم دافئاً بشكل رائع.", "img": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
+      ]},
+      "Mojito": {"title": "موهيتو", "icon": "fas fa-leaf", "items": [
+        {"name": "موهيتو نعناع", "price": "15,000 IQD", "desc": "موهيتو النعناع الكلاسيكي المنعش مع سكر القصب ومياه الصودا.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
+        {"name": "موهيتو سبيشال", "price": "18,000 IQD", "desc": "خلطتنا الخاصة والمميزة من الموهيتو لمذاق فريد.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
+        {"name": "موهيتو فراولة", "price": "16,000 IQD", "desc": "فراولة حلوة طازجة مع نعناع بارد ولمسة غازية منعشة.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
+        {"name": "موهيتو بلو هاواي", "price": "17,000 IQD", "desc": "نكهات بلو هاواي الاستوائية ممزوجة بشكل مثالي مع الموهيتو الكلاسيكي.", "img": "https://images.unsplash.com/photo-1525268323446-0505b6efa779?auto=format&fit=crop&w=600&q=80"}
+      ]},
+      "Milkshake": {"title": "ميلك شيك", "icon": "fas fa-blender", "items": [
+        {"name": "ميلك شيك فراولة", "price": "12,000 IQD", "desc": "ميلك شيك الفراولة الكريمي والحلو مزين بالكريمة المخفوقة.", "img": "https://media.istockphoto.com/id/179767576/photo/strawberry-milkshake.jpg?s=612x612&w=0&k=20&c=Si5hnn7jn3IKj7nA_SXqEQcwigGqrvNQ-c9-jbxwdDg="},
+        {"name": "ميلك شيك أوريو", "price": "14,000 IQD", "desc": "ميلك شيك كثيف ممزوج ببسكويت أوريو الكلاسيكي وشراب الشوكولاتة.", "img": "https://images.unsplash.com/photo-1579954115545-a95f9d2e1327?auto=format&fit=crop&w=600&q=80"},
+        {"name": "ميلك شيك كيندر", "price": "15,000 IQD", "desc": "ميلك شيك فاخر محضر من شوكولاتة كيندر الناعمة.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="},
+        {"name": "ميلك شيك نوتيلا", "price": "15,000 IQD", "desc": "ميلك شيك نوتيلا الغني واللذيذ لعشاق الشوكولاتة.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="}
       ]}
     }
   }
@@ -568,9 +515,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const data = JSON.parse(document.getElementById("menu-data").textContent);
   const langSelection = document.getElementById("language-selection");
   const body = document.body;
-  let activeView = "grid-view-2"; 
+  let activeView = "grid-view-2";
 
-  // Language Setup Trigger
   langSelection.addEventListener("click", e => {
     const btn = e.target.closest("button");
     if (!btn) return;
@@ -583,8 +529,8 @@ document.addEventListener("DOMContentLoaded", () => {
     langSelection.classList.add('hidden');
 
     setTimeout(() => {
-        body.classList.add('lang-selected'); 
-        loadMenu(selectedLang);
+      body.classList.add('lang-selected');
+      loadMenu(selectedLang);
     }, 400);
   });
 
@@ -618,7 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
       section.className = "menu-section";
       if (i === 0) section.classList.add("active");
       section.innerHTML = `<h2>${cat.title}</h2><div class="menu-grid ${activeView}"></div>`;
-      
+
       cat.items.forEach(item => {
         const itemDiv = document.createElement("div");
         itemDiv.className = "menu-item";
@@ -631,7 +577,6 @@ document.addEventListener("DOMContentLoaded", () => {
               <span class="item-name">${item.name}</span>
               <span class="price">${item.price}</span>
             </div>
-            <p class="description">${item.desc}</p>
           </div>
         `;
         section.querySelector(".menu-grid").appendChild(itemDiv);
@@ -639,20 +584,16 @@ document.addEventListener("DOMContentLoaded", () => {
       menuContent.appendChild(section);
     });
 
-    // Dynamic Navigation System
     document.querySelectorAll(".tab-button").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         document.querySelectorAll(".menu-section").forEach(sec => sec.classList.remove("active"));
         document.getElementById(`section-${btn.dataset.category}`).classList.add("active");
-        
-        // Auto scroll mobile nav tabs comfortably
         btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       });
     });
 
-    // View Changer Switcher (List / Grid)
     document.querySelectorAll(".view-button").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".view-button").forEach(b => b.classList.remove("active"));
