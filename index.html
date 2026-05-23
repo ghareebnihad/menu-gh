@@ -35,7 +35,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      zoom: 0.95;
+      zoom: 0.90;
       font-family: var(--font-sans);
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -225,15 +225,28 @@
 
     .menu-wrapper { display: none; flex-direction: column; min-height: 100vh; }
     body.lang-selected .menu-wrapper { display: flex; }
-    .footer { margin-top: auto; padding: 30px 0; background-color: #060709; text-align: center; font-size: 0.85rem; color: var(--secondary-text); }
+    
+    .footer {
+  position: fixed; /* Sabitler */
+  bottom: 0;       /* En alta yaslar */
+  left: 0;
+  width: 100%;     /* Ekran genişliğini kaplar */
+  padding: 15px 0; /* Yüksekliği biraz azalttım, içerik alanını daraltmasın diye */
+  background-color: #060709;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+  z-index: 1000;   /* Diğer öğelerin üzerine çıkması için */
+}
+
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
 
 <div id="language-selection">
-  <div class="logo">Duhok</div>
-  <div class="sub-logo">Rest & Caffe</div>
+  <div class="logo">Duhok Rest & Caffee</div>
+
   <div class="buttons-container" style="flex-direction: column; width: 100%; max-width: 280px;">
     <button data-lang="en" style="width: 100%;">English</button>
     <button data-lang="ar" style="width: 100%;">العربية</button>
@@ -282,7 +295,7 @@
       "cuisineText": "Mediterranean cuisine, premium coffee & hookah",
       "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
       "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
-      "footerText": "All rights reserved | <strong>Developed by Ghareeb</strong>"
+      "footerText": "Developed | <strong> by Ghareeb</strong>"
     },
     "menu": {
       "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice", "items": [
