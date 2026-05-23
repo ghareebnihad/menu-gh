@@ -56,6 +56,23 @@
       text-align: center;
       position: relative;
     }
+    .header-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1.2px); /* Bulanıklık */
+  opacity: 0.5;      /* %50 Opacity */
+  z-index: 0;
+}
+
+/* Yazıların resmin üstünde görünmesi için: */
+.header .container {
+  position: relative;
+  z-index: 1;
+}
 
     .restaurant-name {
       font-family: var(--font-serif);
@@ -260,6 +277,7 @@
 
 <div class="menu-wrapper">
     <header class="header">
+    <img src="https://resizer.otstatic.com/v3/photos/52293729-4" alt="Background" class="header-bg-img">
       <div class="container">
         <h1 class="restaurant-name" id="restaurant-name"></h1>
         <p class="cuisine-text" id="cuisine-text"></p>
