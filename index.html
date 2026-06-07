@@ -2,34 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- initial-scale 0.65 yapılarak mobil cihazlarda %35 uzaklaştırma sağlandı -->
   <meta name="viewport" content="width=device-width, initial-scale=0.65, maximum-scale=5.0" />
   <title>DUHOK REST & CAFFE - Digital Menu</title>
-  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
-  <style>
-/* Premium Design System */
+ <style>
+    /* Premium Design System */
     :root {
-      --bg-color: #0b0c10;
+      --bg-color: #07080a;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #1a222d 0%, #07080a 70%);
       --surface-color: #1f2833;
-      --card-bg: #151a21;
+      --card-bg: rgba(21, 26, 33, 0.85);
       --text-color: #f5f5f7;
-      --accent-color: #c5a030; /* Premium Gold */
+      
+      /* Kafe ana rengi */
+      --accent-color: #c5a030; 
       --accent-hover: #e5c158;
+      
       --secondary-text: #9ca3af;
-      --orange-active: #ff7a00;
-      --glass-bg: rgba(21, 26, 33, 0.85);
+      --glass-bg: rgba(7, 8, 10, 0.80);
       --font-sans: 'Inter', sans-serif;
       --font-serif: 'Playfair Display', serif;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +38,8 @@
     body {
       zoom: 0.96;
       font-family: var(--font-sans);
-      background-color: var(--bg-color);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
       color: var(--text-color);
       line-height: 1.6;
       display: flex;
@@ -51,37 +53,35 @@
     .container { width: 92%; max-width: 1000px; margin: 0 auto; }
 
     .header {
-      background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, var(--bg-color) 100%);
-      padding: 50px 0 30px 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+      padding: 60px 0 40px 0;
       text-align: center;
       position: relative;
     }
+    
     .header-bg-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(1.2px); /* Bulanıklık */
-  opacity: 0.5;      /* %50 Opacity */
-  z-index: 0;
-}
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(2px);
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-/* Yazıların resmin üstünde görünmesi için: */
-.header .container {
-  position: relative;
-  z-index: 1;
-}
+    .header .container { position: relative; z-index: 1; }
 
     .restaurant-name {
       font-family: var(--font-serif);
-      font-size: 3rem;
+      font-size: 3.2rem;
       font-weight: 700;
       color: var(--accent-color);
       margin-bottom: 8px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .cuisine-text {
@@ -89,7 +89,7 @@
       color: var(--secondary-text);
       margin-bottom: 25px;
       font-weight: 300;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
     }
 
@@ -99,87 +99,128 @@
       justify-content: center;
       gap: 25px;
       font-size: 0.95rem;
-      color: var(--text-color);
       opacity: 0.9;
     }
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 400;
-    }
+    .contact-item { display: flex; align-items: center; gap: 8px; }
+    .contact-item i { color: var(--accent-color); }
 
-    .contact-item i { color: var(--accent-color); font-size: 1.05rem; }
-
-    /* Sticky Tab Navigation */
+    /* --- STICKY NAV & KATEGORİ KARELERİ --- */
     .sticky-nav {
       position: sticky;
       top: 0;
       background: var(--glass-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 15px 0;
+      border-bottom: 1px solid rgba(197, 160, 48, 0.1);
+      padding: 20px 0;
     }
 
     .menu-tabs {
       display: flex;
       overflow-x: auto;
-      gap: 12px;
-      padding: 5px 0;
+      gap: 15px;
+      padding: 5px 5px;
       white-space: nowrap;
       scrollbar-width: none;
     }
 
     .menu-tabs::-webkit-scrollbar { display: none; }
 
+    /* Çerçeve boyutları korundu */
     .tab-button {
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 125px;
-      height: 125px;
+      width: 115px;
+      height: 115px;
       flex-shrink: 0;
-      background-color: var(--card-bg);
-      color: var(--secondary-text);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: var(--radius-lg);
       cursor: pointer;
       transition: var(--transition);
       font-weight: 500;
-      font-size: 0.95rem;
-      gap: 12px;
-      display: flex;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      gap: 8px;
+      box-shadow: inset 0 1px 0px rgba(255,255,255,0.1);
     }
 
-    .tab-button i { font-size: 2.2rem; color: var(--accent-color); transition: var(--transition); }
-    .tab-button:hover { background-color: rgba(255,255,255,0.08); color: var(--text-color); }
+    /* İkonlar %8 daha büyütüldü: 2.2rem -> 2.38rem yapıldı */
+    .tab-button i { 
+      font-size: 2.38rem; 
+      color: #ffffff; 
+      transition: var(--transition); 
+    }
+    
+    .tab-button:hover { 
+      background: rgba(197, 160, 48, 0.15); 
+      color: var(--text-color);
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+    
+    .tab-button:hover i { color: var(--accent-color); }
 
     .tab-button.active {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(197, 160, 48, 0.3);
+      background: linear-gradient(145deg, var(--accent-color), #9a7b20);
+      color: #000000 !important;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(197, 160, 48, 0.35), inset 0 1px 2px rgba(255,255,255,0.4);
       border-color: transparent;
+      transform: translateY(-4px);
     }
-    .tab-button.active i { color: var(--bg-color); }
+    .tab-button.active i { color: #000000 !important; font-weight: 700; }
 
-    /* View Controls (Devre dışı bırakıldı) */
-    .view-controls { display: none !important; }
+    /* Görünüm Değiştirme */
+    .view-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin: 25px 0;
+    }
+    
+    body[dir="rtl"] .view-controls {
+      justify-content: flex-start;
+    }
+
+    .view-button {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--secondary-text);
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+
+    .view-button:hover, .view-button.active {
+      background: rgba(197, 160, 48, 0.15);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
 
     /* Menu Sections */
-    .menu-section { display: none; animation: fadeIn 0.4s ease; }
+    .menu-section { display: none; animation: fadeIn 0.5s ease; }
     .menu-section.active { display: block; }
 
     .menu-section h2 {
       font-family: var(--font-serif);
       font-size: 1.8rem;
       color: var(--accent-color);
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       position: relative;
-      padding-bottom: 8px;
+      padding-bottom: 12px;
+      letter-spacing: 1px;
     }
 
     .menu-section h2::after {
@@ -187,39 +228,153 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 50px;
+      width: 60px;
       height: 2px;
-      background-color: var(--accent-color);
+      background: linear-gradient(90deg, var(--accent-color), transparent);
     }
-    body[dir="rtl"] .menu-section h2::after { left: auto; right: 0; }
+    
+    body[dir="rtl"] .menu-section h2::after {
+      left: auto;
+      right: 0;
+      background: linear-gradient(270deg, var(--accent-color), transparent);
+    }
 
-    /* SABİT 2x2 GRID YAPISI */
+    /* --- BÜTÜNLEŞİK KUTU SİSTEMİ --- */
     .menu-grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 15px; 
-      margin-bottom: 40px; 
+      display: grid;
+      gap: 25px; 
+      margin-bottom: 50px; 
+      transition: var(--transition);
+      width: 100%;
     }
 
-    .menu-item {
+    /* 1. Grid Görünümü */
+    .menu-grid.grid-view-2 { 
+      grid-template-columns: repeat(2, 1fr); 
+    }
+    
+    .menu-grid.grid-view-2 .menu-item {
       display: flex;
       flex-direction: column;
-      background-color: var(--card-bg);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
       overflow: hidden;
-      transition: var(--transition);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    
+    .menu-grid.grid-view-2 .item-image-wrapper { 
+      position: relative; 
+      width: 100%; 
+      padding-top: 100%;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .menu-grid.grid-view-2 .item-image { 
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%; 
+      object-fit: cover; 
+      transition: var(--transition); 
+    }
+    
+    .menu-grid.grid-view-2 .item-details { 
+      background: rgba(20, 25, 35, 0.6);
+      padding: 14px 10px;
+      width: 100%;
     }
 
-    .item-image-wrapper { position: relative; width: 100%; height: 180px; overflow: hidden; }
-    .item-image { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
-    .item-details { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
-    .item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 5px; margin-bottom: 5px; }
-    .item-name { font-size: 1rem; font-weight: 600; }
-    .price { font-size: 0.95rem; font-weight: 700; color: var(--accent-color); white-space: nowrap; }
+    .menu-grid.grid-view-2 .item-header { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 6px; 
+    }
+    
+    body[dir="rtl"] .menu-grid.grid-view-2 .item-header { 
+      align-items: flex-start; 
+    }
+    
+    /* İsim %10 büyütüldü: 1rem -> 1.1rem yapıldı */
+    .menu-grid.grid-view-2 .item-name { 
+      font-size: 1.1rem; 
+      font-weight: 500; 
+      color: #ffffff; 
+      word-break: break-word;
+      line-height: 1.3;
+    }
+    
+    .menu-grid.grid-view-2 .price { 
+      font-size: 1.05rem; 
+      font-weight: 600; 
+      color: var(--accent-color); 
+    }
 
-    /* Language Welcoming Overlay */
+    /* 2. Liste Görünümü */
+    .menu-grid.list-view {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .menu-grid.list-view .menu-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      gap: 15px;
+      width: 100%;
+      box-shadow: var(--shadow);
+    }
+    
+    .menu-grid.list-view .item-image-wrapper {
+      width: 75px;
+      height: 75px;
+      flex-shrink: 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    body[dir="rtl"] .menu-grid.list-view .item-image-wrapper {
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    body[dir="ltr"] .menu-grid.list-view .item-image-wrapper {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-grid.list-view .item-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .menu-grid.list-view .item-details {
+      flex: 1;
+      background: transparent;
+      padding: 0;
+    }
+    
+    .menu-grid.list-view .item-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 15px;
+    }
+    
+    /* Liste görünümünde de isim %10 büyütüldü: 1.05rem -> 1.15rem yapıldı */
+    .menu-grid.list-view .item-name { font-size: 1.15rem; font-weight: 500; color: #ffffff; }
+    .menu-grid.list-view .price { font-size: 1.05rem; font-weight: 600; color: var(--accent-color); white-space: nowrap; }
+
+    /* Hover efekti */
+    .menu-item:hover .item-image { transform: scale(1.05); }
+    .menu-item:hover { border-color: rgba(197, 160, 48, 0.4); }
+
+    /* Dil Seçim Ekranı */
     #language-selection {
       position: fixed;
       inset: 0;
@@ -236,41 +391,71 @@
     }
     #language-selection.hidden { opacity: 0; pointer-events: none; }
     #language-selection .logo { font-family: var(--font-serif); font-size: 3.5rem; color: var(--accent-color); margin-bottom: 5px; }
-    #language-selection 
-    .buttons-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 250px; }
     
+    #language-selection .buttons-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 250px; }
     #language-selection button {
-  padding: 25px; font-size: 1.5rem; border-radius: 65px; cursor: pointer;
-  border: 2px solid #c5a030; background: rgba(255,255,255,0.05); 
-  color: #fff; font-family: "Smooch Sans", sans-serif; font-weight: 800; text-transform: uppercase;
-}
-#language-selection button:hover { background: #c5a030; color: #000; }
+      padding: 20px; font-size: 1.4rem; border-radius: 65px; cursor: pointer;
+      border: 2px solid var(--accent-color); background: rgba(255,255,255,0.05); 
+      color: #fff; font-family: "Smooch Sans", sans-serif; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 2px; transition: var(--transition);
+    }
+    #language-selection button:hover { background: var(--accent-color); color: #000; transform: scale(1.05); }
 
-    .menu-wrapper { display: none; flex-direction: column; min-height: 100vh; }
+    /* Ana Sarıcı Yapısı */
+    .menu-wrapper { 
+      display: none; 
+      flex-direction: column; 
+      min-height: 100vh; 
+      width: 100%;
+    }
     body.lang-selected .menu-wrapper { display: flex; }
     
-   .social-links { display: flex; gap: 25px; margin-top: 55px; }
-.social-icon {
-  width: 75px; height: 75px; border-radius: 50%; border: 1px solid #c5a030;
-  display: flex; align-items: center; justify-content: center; color: #c5a030;
-  font-size: 1.6rem; text-decoration: none; transition: 0.3s;
-}
-.social-icon:hover { background: #c5a030; color: #000; transform: scale(1.1); }
+    main.container {
+      flex: 1 0 auto;
+      padding-bottom: 40px;
+      width: 92%;
+    }
+    
+    .social-links { display: flex; gap: 25px; margin-top: 55px; justify-content: center;}
+    .social-icon {
+      width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--accent-color);
+      display: flex; align-items: center; justify-content: center; color: var(--accent-color);
+      font-size: 1.4rem; text-decoration: none; transition: 0.3s;
+    }
+    .social-icon:hover { background: var(--accent-color); color: #000; transform: scale(1.1); }
 
-.footer {
-  position: fixed; /* Sabitler */
-  bottom: 0;       /* En alta yaslar */
-  left: 0;
-  width: 100%;     /* Ekran genişliğini kaplar */
-  padding: 15px 0; /* Yüksekliği biraz azalttım, içerik alanını daraltmasın diye */
-  background-color: #060709;
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--secondary-text);
-  z-index: 1000;   /* Diğer öğelerin üzerine çıkması için */
-}
+    .footer {
+      flex-shrink: 0;
+      width: 100%;
+      padding: 25px 0;
+      background-color: #050608;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--secondary-text);
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    
+    /* Mobil Düzenlemeler */
+    @media (max-width: 600px) {
+      .menu-grid { gap: 16px; }
+      .menu-grid.grid-view-2 { gap: 12px; }
+      .grid-view-2 .item-details { padding: 8px 6px; }
+      
+      /* Mobilde isim boyutu dengelendi */
+      .grid-view-2 .item-name { font-size: 1rem; }
+      .grid-view-2 .price { font-size: 0.85rem; }
+      
+      /* Mobilde ikon boyutu %8 artışa göre güncellendi */
+      .tab-button { width: 95px; height: 95px; font-size: 0.75rem; }
+      .tab-button i { font-size: 1.95rem; } 
+      
+      .menu-grid.list-view .menu-item { gap: 10px; padding: 8px; }
+      .menu-grid.list-view .item-image-wrapper { width: 65px; height: 65px; }
+      .menu-grid.list-view .item-name { font-size: 1rem; }
+      .menu-grid.list-view .price { font-size: 0.90rem; }
+    }
   </style>
 </head>
 <body>
@@ -324,145 +509,15 @@
 </div>
 
 <script id="menu-script">
-  // Menü Verisi
-  const menuData = {
-    "en": {
-      "translations": {
-        "restaurantName": "DUHOK REST & CAFFE",
-        "cuisineText": "Mediterranean cuisine, premium coffee & hookah",
-        "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
-        "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
-        "footerText": "Developed | <strong> by Ghareeb</strong>"
-      },
-      "menu": {
-        "Pizza": {"title": "Pizza", "icon": "fas fa-pizza-slice", "items": [
-          {"name": "Vesuvio Margarita", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Pepperoni Delight", "price": "6,000 IQD", "img": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Vegetarian Special", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
-          {"name": "BBQ Chicken Pizza", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Four Cheese", "price": "7,000 IQD", "img": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Burger": {"title": "Burgers", "icon": "fas fa-hamburger", "items": [
-          {"name": "Signature Burger", "price": "6,000 IQD", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Cheeseburger", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Chicken Burger", "price": "5,000 IQD", "img": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Veggie Burger", "price": "4,000 IQD", "img": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Double Beef Burger", "price": "7,000 IQD", "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Cold Drinks": {"title": "Cold Drinks", "icon": "fas fa-cocktail", "items": [
-          {"name": "Classic Mojito", "price": "15,000 IQD", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Strawberry Mojito", "price": "16,000 IQD", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Iced Tea", "price": "10,000 IQD", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Lemonade", "price": "12,000 IQD", "img": "https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Cola", "price": "8,000 IQD", "img": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Hot Drinks": {"title": "Hot Drinks", "icon": "fas fa-coffee", "items": [
-          {"name": "Espresso", "price": "10,000 IQD", "img": "https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Cappuccino", "price": "12,000 IQD", "img": "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Latte", "price": "13,000 IQD", "img": "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Hot Chocolate", "price": "15,000 IQD", "img": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Herbal Tea", "price": "9,000 IQD", "img": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Shisha": {"title": "Shisha & Hookah", "icon": "fas fa-wind", "items": [
-          {"name": "Classic Double Apple", "price": "10,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "Love 66 Special", "price": "10,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "Zesty Lemon Mint", "price": "9,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "Premium Grape Mint", "price": "9,000 IQD", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="}
-        ]},
-        "Sweets": {"title": "Sweets", "icon": "fas fa-ice-cream", "items": [
-          {"name": "Chocolate Cake", "price": "20,000 IQD", "desc": "Layered rich chocolate sponge cake with elegant fudge.", "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Cheesecake", "price": "22,000 IQD", "desc": "Creamy New York style cheesecake topped with wild berries syrup.", "img": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Ice Cream Sundae", "price": "18,000 IQD", "desc": "Gourmet vanilla bean ice cream loaded with premium toppings.", "img": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Baklava", "price": "25,000 IQD", "desc": "Flaky traditional pastry layered with crushed nuts and sweet honey syrup.", "img": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Chocolate Brownie", "price": "20,000 IQD", "desc": "Fudgy dark chocolate brownie served delightfully warm.", "img": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Mojito": {"title": "Mojitos", "icon": "fas fa-leaf", "items": [
-          {"name": "Mint Mojito", "price": "15,000 IQD", "desc": "Refreshing classic mint mojito with pure cane sugar and bubbly soda water.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Special Mojito", "price": "18,000 IQD", "desc": "Our signature special mojito blend for a unique taste.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Strawberry Mojito", "price": "16,000 IQD", "desc": "Fresh sweet strawberries combined with cool mint and a fizzy splash.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Blue Hawaii Mojito", "price": "17,000 IQD", "desc": "Tropical blue hawaii flavors perfectly mixed with our classic mojito base.", "img": "https://images.unsplash.com/photo-1525268323446-0505b6efa779?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Milkshake": {"title": "Milkshakes", "icon": "fas fa-blender", "items": [
-          {"name": "Strawberry Milkshake", "price": "12,000 IQD", "desc": "Creamy and sweet strawberry milkshake topped with whipped cream.", "img": "https://media.istockphoto.com/id/179767576/photo/strawberry-milkshake.jpg?s=612x612&w=0&k=20&c=Si5hnn7jn3IKj7nA_SXqEQcwigGqrvNQ-c9-jbxwdDg="},
-          {"name": "Oreo Milkshake", "price": "14,000 IQD", "desc": "Thick milkshake blended with classic Oreo cookies and chocolate syrup.", "img": "https://images.unsplash.com/photo-1579954115545-a95f9d2e1327?auto=format&fit=crop&w=600&q=80"},
-          {"name": "Kinder Milkshake", "price": "15,000 IQD", "desc": "Premium milkshake crafted with smooth Kinder chocolate.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="},
-          {"name": "Nutella Milkshake", "price": "15,000 IQD", "desc": "Indulgent and rich Nutella milkshake for chocolate lovers.", "img": "https://images.unsplash.com/photo-1595991209266-5af5fe113d09?auto=format&fit=crop&w=600&q=80"}
-        ]}
-      }
-    },
-    "ar": {
-      "translations": {
-        "restaurantName": "دهوك رست و كافيه",
-        "cuisineText": "مأكولات متوسطية، قهوة فاخرة وأرجيلة مميزة",
-        "locationText": "<i class='fas fa-map-marker-alt'></i> دهوك KRO",
-        "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
-        "footerText": "جميع الحقوق محفوظة | <strong>تم التطوير بواسطة Ghareeb</strong>"
-      },
-      "menu": {
-        "Pizza": {"title": "بيتزا", "icon": "fas fa-pizza-slice", "items": [
-          {"name": "ڤيسوفيو مارجريتا", "price": "5,000 IQD", "desc": "طماطم سان مارزانو، موتزاريلا طازجة، ريحان عطري.", "img": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"},
-          {"name": "بيبروني دلايت", "price": "6,000 IQD", "desc": "بيبروني ممتاز، موتزاريلا ذائبة، صلصة الطماطم المصنوعة منزلياً.", "img": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80"},
-          {"name": "الخضروات الخاصة", "price": "5,000 IQD", "desc": "خضار موسمية متنوعة، موتزاريلا، صلصتنا الخاصة.", "img": "https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=600&q=80"},
-          {"name": "بيتزا دجاج باربيكيو", "price": "6,000 IQD", "desc": "دجاج مشوي طري، صوص باربيكيو مدخن، موتزاريلا ذهبية.", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"},
-          {"name": "أربعة أجبان", "price": "7,000 IQD", "desc": "مزيج غني من الموتزاريلا، الشيدر الكلاسيكي، البارميزان، والجورجونزولا.", "img": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Burger": {"title": "برجر", "icon": "fas fa-hamburger", "items": [
-          {"name": "برجر مميز", "price": "6,000 IQD", "desc": "لحم بقري مشوي على اللهب، مايونيز الكمأ الفاخر، بصل مكرمل حلو.", "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "تشيز برجر", "price": "5,000 IQD", "desc": "قطعة لحم بقري عصيرية، جبنة شيدر ذائبة، خس مقرمش.", "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"},
-          {"name": "برجر دجاج", "price": "5,000 IQD", "desc": "صدر دجاج مشوي مقرمش، مايونيز ناعم، خس طازج، طماطم.", "img": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80"},
-          {"name": "برجر خضار", "price": "4,000 IQD", "desc": "أقراص خضروات مصنوعة يدوياً، جبنة، مزيج الخس العضوي.", "img": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=600&q=80"},
-          {"name": "برجر لحم مزدوج", "price": "7,000 IQD", "desc": "قطعتان من اللحم البقري، شيدر حاد، شرائح لحم مقدد مقرمشة.", "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Cold Drinks": {"title": "مشروبات باردة", "icon": "fas fa-cocktail", "items": [
-          {"name": "موهيتو كلاسيك", "price": "15,000 IQD", "desc": "أوراق النعناع الطازجة المهروسة، ليمون حامض معصور، سكر قصب نقي ومياه صودا فوارة.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-          {"name": "موهيتو الفراولة", "price": "16,000 IQD", "desc": "الفراولة الحلوة الطازجة مع النعناع البارد وعصير الليمون المنعش مع الصودا.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "شاي مثلج", "price": "10,000 IQD", "desc": "شاي أسود مثلج منعش مع الليمون الحامض.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-          {"name": "عصير ليمون", "price": "12,000 IQD", "desc": "عصير ليمون طازج ومبرد بشكل مثالي.", "img": "https://images.unsplash.com/photo-1538587888044-79f13ddd7e49?auto=format&fit=crop&w=600&q=80"},
-          {"name": "كولا", "price": "8,000 IQD", "desc": "مشروب غازي كلاسيكي بارد ومثلج.", "img": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Hot Drinks": {"title": "مشروبات ساخنة", "icon": "fas fa-coffee", "items": [
-          {"name": "إسبريسو", "price": "10,000 IQD", "desc": "جرعة إسبريسو قوية ومركزة ومستخلصة من حبوب بن ممتازة.", "img": "https://images.unsplash.com/photo-1510972527409-cac19ff31d7c?auto=format&fit=crop&w=600&q=80"},
-          {"name": "كابتشينو", "price": "12,000 IQD", "desc": "إسبريسو غني متوازن مع حليب مبخر مخملي ورغوة كثيفة.", "img": "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"},
-          {"name": "لاتيه", "price": "13,000 IQD", "desc": "إسبريسو ناعم يعلوه حليب مبخر رقيق.", "img": "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=600&q=80"},
-          {"name": "هوت شوكليت", "price": "15,000 IQD", "desc": "شوكولاتة داكنة ذائبة في حليب دافئ كامل الدسم.", "img": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"},
-          {"name": "شاي أعشاب", "price": "9,000 IQD", "desc": "مجموعة مختارة من الأعشاب العطرية الفاخرة والمهدئة للغاية.", "img": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Shisha": {"title": "الأرجيلة والشيشة", "icon": "fas fa-wind", "items": [
-          {"name": "تفاحتين كلاسيك فاخر", "price": "10,000 IQD", "desc": "النكهة التقليدية الأشهر عالمياً بمزيج التفاح المزدوج الفاخر والينسون.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "عشق 66 المميز", "price": "10,000 IQD", "desc": "مزيج الفواكه الاستوائية الحلوة، البطيخ والنعناع البارد المنعش.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "ليمون نعناع منعش", "price": "9,000 IQD", "desc": "مزيج الحمضيات القوي مع طبقة من النعناع لتدخين بارد ومنعش.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="},
-          {"name": "عنب نعناع فاخر", "price": "9,000 IQD", "desc": "نكهة العنب الأحمر الغنية والحلوة مع النعناع البري الطازج.", "img": "https://media.istockphoto.com/id/1142016593/photo/hookah-on-a-dark-background-of-a-blurry-bar-with-a-bokeh-copy-space.jpg?s=612x612&w=0&k=20&c=vZ7LvfZNN1uI2rqWT30QxBJQY3NlHY5_3FkA4uN9KLw="}
-        ]},
-        "Sweets": {"title": "حلويات", "icon": "fas fa-ice-cream", "items": [
-          {"name": "كيك شوكولاتة", "price": "20,000 IQD", "desc": "كيك إسفنجي غني بالشوكولاتة مع فودج أنيق.", "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"},
-          {"name": "تشيز كيك", "price": "22,000 IQD", "desc": "تشيز كيك كريمي على طريقة نيويورك مغطى بشراب التوت البري.", "img": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"},
-          {"name": "آيس كريم صن داي", "price": "18,000 IQD", "desc": "آيس كريم فانيليا فاخر غني بالإضافات اللذيذة.", "img": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-          {"name": "بقلاوة", "price": "25,000 IQD", "desc": "معجنات تقليدية مقرمشة ومورقة محشوة بالمكسرات وشراب العسل الحلو.", "img": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80"},
-          {"name": "براوني شوكولاتة", "price": "20,000 IQD", "desc": "براوني غني بالشوكولاتة الداكنة يقدم دافئاً بشكل رائع.", "img": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Mojito": {"title": "موهيتو", "icon": "fas fa-leaf", "items": [
-          {"name": "موهيتو نعناع", "price": "15,000 IQD", "desc": "موهيتو النعناع الكلاسيكي المنعش مع سكر القصب ومياه الصودا.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"},
-          {"name": "موهيتو سبيشال", "price": "18,000 IQD", "desc": "خلطتنا الخاصة والمميزة من الموهيتو لمذاق فريد.", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"},
-          {"name": "موهيتو فراولة", "price": "16,000 IQD", "desc": "فراولة حلوة طازجة مع نعناع بارد ولمسة غازية منعشة.", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"},
-          {"name": "موهيتو بلو هاواي", "price": "17,000 IQD", "desc": "نكهات بلو هاواي الاستوائية ممزوجة بشكل مثالي مع الموهيتو الكلاسيكي.", "img": "https://images.unsplash.com/photo-1525268323446-0505b6efa779?auto=format&fit=crop&w=600&q=80"}
-        ]},
-        "Milkshake": {"title": "ميلك شيك", "icon": "fas fa-blender", "items": [
-          {"name": "ميلك شيك فراولة", "price": "12,000 IQD", "desc": "ميلك شيك الفراولة الكريمي والحلو مزين بالكريمة المخفوقة.", "img": "https://media.istockphoto.com/id/179767576/photo/strawberry-milkshake.jpg?s=612x612&w=0&k=20&c=Si5hnn7jn3IKj7nA_SXqEQcwigGqrvNQ-c9-jbxwdDg="},
-          {"name": "ميلك شيك أوريو", "price": "14,000 IQD", "desc": "ميلك شيك كثيف ممزوج ببسكويت أوريو الكلاسيكي وشراب الشوكولاتة.", "img": "https://images.unsplash.com/photo-1579954115545-a95f9d2e1327?auto=format&fit=crop&w=600&q=80"},
-          {"name": "ميلك شيك كيندر", "price": "15,000 IQD", "desc": "ميلك شيك فاخر محضر من شوكولاتة كيندر الناعمة.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="},
-          {"name": "ميلك شيك نوتيلا", "price": "15,000 IQD", "desc": "ميلك شيك نوتيلا الغني واللذيذ لعشاق الشوكولاتة.", "img": "https://media.istockphoto.com/id/926990564/photo/chocolate-milk-and-whipped-cream.jpg?s=612x612&w=0&k=20&c=LabS3iGKio9kYS7OUGsosTm0Bb4XKY8WkXPer_RU3IQ="}
-        ]}
-      }
-    }
-  };
+  const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRpEvyH9Kzk9aMNPhhKYzEyy2MbuMsx4qCyLwrDB0kPsqio0HWvlcIFPyQPJHTz4UJPm0eMr5X2qvWk/pub?output=csv";
 
   document.addEventListener("DOMContentLoaded", () => {
-    const data = menuData;
     const langSelection = document.getElementById("language-selection");
     const body = document.body;
     let activeView = "grid-view-2";
+    let cachedData = null;
 
-    langSelection.addEventListener("click", e => {
+    langSelection.addEventListener("click", async (e) => {
       const btn = e.target.closest("button");
       if (!btn) return;
 
@@ -472,14 +527,73 @@
       const selectedLang = btn.dataset.lang;
       body.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
       langSelection.classList.add('hidden');
+      
+      try {
+        if (!cachedData) {
+          const response = await fetch(SHEET_URL);
+          if (!response.ok) throw new Error("Veri çekilemedi.");
+          const csvText = await response.text();
+          cachedData = parseCSVToMenuData(csvText);
+        }
+        
+        setTimeout(() => {
+          body.classList.add('lang-selected');
+          loadMenu(cachedData, selectedLang);
+        }, 400);
 
-      setTimeout(() => {
-        body.classList.add('lang-selected');
-        loadMenu(selectedLang);
-      }, 400);
+      } catch (error) {
+        console.error("Hata:", error);
+        alert("Menü yüklenirken bir hata oluştu.");
+      }
     });
 
-    function loadMenu(lang) {
+    function parseCSVToMenuData(csvText) {
+      const lines = csvText.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+      
+      const menuData = {
+        "en": {
+          "translations": {
+            "restaurantName": "DUHOK REST & CAFFE",
+            "cuisineText": "Mediterranean cuisine, premium coffee & hookah",
+            "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
+            "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+            "footerText": "Developed | <strong> by Ghareeb</strong>"
+          },
+          "menu": {}
+        },
+        "ar": {
+          "translations": {
+            "restaurantName": "دهوك REST & CAFFE",
+            "cuisineText": "مأكولات متوسطية، قهوة فاخرة وأرجيلة مميزة",
+            "locationText": "<i class='fas fa-map-marker-alt'></i> دهوك KRO",
+            "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+            "footerText": "جميع الحقوق محفوظة | <strong>تم التطوير بواسطة Ghareeb</strong>"
+          },
+          "menu": {}
+        }
+      };
+
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.replace(/^"|"$/g, '').trim());
+        if (row.length < 8) continue;
+
+        const [catId, catEn, catAr, catIcon, nameEn, nameAr, price, img] = row;
+        if (!catId) continue;
+
+        if (!menuData.en.menu[catId]) {
+          menuData.en.menu[catId] = { "title": catEn, "icon": catIcon, "items": [] };
+        }
+        menuData.en.menu[catId].items.push({ "name": nameEn, "price": price, "img": img });
+
+        if (!menuData.ar.menu[catId]) {
+          menuData.ar.menu[catId] = { "title": catAr, "icon": catIcon, "items": [] };
+        }
+        menuData.ar.menu[catId].items.push({ "name": nameAr, "price": price, "img": img });
+      }
+      return menuData;
+    }
+
+    function loadMenu(data, lang) {
       const translations = data[lang].translations;
       const menu = data[lang].menu;
 
