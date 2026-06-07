@@ -10,26 +10,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
  <style>
-    /* Premium Design System */
+    /* Premium Coffee & Caramel Design System */
     :root {
-      --bg-color: #07080a;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #1a222d 0%, #07080a 70%);
-      --surface-color: #1f2833;
-      --card-bg: rgba(21, 26, 33, 0.85);
-      --text-color: #f5f5f7;
+      /* Derin kahve tonlarında arka plan geçişi */
+      --bg-color: #0f0805;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #3b2314 0%, #0f0805 75%);
+      --surface-color: #26140a;
+      --card-bg: rgba(38, 20, 10, 0.85);
       
-      /* Kafe ana rengi */
-      --accent-color: #c5a030; 
-      --accent-hover: #e5c158;
+      /* Süt köpüğü / Krem yazı rengi */
+      --text-color: #f7f5f0;
       
-      --secondary-text: #9ca3af;
-      --glass-bg: rgba(7, 8, 10, 0.80);
+      /* Sıcak Karamel Ana Renk */
+      --accent-color: #c68642; 
+      --accent-hover: #e0a363;
+      
+      /* Sütlü Kahve İkincil Yazı Rengi */
+      --secondary-text: #bfa89b;
+      --glass-bg: rgba(15, 8, 5, 0.85);
       --font-sans: 'Inter', sans-serif;
       --font-serif: 'Playfair Display', serif;
       --radius-sm: 6px;
       --radius-md: 12px;
       --radius-lg: 18px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
       --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -53,7 +57,7 @@
     .container { width: 92%; max-width: 1000px; margin: 0 auto; }
 
     .header {
-      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(15, 8, 5, 0.95) 0%, transparent 100%);
       padding: 60px 0 40px 0;
       text-align: center;
       position: relative;
@@ -66,8 +70,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: blur(2px);
-      opacity: 0.3;
+      filter: blur(3px);
+      opacity: 0.25;
       z-index: 0;
     }
 
@@ -81,7 +85,7 @@
       margin-bottom: 8px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
 
     .cuisine-text {
@@ -105,7 +109,7 @@
     .contact-item { display: flex; align-items: center; gap: 8px; }
     .contact-item i { color: var(--accent-color); }
 
-    /* --- STICKY NAV & TEMİZ KATEGORİ SİSTEMİ --- */
+    /* --- STICKY NAV & KATEGORİ SİSTEMİ --- */
     .sticky-nav {
       position: sticky;
       top: 0;
@@ -113,14 +117,14 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       z-index: 100;
-      border-bottom: 1px solid rgba(197, 160, 48, 0.1);
+      border-bottom: 1px solid rgba(198, 134, 66, 0.15);
       padding: 20px 0;
     }
 
     .menu-tabs {
       display: flex;
       overflow-x: auto;
-      gap: 20px;
+      gap: 24px;
       padding: 5px 5px;
       white-space: nowrap;
       scrollbar-width: none;
@@ -128,13 +132,12 @@
 
     .menu-tabs::-webkit-scrollbar { display: none; }
 
-    /* Kategori butonlarının arka plan, çerçeve ve gölgeleri tamamen kaldırıldı */
     .tab-button {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100px;
+      width: 110px;
       height: auto;
       flex-shrink: 0;
       background: none;
@@ -144,20 +147,20 @@
       cursor: pointer;
       transition: var(--transition);
       font-weight: 500;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       letter-spacing: 0.5px;
-      gap: 10px;
+      gap: 12px;
       padding: 10px 0;
       outline: none;
     }
 
+    /* Kategori ikon boyutu %25 büyütüldü (2.38rem -> 2.98rem) */
     .tab-button i { 
-      font-size: 2.38rem; 
+      font-size: 2.98rem; 
       color: var(--secondary-text); 
       transition: var(--transition); 
     }
     
-    /* Hover Durumu */
     .tab-button:hover { 
       color: var(--text-color);
       transform: translateY(-2px);
@@ -165,7 +168,7 @@
     
     .tab-button:hover i { color: var(--text-color); }
 
-    /* Aktif Kategori Durumu (Sadece renk değişir ve hafif yukarı esner) */
+    /* Aktif Kategori (Sıcak Karamel) */
     .tab-button.active {
       background: none;
       color: var(--accent-color) !important;
@@ -176,7 +179,7 @@
       color: var(--accent-color) !important; 
     }
 
-    /* Görünüm Değiştirme Butonları (Çerçevesiz Temiz İkon Tasarımı) */
+    /* Görünüm Değiştirme Butonları */
     .view-controls {
       display: flex;
       justify-content: flex-end;
@@ -239,7 +242,7 @@
       background: linear-gradient(270deg, var(--accent-color), transparent);
     }
 
-    /* --- BÜTÜNLEŞİK KUTU SİSTEMİ --- */
+    /* --- ÜRÜN KUTULARI (KAHVE & KARAMEL UYUMU) --- */
     .menu-grid { 
       display: grid;
       gap: 25px; 
@@ -256,8 +259,8 @@
     .menu-grid.grid-view-2 .menu-item {
       display: flex;
       flex-direction: column;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(38, 20, 10, 0.4);
+      border: 1px solid rgba(198, 134, 66, 0.12);
       border-radius: var(--radius-md);
       overflow: hidden;
       box-shadow: var(--shadow);
@@ -268,7 +271,7 @@
       width: 100%; 
       padding-top: 100%;
       overflow: hidden;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid rgba(198, 134, 66, 0.2);
     }
     
     .menu-grid.grid-view-2 .item-image { 
@@ -280,7 +283,7 @@
     }
     
     .menu-grid.grid-view-2 .item-details { 
-      background: rgba(20, 25, 35, 0.6);
+      background: rgba(24, 12, 6, 0.75);
       padding: 14px 12px;
       width: 100%;
     }
@@ -290,10 +293,6 @@
       flex-direction: column; 
       align-items: flex-start; 
       gap: 6px; 
-    }
-    
-    body[dir="rtl"] .menu-grid.grid-view-2 .item-header { 
-      align-items: flex-start; 
     }
     
     .menu-grid.grid-view-2 .item-name { 
@@ -310,7 +309,7 @@
       color: var(--accent-color); 
     }
 
-    /* 2. Liste Görünümü */
+    /* 2. Liste Görünümü (Mobil Uyumlu) */
     .menu-grid.list-view {
       grid-template-columns: 1fr;
       gap: 18px;
@@ -319,8 +318,8 @@
     .menu-grid.list-view .menu-item {
       display: flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(38, 20, 10, 0.4);
+      border: 1px solid rgba(198, 134, 66, 0.12);
       border-radius: var(--radius-md);
       padding: 12px;
       gap: 18px;
@@ -338,10 +337,10 @@
     }
     
     body[dir="rtl"] .menu-grid.list-view .item-image-wrapper {
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 1px solid rgba(198, 134, 66, 0.15);
     }
     body[dir="ltr"] .menu-grid.list-view .item-image-wrapper {
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-right: 1px solid rgba(198, 134, 66, 0.15);
     }
 
     .menu-grid.list-view .item-image {
@@ -370,7 +369,7 @@
 
     /* Hover efekti */
     .menu-item:hover .item-image { transform: scale(1.05); }
-    .menu-item:hover { border-color: rgba(197, 160, 48, 0.4); }
+    .menu-item:hover { border-color: rgba(198, 134, 66, 0.45); }
 
     /* Dil Seçim Ekranı */
     #language-selection {
@@ -380,7 +379,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%);
+      background: radial-gradient(circle at center, #3b2314 0%, #0f0805 100%);
       z-index: 9999;
       color: #ffffff;
       text-align: center;
@@ -426,11 +425,11 @@
       flex-shrink: 0;
       width: 100%;
       padding: 25px 0;
-      background-color: #050608;
+      background-color: #080402;
       text-align: center;
       font-size: 0.85rem;
       color: var(--secondary-text);
-      border-top: 1px solid rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(198, 134, 66, 0.08);
     }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -444,8 +443,9 @@
       .grid-view-2 .item-name { font-size: 1.12rem; }
       .grid-view-2 .price { font-size: 1.05rem; }
       
-      .tab-button { width: 85px; font-size: 0.78rem; gap: 6px; }
-      .tab-button i { font-size: 1.95rem; } 
+      .tab-button { width: 95px; font-size: 0.82rem; gap: 8px; }
+      /* Mobil için de ikonlar %25 oranında büyütüldü (1.95rem -> 2.44rem) */
+      .tab-button i { font-size: 2.44rem; } 
       
       .menu-grid.list-view .menu-item { gap: 14px; padding: 10px; }
       .menu-grid.list-view .item-image-wrapper { width: 80px; height: 80px; }
