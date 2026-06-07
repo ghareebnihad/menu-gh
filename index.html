@@ -114,13 +114,13 @@
       -webkit-backdrop-filter: blur(20px);
       z-index: 100;
       border-bottom: 1px solid rgba(198, 134, 66, 0.15);
-      padding: 20px 0;
+      padding: 25px 0;
     }
 
     .menu-tabs {
       display: flex;
       overflow-x: auto;
-      gap: 24px;
+      gap: 28px;
       padding: 5px 5px;
       white-space: nowrap;
       scrollbar-width: none;
@@ -133,7 +133,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 110px;
+      width: 125px;
       height: auto;
       flex-shrink: 0;
       background: none;
@@ -143,15 +143,16 @@
       cursor: pointer;
       transition: var(--transition);
       font-weight: 500;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       letter-spacing: 0.5px;
-      gap: 12px;
+      gap: 14px;
       padding: 10px 0;
       outline: none;
     }
 
+    /* Kategori ikon boyutu %30 daha büyütüldü (2.98rem -> 3.87rem) */
     .tab-button i { 
-      font-size: 2.98rem; 
+      font-size: 3.87rem; 
       color: var(--secondary-text); 
       transition: var(--transition); 
     }
@@ -173,12 +174,12 @@
       color: var(--accent-color) !important; 
     }
 
-    /* --- GÖRÜNÜM BUTONLARI --- */
+    /* --- GÖRÜNÜM BUTONLARI (%40 BÜYÜTÜLDÜ) --- */
     .view-controls {
       display: flex;
       justify-content: flex-end;
-      gap: 20px;
-      margin: 25px 0;
+      gap: 24px;
+      margin: 30px 0;
     }
     
     body[dir="rtl"] .view-controls {
@@ -189,13 +190,13 @@
       background: none;
       border: none;
       color: var(--secondary-text);
-      width: 55px; 
-      height: 55px; 
+      width: 77px; /* 55px -> 77px (%40 büyütüldü) */
+      height: 77px; /* 55px -> 77px (%40 büyütüldü) */
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.81rem; 
+      font-size: 2.53rem; /* 1.81rem -> 2.53rem (%40 büyütüldü) */
       transition: var(--transition);
       padding: 0;
       outline: none;
@@ -260,11 +261,10 @@
       box-shadow: var(--shadow);
     }
     
-    /* 1:1 Kare Görünümü için Aspect Ratio */
     .menu-grid.grid-view-2 .item-image-wrapper { 
       position: relative; 
       width: 100%; 
-      aspect-ratio: 1 / 1; /* Tam Kare formülü */
+      aspect-ratio: 1 / 1; 
       padding-top: 0;
       overflow: hidden;
       border-bottom: 1px solid rgba(198, 134, 66, 0.2);
@@ -323,11 +323,10 @@
       box-shadow: var(--shadow);
     }
     
-    /* Liste resim alanı tam kare yapıldı */
     .menu-grid.list-view .item-image-wrapper {
       width: 112px;  
       height: 112px; 
-      aspect-ratio: 1 / 1; /* Tam Kare formülü */
+      aspect-ratio: 1 / 1; 
       flex-shrink: 0;
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -379,7 +378,7 @@
     .menu-item:hover .item-image { transform: scale(1.05); }
     .menu-item:hover { border-color: rgba(198, 134, 66, 0.45); }
 
-    /* Dil Seçim Ekranı */
+    /* --- DİL SEÇİM EKRANI (AŞAĞI KAYDIRILDI VE %25 BÜYÜTÜLDÜ) --- */
     #language-selection {
       position: fixed;
       inset: 0;
@@ -397,14 +396,32 @@
     #language-selection.hidden { opacity: 0; pointer-events: none; }
     #language-selection .logo { font-family: var(--font-serif); font-size: 3.5rem; color: var(--accent-color); margin-bottom: 5px; }
     
-    #language-selection .buttons-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 250px; }
-    #language-selection button {
-      padding: 20px; font-size: 1.4rem; border-radius: 65px; cursor: pointer;
-      border: 2px solid var(--accent-color); background: rgba(255,255,255,0.05); 
-      color: #fff; font-family: "Smooch Sans", sans-serif; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 2px; transition: var(--transition);
+    /* Buton konteynırına yukarıdan boşluk verilerek aşağı indirildi */
+    #language-selection .buttons-container { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 20px; 
+      width: 100%; 
+      max-width: 350px; /* Buton genişliği %25 oranında artırıldı */
+      margin-top: 50px; /* Butonlar biraz aşağı indirildi */
     }
-    #language-selection button:hover { background: var(--accent-color); color: #000; transform: scale(1.05); }
+    
+    /* Dil butonları %25 büyütüldü */
+    #language-selection button {
+      padding: 25px; /* 20px -> 25px (%25 büyütüldü) */
+      font-size: 1.75rem; /* 1.4rem -> 1.75rem (%25 büyütüldü) */
+      border-radius: 80px; 
+      cursor: pointer;
+      border: 2px solid var(--accent-color); 
+      background: rgba(255,255,255,0.05); 
+      color: #fff; 
+      font-family: "Smooch Sans", sans-serif; 
+      font-weight: 800; 
+      text-transform: uppercase;
+      letter-spacing: 2px; 
+      transition: var(--transition);
+    }
+    #language-selection button:hover { background: var(--accent-color); color: #000; transform: scale(1.03); }
 
     /* Ana Sarıcı Yapısı */
     .menu-wrapper { 
@@ -451,16 +468,21 @@
       .grid-view-2 .item-name { font-size: 1.12rem; }
       .grid-view-2 .price { font-size: 1.05rem; }
       
-      .tab-button { width: 95px; font-size: 0.82rem; gap: 8px; }
-      .tab-button i { font-size: 2.44rem; } 
+      .tab-button { width: 105px; font-size: 0.85rem; gap: 10px; }
+      /* Mobil için kategori ikonları %30 büyütüldü (2.44rem -> 3.17rem) */
+      .tab-button i { font-size: 3.17rem; } 
       
-      /* Mobil için Kare Liste Görünümü */
       .menu-grid.list-view .menu-item { gap: 16px; padding: 12px; }
       .menu-grid.list-view .item-image-wrapper { width: 100px; height: 100px; aspect-ratio: 1 / 1; }
       .menu-grid.list-view .item-name { font-size: 1.4rem; }
       .menu-grid.list-view .price { font-size: 1.25rem; }
 
-      .view-button { font-size: 1.68rem; width: 48px; height: 48px; }
+      /* Mobil için Grid butonu %40 büyütüldü (48px -> 67px) */
+      .view-button { font-size: 2.35rem; width: 67px; height: 67px; }
+      
+      /* Mobil için Dil Seçim ekranı ölçekleri */
+      #language-selection .buttons-container { max-width: 280px; margin-top: 40px; }
+      #language-selection button { padding: 18px; font-size: 1.45rem; }
     }
   </style>
 </head>
@@ -469,9 +491,9 @@
 <div id="language-selection">
   <div class="logo">Duhok Rest & Caffee</div>
 
-  <div class="buttons-container" style="flex-direction: column; width: 100%; max-width: 280px;">
-    <button data-lang="en" style="width: 100%;">English</button>
-    <button data-lang="ar" style="width: 100%;">العربية</button>
+  <div class="buttons-container">
+    <button data-lang="en">English</button>
+    <button data-lang="ar">العربية</button>
   </div>
   <div class="social-links">
     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
