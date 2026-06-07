@@ -105,7 +105,7 @@
     .contact-item { display: flex; align-items: center; gap: 8px; }
     .contact-item i { color: var(--accent-color); }
 
-    /* --- STICKY NAV & KATEGORİ KARELERİ --- */
+    /* --- STICKY NAV & TEMİZ KATEGORİ SİSTEMİ --- */
     .sticky-nav {
       position: sticky;
       top: 0;
@@ -120,7 +120,7 @@
     .menu-tabs {
       display: flex;
       overflow-x: auto;
-      gap: 15px;
+      gap: 20px;
       padding: 5px 5px;
       white-space: nowrap;
       scrollbar-width: none;
@@ -128,59 +128,59 @@
 
     .menu-tabs::-webkit-scrollbar { display: none; }
 
-    /* Çerçeve boyutları korundu */
+    /* Kategori butonlarının arka plan, çerçeve ve gölgeleri tamamen kaldırıldı */
     .tab-button {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 115px;
-      height: 115px;
+      width: 100px;
+      height: auto;
       flex-shrink: 0;
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      border-radius: var(--radius-lg);
+      background: none;
+      color: var(--secondary-text);
+      border: none;
+      border-radius: 0;
       cursor: pointer;
       transition: var(--transition);
       font-weight: 500;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       letter-spacing: 0.5px;
-      gap: 8px;
-      box-shadow: inset 0 1px 0px rgba(255,255,255,0.1);
+      gap: 10px;
+      padding: 10px 0;
+      outline: none;
     }
 
-    /* İkonlar %8 daha büyütüldü: 2.2rem -> 2.38rem yapıldı */
     .tab-button i { 
       font-size: 2.38rem; 
-      color: #ffffff; 
+      color: var(--secondary-text); 
       transition: var(--transition); 
     }
     
+    /* Hover Durumu */
     .tab-button:hover { 
-      background: rgba(197, 160, 48, 0.15); 
       color: var(--text-color);
-      border-color: var(--accent-color);
       transform: translateY(-2px);
     }
     
-    .tab-button:hover i { color: var(--accent-color); }
+    .tab-button:hover i { color: var(--text-color); }
 
+    /* Aktif Kategori Durumu (Sadece renk değişir ve hafif yukarı esner) */
     .tab-button.active {
-      background: linear-gradient(145deg, var(--accent-color), #9a7b20);
-      color: #000000 !important;
-      font-weight: 700;
-      box-shadow: 0 8px 25px rgba(197, 160, 48, 0.35), inset 0 1px 2px rgba(255,255,255,0.4);
-      border-color: transparent;
+      background: none;
+      color: var(--accent-color) !important;
+      font-weight: 600;
       transform: translateY(-4px);
     }
-    .tab-button.active i { color: #000000 !important; font-weight: 700; }
+    .tab-button.active i { 
+      color: var(--accent-color) !important; 
+    }
 
-    /* Görünüm Değiştirme */
+    /* Görünüm Değiştirme Butonları (Çerçevesiz Temiz İkon Tasarımı) */
     .view-controls {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 16px;
       margin: 25px 0;
     }
     
@@ -189,24 +189,24 @@
     }
 
     .view-button {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: none;
+      border: none;
       color: var(--secondary-text);
       width: 44px;
       height: 44px;
-      border-radius: var(--radius-sm);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.45rem;
       transition: var(--transition);
+      padding: 0;
+      outline: none;
     }
 
     .view-button:hover, .view-button.active {
-      background: rgba(197, 160, 48, 0.15);
-      border-color: var(--accent-color);
       color: var(--accent-color);
+      transform: scale(1.1);
     }
 
     /* Menu Sections */
@@ -281,7 +281,7 @@
     
     .menu-grid.grid-view-2 .item-details { 
       background: rgba(20, 25, 35, 0.6);
-      padding: 14px 10px;
+      padding: 14px 12px;
       width: 100%;
     }
 
@@ -296,9 +296,8 @@
       align-items: flex-start; 
     }
     
-    /* İsim %10 büyütüldü: 1rem -> 1.1rem yapıldı */
     .menu-grid.grid-view-2 .item-name { 
-      font-size: 1.1rem; 
+      font-size: 1.26rem; 
       font-weight: 500; 
       color: #ffffff; 
       word-break: break-word;
@@ -306,7 +305,7 @@
     }
     
     .menu-grid.grid-view-2 .price { 
-      font-size: 1.05rem; 
+      font-size: 1.21rem; 
       font-weight: 600; 
       color: var(--accent-color); 
     }
@@ -314,7 +313,7 @@
     /* 2. Liste Görünümü */
     .menu-grid.list-view {
       grid-template-columns: 1fr;
-      gap: 15px;
+      gap: 18px;
     }
     
     .menu-grid.list-view .menu-item {
@@ -323,17 +322,17 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
-      padding: 10px;
-      gap: 15px;
+      padding: 12px;
+      gap: 18px;
       width: 100%;
       box-shadow: var(--shadow);
     }
     
     .menu-grid.list-view .item-image-wrapper {
-      width: 75px;
-      height: 75px;
+      width: 90px;
+      height: 90px;
       flex-shrink: 0;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
       overflow: hidden;
       position: relative;
     }
@@ -366,9 +365,8 @@
       gap: 15px;
     }
     
-    /* Liste görünümünde de isim %10 büyütüldü: 1.05rem -> 1.15rem yapıldı */
-    .menu-grid.list-view .item-name { font-size: 1.15rem; font-weight: 500; color: #ffffff; }
-    .menu-grid.list-view .price { font-size: 1.05rem; font-weight: 600; color: var(--accent-color); white-space: nowrap; }
+    .menu-grid.list-view .item-name { font-size: 1.32rem; font-weight: 500; color: #ffffff; }
+    .menu-grid.list-view .price { font-size: 1.21rem; font-weight: 600; color: var(--accent-color); white-space: nowrap; }
 
     /* Hover efekti */
     .menu-item:hover .item-image { transform: scale(1.05); }
@@ -441,20 +439,20 @@
     @media (max-width: 600px) {
       .menu-grid { gap: 16px; }
       .menu-grid.grid-view-2 { gap: 12px; }
-      .grid-view-2 .item-details { padding: 8px 6px; }
+      .grid-view-2 .item-details { padding: 10px 8px; }
       
-      /* Mobilde isim boyutu dengelendi */
-      .grid-view-2 .item-name { font-size: 1rem; }
-      .grid-view-2 .price { font-size: 0.85rem; }
+      .grid-view-2 .item-name { font-size: 1.12rem; }
+      .grid-view-2 .price { font-size: 1.05rem; }
       
-      /* Mobilde ikon boyutu %8 artışa göre güncellendi */
-      .tab-button { width: 95px; height: 95px; font-size: 0.75rem; }
+      .tab-button { width: 85px; font-size: 0.78rem; gap: 6px; }
       .tab-button i { font-size: 1.95rem; } 
       
-      .menu-grid.list-view .menu-item { gap: 10px; padding: 8px; }
-      .menu-grid.list-view .item-image-wrapper { width: 65px; height: 65px; }
-      .menu-grid.list-view .item-name { font-size: 1rem; }
-      .menu-grid.list-view .price { font-size: 0.90rem; }
+      .menu-grid.list-view .menu-item { gap: 14px; padding: 10px; }
+      .menu-grid.list-view .item-image-wrapper { width: 80px; height: 80px; }
+      .menu-grid.list-view .item-name { font-size: 1.15rem; }
+      .menu-grid.list-view .price { font-size: 1.05rem; }
+
+      .view-button { font-size: 1.35rem; width: 38px; height: 38px; }
     }
   </style>
 </head>
