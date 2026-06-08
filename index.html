@@ -416,7 +416,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, #26140a 0%, #0f0805 100%);
+      background: radial-gradient(circle at center, #1f1108 0%, #0f0805 100%);
       z-index: 9999;
       color: #ffffff;
       text-align: center;
@@ -433,58 +433,52 @@
       text-shadow: 0 4px 15px rgba(0,0,0,0.6);
     }
     
-    /* Butonlar Büyütüldü ve Aralarındaki Mesafe Artırıldı (gap: 30px) */
+    /* Butonlar %20 oranında aşağı indirildi (margin-top: 45px -> 54px) */
+    /* İki buton arasındaki mesafe %20 artırıldı (gap: 30px -> 36px) */
     #language-selection .buttons-container { 
       display: flex; 
       flex-direction: column; 
-      gap: 30px; 
+      gap: 36px; 
       width: 100%; 
       max-width: 360px; 
-      margin-top: 45px; 
+      margin-top: 54px; 
     }
     
-    /* Butonlar Parlak ve Daha Büyük Yapıldı */
+    /* Buton rengi %20 daha açık hale getirildi */
     #language-selection button {
       padding: 22px 30px; 
       font-size: 1.65rem; 
       border-radius: 8px; 
       cursor: pointer;
-      border: 1px solid #e0a363; 
-      /* Parlak karamel gradyan */
-      background: linear-gradient(135deg, #c68642 0%, #a06328 100%);
-      color: #0f0805; /* Koyu renk yazı ile yüksek okunurluk */
+      /* %20 daha açık tonlu, mat kahve taban */
+      background: rgba(74, 43, 26, 0.85); 
+      border: 1px solid rgba(198, 134, 66, 0.35); 
+      color: #f7f5f0; 
       font-family: var(--font-sans); 
-      font-weight: 700; 
-      letter-spacing: 5.8px; 
+      font-weight: 600; 
+      letter-spacing: 2px; 
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      /* Dışa doğru parlama efekti */
-      box-shadow: 0 6px 25px rgba(198, 134, 66, 0.35);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       position: relative;
-      overflow: hidden;
+      outline: none;
     }
     
-    /* Hover Durumunda Daha da Parlak Efekt */
     #language-selection button:hover { 
-      background: linear-gradient(135deg, #e0a363 0%, #c68642 100%);
-      transform: translateY(-8px);
-      box-shadow: 0 10px 30px rgba(198, 134, 66, 0.6);
-    }
-    
-    /* Ekstra Işık Efekti Geçişi */
-    #language-selection button::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: 0.5s;
-    }
-    #language-selection button:hover::before {
-      left: 100%;
+      background: #5a3520; /* Üzerine gelindiğinde bir tık daha açık mat kahve */
+      border-color: var(--accent-color); 
+      color: var(--accent-color); 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     }
 
     /* SOSYAL MEDYA İKONLARI */
-    .social-links { display: flex; gap: 25px; margin-top: 55px; justify-content: center;}
+    /* %25 oranında aşağı indirildi (margin-top: 55px -> 69px) */
+    .social-links { 
+      display: flex; 
+      gap: 25px; 
+      margin-top: 69px; 
+      justify-content: center;
+    }
     
     .social-icon {
       width: 75px;        
@@ -564,9 +558,10 @@
         font-size: 1.55rem;
       }
       
-      /* Mobil için ölçeklendirilmiş parlak butonlar */
-      #language-selection .buttons-container { max-width: 300px; margin-top: 35px; gap: 20px; }
+      /* Mobil için de orantılı aşağı kaydırma ve mesafe artışı */
+      #language-selection .buttons-container { max-width: 300px; margin-top: 42px; gap: 24px; }
       #language-selection button { padding: 16px 24px; font-size: 1.4rem; }
+      .social-links { margin-top: 44px; }
     }
   </style>
 </head>
