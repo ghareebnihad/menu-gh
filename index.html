@@ -267,6 +267,24 @@
       background: linear-gradient(270deg, var(--accent-color), transparent);
     }
 
+    /* --- SADE VE ŞIK FİYAT ÇERCEVESİ (ORTAK STİL) --- */
+    .price {
+      font-weight: 600; 
+      color: var(--accent-color); 
+      background: rgba(198, 134, 66, 0.05);
+      border: 1px solid rgba(198, 134, 66, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      white-space: nowrap;
+      display: inline-block;
+      letter-spacing: 0.5px;
+      transition: var(--transition);
+    }
+    .menu-item:hover .price {
+      border-color: rgba(198, 134, 66, 0.7);
+      background: rgba(198, 134, 66, 0.1);
+    }
+
     /* --- ÜRÜN GRID YAPISI --- */
     .menu-grid { 
       display: grid;
@@ -276,7 +294,7 @@
       width: 100%;
     }
 
-    /* 1. Grid Görünümü */
+    /* 1. Grid Görünümü (2x2) */
     .menu-grid.grid-view-2 { 
       grid-template-columns: repeat(2, 1fr); 
     }
@@ -318,7 +336,7 @@
       display: flex; 
       flex-direction: column; 
       align-items: flex-start; 
-      gap: 6px; 
+      gap: 10px; /* Boşluk artırıldı */
     }
     
     .menu-grid.grid-view-2 .item-name { 
@@ -329,10 +347,9 @@
       line-height: 1.3;
     }
     
+    /* Grid Görünüm Fiyat Boyutu */
     .menu-grid.grid-view-2 .price { 
-      font-size: 1.21rem; 
-      font-weight: 600; 
-      color: var(--accent-color); 
+      font-size: 1.35rem; /* Biraz büyütüldü */
     }
 
     /* 2. Liste Görünümü */
@@ -397,11 +414,9 @@
       color: #ffffff; 
     }
     
+    /* Liste Görünüm Fiyat Boyutu */
     .menu-grid.list-view .price { 
-      font-size: 1.51rem; 
-      font-weight: 600; 
-      color: var(--accent-color); 
-      white-space: nowrap; 
+      font-size: 1.65rem; /* Biraz büyütüldü */
     }
 
     /* Hover efekti */
@@ -433,8 +448,6 @@
       text-shadow: 0 4px 15px rgba(0,0,0,0.6);
     }
     
-    /* Butonlar %20 oranında aşağı indirildi (margin-top: 45px -> 54px) */
-    /* İki buton arasındaki mesafe %20 artırıldı (gap: 30px -> 36px) */
     #language-selection .buttons-container { 
       display: flex; 
       flex-direction: column; 
@@ -444,13 +457,11 @@
       margin-top: 54px; 
     }
     
-    /* Buton rengi %20 daha açık hale getirildi */
     #language-selection button {
       padding: 22px 30px; 
       font-size: 1.65rem; 
       border-radius: 8px; 
       cursor: pointer;
-      /* %20 daha açık tonlu, mat kahve taban */
       background: rgba(74, 43, 26, 0.85); 
       border: 1px solid rgba(198, 134, 66, 0.35); 
       color: #f7f5f0; 
@@ -464,7 +475,7 @@
     }
     
     #language-selection button:hover { 
-      background: #5a3520; /* Üzerine gelindiğinde bir tık daha açık mat kahve */
+      background: #5a3520; 
       border-color: var(--accent-color); 
       color: var(--accent-color); 
       transform: translateY(-2px);
@@ -472,7 +483,6 @@
     }
 
     /* SOSYAL MEDYA İKONLARI */
-    /* %25 oranında aşağı indirildi (margin-top: 55px -> 69px) */
     .social-links { 
       display: flex; 
       gap: 25px; 
@@ -530,7 +540,7 @@
       .grid-view-2 .item-details { padding: 10px 8px; }
       
       .grid-view-2 .item-name { font-size: 1.12rem; }
-      .grid-view-2 .price { font-size: 1.05rem; }
+      .menu-grid.grid-view-2 .price { font-size: 1.15rem; padding: 2px 6px; } /* Mobil grid fiyat boyutu */
       
       .sticky-nav { padding: 8px 0; }
       .tab-button { width: 100px; font-size: 0.82rem; gap: 6px; }
@@ -548,7 +558,7 @@
       .menu-grid.list-view .menu-item { gap: 16px; padding: 12px; }
       .menu-grid.list-view .item-image-wrapper { width: 100px; height: 100px; aspect-ratio: 1 / 1; }
       .menu-grid.list-view .item-name { font-size: 1.4rem; }
-      .menu-grid.list-view .price { font-size: 1.25rem; }
+      .menu-grid.list-view .price { font-size: 1.4rem; padding: 3px 8px; } /* Mobil liste fiyat boyutu */
 
       .view-button { font-size: 2.35rem; width: 67px; height: 67px; }
       
@@ -558,7 +568,6 @@
         font-size: 1.55rem;
       }
       
-      /* Mobil için de orantılı aşağı kaydırma ve mesafe artışı */
       #language-selection .buttons-container { max-width: 300px; margin-top: 42px; gap: 24px; }
       #language-selection button { padding: 16px 24px; font-size: 1.4rem; }
       .social-links { margin-top: 44px; }
