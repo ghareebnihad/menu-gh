@@ -105,7 +105,7 @@
     .contact-item { display: flex; align-items: center; gap: 8px; }
     .contact-item i { color: var(--accent-color); }
 
-    /* --- STICKY NAV & KATEGORİ SİSTEMİ --- */
+    /* --- STICKY NAV --- */
     .sticky-nav {
       position: sticky;
       top: 0;
@@ -114,14 +114,14 @@
       -webkit-backdrop-filter: blur(20px);
       z-index: 100;
       border-bottom: 1px solid rgba(198, 134, 66, 0.15);
-      padding: 25px 0;
+      padding: 12px 0;
     }
 
     .menu-tabs {
       display: flex;
       overflow-x: auto;
-      gap: 28px;
-      padding: 5px 5px;
+      gap: 24px; 
+      padding: 4px 5px;
       white-space: nowrap;
       scrollbar-width: none;
     }
@@ -133,53 +133,83 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 125px;
+      width: 120px;
       height: auto;
       flex-shrink: 0;
       background: none;
       color: var(--secondary-text);
       border: none;
-      border-radius: 0;
       cursor: pointer;
       transition: var(--transition);
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       letter-spacing: 0.5px;
-      gap: 14px;
-      padding: 10px 0;
+      gap: 8px; 
+      padding: 4px 0;
       outline: none;
     }
 
-    /* Kategori ikon boyutu %30 daha büyütüldü (2.98rem -> 3.87rem) */
+    /* --- İKONLAR İÇİN PREMIUM ÇERCEVE --- */
+    .tab-button .icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 82px; 
+      height: 82px;
+      border-radius: 20px;
+      background: rgba(38, 20, 10, 0.4);
+      border: 1px solid rgba(198, 134, 66, 0.2);
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+    }
+
     .tab-button i { 
-      font-size: 3.87rem; 
+      font-size: 2.5rem; 
       color: var(--secondary-text); 
       transition: var(--transition); 
     }
     
+    /* Hover Durumu */
     .tab-button:hover { 
       color: var(--text-color);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
     
-    .tab-button:hover i { color: var(--text-color); }
+    .tab-button:hover .icon-wrapper {
+      background: rgba(198, 134, 66, 0.1);
+      border-color: rgba(198, 134, 66, 0.6);
+      box-shadow: 0 6px 20px rgba(198, 134, 66, 0.25);
+    }
+    
+    .tab-button:hover i { 
+      color: var(--text-color); 
+      transform: scale(1.05);
+    }
 
+    /* Aktif Kategori Durumu */
     .tab-button.active {
       background: none;
       color: var(--accent-color) !important;
       font-weight: 600;
-      transform: translateY(-4px);
+      transform: translateY(-3px);
     }
+    
+    .tab-button.active .icon-wrapper {
+      background: linear-gradient(135deg, #3b2314 0%, #26140a 100%);
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 0 20px rgba(198, 134, 66, 0.35), inset 0 0 10px rgba(198, 134, 66, 0.2);
+    }
+    
     .tab-button.active i { 
       color: var(--accent-color) !important; 
     }
 
-    /* --- GÖRÜNÜM BUTONLARI (%40 BÜYÜTÜLDÜ) --- */
+    /* --- GÖRÜNÜM BUTONLARI --- */
     .view-controls {
       display: flex;
       justify-content: flex-end;
       gap: 24px;
-      margin: 30px 0;
+      margin: 15px 0 10px 0; 
     }
     
     body[dir="rtl"] .view-controls {
@@ -190,13 +220,13 @@
       background: none;
       border: none;
       color: var(--secondary-text);
-      width: 77px; /* 55px -> 77px (%40 büyütüldü) */
-      height: 77px; /* 55px -> 77px (%40 büyütüldü) */
+      width: 77px; 
+      height: 77px; 
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.53rem; /* 1.81rem -> 2.53rem (%40 büyütüldü) */
+      font-size: 2.53rem; 
       transition: var(--transition);
       padding: 0;
       outline: none;
@@ -215,9 +245,9 @@
       font-family: var(--font-serif);
       font-size: 1.8rem;
       color: var(--accent-color);
-      margin-bottom: 30px;
+      margin-bottom: 20px; 
       position: relative;
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       letter-spacing: 1px;
     }
 
@@ -241,12 +271,12 @@
     .menu-grid { 
       display: grid;
       gap: 25px; 
-      margin-bottom: 50px; 
+      margin-bottom: 35px; 
       transition: var(--transition);
       width: 100%;
     }
 
-    /* 1. Grid Görünümü (Yan Yana Tam 1:1 Kare) */
+    /* 1. Grid Görünümü */
     .menu-grid.grid-view-2 { 
       grid-template-columns: repeat(2, 1fr); 
     }
@@ -305,7 +335,7 @@
       color: var(--accent-color); 
     }
 
-    /* 2. Liste Görünümü (Görseller Tam 1:1 Kare) */
+    /* 2. Liste Görünümü */
     .menu-grid.list-view {
       grid-template-columns: 1fr;
       gap: 22px; 
@@ -378,7 +408,7 @@
     .menu-item:hover .item-image { transform: scale(1.05); }
     .menu-item:hover { border-color: rgba(198, 134, 66, 0.45); }
 
-    /* --- DİL SEÇİM EKRANI (AŞAĞI KAYDIRILDI VE %25 BÜYÜTÜLDÜ) --- */
+    /* --- DİL SEÇİM EKRANI --- */
     #language-selection {
       position: fixed;
       inset: 0;
@@ -386,7 +416,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, #3b2314 0%, #0f0805 100%);
+      background: radial-gradient(circle at center, #26140a 0%, #0f0805 100%);
       z-index: 9999;
       color: #ffffff;
       text-align: center;
@@ -394,34 +424,82 @@
       padding: 20px;
     }
     #language-selection.hidden { opacity: 0; pointer-events: none; }
-    #language-selection .logo { font-family: var(--font-serif); font-size: 3.5rem; color: var(--accent-color); margin-bottom: 5px; }
     
-    /* Buton konteynırına yukarıdan boşluk verilerek aşağı indirildi */
+    #language-selection .logo { 
+      font-family: var(--font-serif); 
+      font-size: 3.5rem; 
+      color: var(--accent-color); 
+      margin-bottom: 5px; 
+      text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    
+    /* Butonlar Büyütüldü ve Aralarındaki Mesafe Artırıldı (gap: 30px) */
     #language-selection .buttons-container { 
       display: flex; 
       flex-direction: column; 
-      gap: 20px; 
+      gap: 30px; 
       width: 100%; 
-      max-width: 350px; /* Buton genişliği %25 oranında artırıldı */
-      margin-top: 50px; /* Butonlar biraz aşağı indirildi */
+      max-width: 360px; 
+      margin-top: 45px; 
     }
     
-    /* Dil butonları %25 büyütüldü */
+    /* Butonlar Parlak ve Daha Büyük Yapıldı */
     #language-selection button {
-      padding: 25px; /* 20px -> 25px (%25 büyütüldü) */
-      font-size: 1.75rem; /* 1.4rem -> 1.75rem (%25 büyütüldü) */
-      border-radius: 80px; 
+      padding: 22px 30px; 
+      font-size: 1.65rem; 
+      border-radius: 8px; 
       cursor: pointer;
-      border: 2px solid var(--accent-color); 
-      background: rgba(255,255,255,0.05); 
-      color: #fff; 
-      font-family: "Smooch Sans", sans-serif; 
-      font-weight: 800; 
-      text-transform: uppercase;
-      letter-spacing: 2px; 
-      transition: var(--transition);
+      border: 1px solid #e0a363; 
+      /* Parlak karamel gradyan */
+      background: linear-gradient(135deg, #c68642 0%, #a06328 100%);
+      color: #0f0805; /* Koyu renk yazı ile yüksek okunurluk */
+      font-family: var(--font-sans); 
+      font-weight: 700; 
+      letter-spacing: 5.8px; 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Dışa doğru parlama efekti */
+      box-shadow: 0 6px 25px rgba(198, 134, 66, 0.35);
+      position: relative;
+      overflow: hidden;
     }
-    #language-selection button:hover { background: var(--accent-color); color: #000; transform: scale(1.03); }
+    
+    /* Hover Durumunda Daha da Parlak Efekt */
+    #language-selection button:hover { 
+      background: linear-gradient(135deg, #e0a363 0%, #c68642 100%);
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(198, 134, 66, 0.6);
+    }
+    
+    /* Ekstra Işık Efekti Geçişi */
+    #language-selection button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: 0.5s;
+    }
+    #language-selection button:hover::before {
+      left: 100%;
+    }
+
+    /* SOSYAL MEDYA İKONLARI */
+    .social-links { display: flex; gap: 25px; margin-top: 55px; justify-content: center;}
+    
+    .social-icon {
+      width: 75px;        
+      height: 75px;       
+      border-radius: 50%; 
+      border: 1px solid var(--accent-color);
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: var(--accent-color);
+      font-size: 1.75rem; 
+      text-decoration: none; 
+      transition: 0.3s;
+    }
+    .social-icon:hover { background: var(--accent-color); color: #000; transform: scale(1.1); }
 
     /* Ana Sarıcı Yapısı */
     .menu-wrapper { 
@@ -437,14 +515,6 @@
       padding-bottom: 40px;
       width: 92%;
     }
-    
-    .social-links { display: flex; gap: 25px; margin-top: 55px; justify-content: center;}
-    .social-icon {
-      width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--accent-color);
-      display: flex; align-items: center; justify-content: center; color: var(--accent-color);
-      font-size: 1.4rem; text-decoration: none; transition: 0.3s;
-    }
-    .social-icon:hover { background: var(--accent-color); color: #000; transform: scale(1.1); }
 
     .footer {
       flex-shrink: 0;
@@ -468,21 +538,35 @@
       .grid-view-2 .item-name { font-size: 1.12rem; }
       .grid-view-2 .price { font-size: 1.05rem; }
       
-      .tab-button { width: 105px; font-size: 0.85rem; gap: 10px; }
-      /* Mobil için kategori ikonları %30 büyütüldü (2.44rem -> 3.17rem) */
-      .tab-button i { font-size: 3.17rem; } 
+      .sticky-nav { padding: 8px 0; }
+      .tab-button { width: 100px; font-size: 0.82rem; gap: 6px; }
       
+      .tab-button .icon-wrapper {
+        width: 64px;
+        height: 64px;
+        border-radius: 15px;
+      }
+      .tab-button i { font-size: 1.95rem; } 
+      
+      .view-controls { margin: 8px 0 4px 0; }
+      .menu-section h2 { margin-bottom: 12px; }
+
       .menu-grid.list-view .menu-item { gap: 16px; padding: 12px; }
       .menu-grid.list-view .item-image-wrapper { width: 100px; height: 100px; aspect-ratio: 1 / 1; }
       .menu-grid.list-view .item-name { font-size: 1.4rem; }
       .menu-grid.list-view .price { font-size: 1.25rem; }
 
-      /* Mobil için Grid butonu %40 büyütüldü (48px -> 67px) */
       .view-button { font-size: 2.35rem; width: 67px; height: 67px; }
       
-      /* Mobil için Dil Seçim ekranı ölçekleri */
-      #language-selection .buttons-container { max-width: 280px; margin-top: 40px; }
-      #language-selection button { padding: 18px; font-size: 1.45rem; }
+      .social-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 1.55rem;
+      }
+      
+      /* Mobil için ölçeklendirilmiş parlak butonlar */
+      #language-selection .buttons-container { max-width: 300px; margin-top: 35px; gap: 20px; }
+      #language-selection button { padding: 16px 24px; font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -642,7 +726,7 @@
         const tab = document.createElement("button");
         tab.className = "tab-button";
         tab.dataset.category = key;
-        tab.innerHTML = `<i class="${cat.icon}"></i><span>${cat.title}</span>`;
+        tab.innerHTML = `<div class="icon-wrapper"><i class="${cat.icon}"></i></div><span>${cat.title}</span>`;
         if (i === 0) tab.classList.add("active");
         menuTabs.appendChild(tab);
 
