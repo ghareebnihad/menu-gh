@@ -1,17 +1,25 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=0.65, maximum-scale=5.0" />
+
   <title>DUHOK REST & CAFFE - Digital Menu</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
+
 /* ==========================================================================
-   Lüks & Minimal 60FPS Dijital Menü CSS Teması
-   (Ürün Resimleri Aktif - Üst Bar/Header/Nav Görselleri Kaldırılmış)
+   DUHOK REST & CAFFE - Lüks & Minimal 60FPS Dijital Menü CSS (Full)
    ========================================================================== */
 
 :root {
@@ -19,28 +27,28 @@
   --bg-main: #080706;
   --bg-surface: #120f0d;
   --bg-card: #181410;
-  
+
   /* Şampanya Altın Vurguları */
   --accent-gold: #c5a059;
   --accent-gold-bright: #e5c378;
   --accent-gold-glow: rgba(229, 195, 120, 0.25);
   --accent-gold-muted: rgba(197, 160, 89, 0.15);
-  
+
   /* Metin ve Sınır Renkleri */
   --text-primary: #f7f3ed;
   --text-muted: #a3978c;
   --border-subtle: rgba(197, 160, 89, 0.18);
   --border-gold: rgba(197, 160, 89, 0.45);
-  
+
   /* Tipografi */
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  
+
   /* Ölçüler */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
-  
+
   /* 60FPS GPU Geçişi */
   --gpu-transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), 
                     border-color 0.18s ease, 
@@ -81,32 +89,22 @@ body {
   margin: 0 auto;
 }
 
-/* ==========================================================================
-   ÜST BAR & NAV GÖRSELLERİNİ KALDIRMA (DEV HEADER RESMİ KAPALI)
-   ========================================================================== */
-
-/* Üst Bar (Header), Hero ve Nav alanındaki resimleri tamamen engelle */
-.header img,
-.header::before,
-.header::after,
-.sticky-nav img,
-.hero-image,
-.banner-image {
-  display: none !important;
-  background-image: none !important;
-}
-
+/* --- Üst Bar (Header) --- */
 .header {
   position: relative;
   padding: 36px 0 20px 0;
   text-align: center;
-  background: var(--bg-main) !important;
+  background: var(--bg-main);
   border-bottom: 1px solid var(--border-subtle);
 }
 
-/* ==========================================================================
-   DİL SEÇİM MODALI
-   ========================================================================== */
+.header img,
+.header::before,
+.header::after {
+  display: none !important;
+}
+
+/* --- Dil Seçim Modalı --- */
 #language-selection {
   position: fixed;
   inset: 0;
@@ -114,29 +112,27 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
   background: 
-    linear-gradient(180deg, rgba(8, 7, 6, 0.75) 0%, rgba(8, 7, 6, 0.96) 100%),
+    linear-gradient(180deg, rgba(8, 7, 6, 0.85) 0%, rgba(8, 7, 6, 0.98) 100%),
     url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-  
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   color: var(--text-primary);
   text-align: center;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   padding: 24px;
-  contain: strict;
 }
 
 #language-selection.hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
 #language-selection .logo {
   font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
   color: var(--accent-gold-bright);
   margin-bottom: 8px;
   letter-spacing: 2px;
@@ -153,10 +149,9 @@ body {
 }
 
 #language-selection button {
-  height: 60px;
-  min-height: 60px;
+  height: 56px;
   padding: 0 24px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   border-radius: var(--radius-md);
   cursor: pointer;
   background: rgba(24, 20, 16, 0.85);
@@ -176,20 +171,17 @@ body {
 
 #language-selection button:active,
 #language-selection button.active {
-  transform: scale(0.95);
+  transform: scale(0.96);
   border-color: var(--accent-gold-bright);
   color: var(--accent-gold-bright);
   background: rgba(35, 28, 20, 0.95);
   box-shadow: 0 0 20px var(--accent-gold-glow);
 }
 
-/* ==========================================================================
-   SADE VE TEMİZ ÜST BAR (HEADER METİNLERİ)
-   ========================================================================== */
-
+/* --- Üst Bar Metinleri --- */
 .restaurant-name {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 700;
   color: var(--accent-gold-bright);
   letter-spacing: 2.5px;
@@ -202,7 +194,7 @@ body {
   color: var(--text-muted);
   margin-bottom: 16px;
   font-weight: 400;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
@@ -225,10 +217,7 @@ body {
   color: var(--accent-gold);
 }
 
-/* ==========================================================================
-   STICKY NAV (KATEGORİ TABLARI)
-   ========================================================================== */
-
+/* --- Sticky Nav (Kategori Tabları) - %30 BÜYÜTÜLDÜ --- */
 .sticky-nav {
   position: sticky;
   top: 0;
@@ -237,15 +226,14 @@ body {
   -webkit-backdrop-filter: blur(12px);
   z-index: 100;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 12px 0;
-  transform: translateZ(0);
+  padding: 16px 0;
 }
 
 .menu-tabs {
   display: flex;
   overflow-x: auto;
-  gap: 12px;
-  padding: 2px;
+  gap: 16px;
+  padding: 4px;
   white-space: nowrap;
   scrollbar-width: none;
   align-items: center;
@@ -259,7 +247,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 84px;
+  width: 104px;
   flex-shrink: 0;
   background: none;
   color: var(--text-muted);
@@ -267,18 +255,17 @@ body {
   cursor: pointer;
   transition: var(--gpu-transition);
   font-weight: 500;
-  font-size: 0.8rem;
-  gap: 6px;
+  font-size: 0.95rem;
+  gap: 8px;
   outline: none;
-  touch-action: manipulation;
 }
 
 .tab-button .icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 68px;
   border-radius: var(--radius-md);
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -286,14 +273,9 @@ body {
 }
 
 .tab-button i {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: var(--text-muted);
   transition: var(--gpu-transition);
-}
-
-.tab-button:active .icon-wrapper {
-  transform: scale(0.92);
-  border-color: var(--accent-gold-bright);
 }
 
 .tab-button.active {
@@ -304,16 +286,14 @@ body {
 .tab-button.active .icon-wrapper {
   background: linear-gradient(145deg, #241e17 0%, #15120e 100%);
   border-color: var(--accent-gold);
-  box-shadow: 0 4px 14px rgba(197, 160, 89, 0.25);
+  box-shadow: 0 4px 18px rgba(197, 160, 89, 0.3);
 }
 
 .tab-button.active i {
   color: var(--accent-gold-bright);
 }
 
-/* ==========================================================================
-   GÖRÜNÜM BUTONLARI & İÇERİK DÜZENİ
-   ========================================================================== */
+/* --- Görünüm Butonları --- */
 .view-controls {
   display: flex;
   justify-content: flex-end;
@@ -330,21 +310,14 @@ body[dir="rtl"] .view-controls {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   color: var(--text-muted);
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.05rem;
+  font-size: 1rem;
   transition: var(--gpu-transition);
-  outline: none;
-  touch-action: manipulation;
-}
-
-.view-button:active {
-  transform: scale(0.9);
-  border-color: var(--accent-gold-bright);
 }
 
 .view-button.active {
@@ -354,7 +327,7 @@ body[dir="rtl"] .view-controls {
   box-shadow: 0 0 12px var(--accent-gold-glow);
 }
 
-/* --- SEKSİYONLAR --- */
+/* --- Seksiyonlar --- */
 .menu-section {
   display: none;
   opacity: 0;
@@ -370,7 +343,7 @@ body[dir="rtl"] .view-controls {
 
 .menu-section h2 {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   color: var(--accent-gold-bright);
   margin-bottom: 18px;
   position: relative;
@@ -390,21 +363,22 @@ body[dir="rtl"] .menu-section h2::after {
   left: auto; right: 0;
 }
 
+/* --- ŞIK MİNİMAL FİYAT TASARIMI --- */
 .price {
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
   color: var(--accent-gold-bright);
-  background: var(--accent-gold-muted);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 4px 10px;
+  letter-spacing: 0.5px;
+  background: none;
+  border: none;
+  padding: 0;
   white-space: nowrap;
   display: inline-block;
-  font-size: 0.92rem;
+  text-shadow: 0 0 10px rgba(229, 195, 120, 0.25);
 }
 
-/* ==========================================================================
-   ÜRÜN KARTLARI VE GERİ GETİRİLEN ÜRÜN RESİMLERİ
-   ========================================================================== */
+/* --- Ürün Kartları & Grid Düzeni --- */
 .menu-grid {
   display: grid;
   gap: 14px;
@@ -412,7 +386,6 @@ body[dir="rtl"] .menu-section h2::after {
   width: 100%;
 }
 
-/* --- Ürün Resim Alanı Stili --- */
 .item-image-wrapper {
   display: block;
   width: 100%;
@@ -430,7 +403,7 @@ body[dir="rtl"] .menu-section h2::after {
   transition: transform 0.3s ease;
 }
 
-/* Grid Görünümü (2 Kolonlu Kartlar) */
+/* --- Grid Görünümü (2 Kolonlu) --- */
 .menu-grid.grid-view-2 {
   grid-template-columns: repeat(2, 1fr);
 }
@@ -443,8 +416,6 @@ body[dir="rtl"] .menu-section h2::after {
   border-radius: var(--radius-md);
   padding: 12px;
   transition: var(--gpu-transition);
-  touch-action: manipulation;
-  overflow: hidden;
 }
 
 .menu-grid.grid-view-2 .item-image-wrapper {
@@ -452,27 +423,38 @@ body[dir="rtl"] .menu-section h2::after {
   margin-bottom: 10px;
 }
 
-.menu-grid.grid-view-2 .menu-item:active {
-  transform: scale(0.97);
-  border-color: var(--accent-gold);
-}
-
 .menu-grid.grid-view-2 .item-details {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
+}
+
+.menu-grid.grid-view-2 .item-header {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
   gap: 8px;
 }
 
 .menu-grid.grid-view-2 .item-name {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-primary);
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
-/* Liste Görünümü (Satır Düzeni + Küçük Resim) */
+.menu-grid.grid-view-2 .price {
+  align-self: flex-end;
+  margin-top: 4px;
+}
+
+body[dir="rtl"] .menu-grid.grid-view-2 .price {
+  align-self: flex-start;
+}
+
+/* --- Liste Görünümü (Tek Kolonlu) --- */
 .menu-grid.list-view {
   grid-template-columns: 1fr;
   gap: 10px;
@@ -488,18 +470,12 @@ body[dir="rtl"] .menu-section h2::after {
   padding: 10px 14px;
   width: 100%;
   transition: var(--gpu-transition);
-  touch-action: manipulation;
 }
 
 .menu-grid.list-view .item-image-wrapper {
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
-}
-
-.menu-grid.list-view .menu-item:active {
-  transform: scale(0.98);
-  border-color: var(--accent-gold);
 }
 
 .menu-grid.list-view .item-details {
@@ -515,12 +491,12 @@ body[dir="rtl"] .menu-section h2::after {
 }
 
 .menu-grid.list-view .item-name {
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--text-primary);
 }
 
-/* Sosyal Medya & Alt Bilgi */
+/* --- Sosyal Medya & Alt Bilgi (Footer) --- */
 .social-links {
   display: flex;
   gap: 16px;
@@ -529,7 +505,7 @@ body[dir="rtl"] .menu-section h2::after {
 }
 
 .social-icon {
-  width: 48px; height: 48px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border-subtle);
   background: var(--bg-card);
@@ -537,16 +513,9 @@ body[dir="rtl"] .menu-section h2::after {
   align-items: center;
   justify-content: center;
   color: var(--accent-gold-bright);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: none;
   transition: var(--gpu-transition);
-  touch-action: manipulation;
-}
-
-.social-icon:active, .social-icon.active {
-  transform: scale(0.88);
-  border-color: var(--accent-gold-bright);
-  box-shadow: 0 0 16px var(--accent-gold-glow);
 }
 
 .menu-wrapper {
@@ -575,216 +544,429 @@ main.container {
   color: var(--text-muted);
   border-top: 1px solid var(--border-subtle);
 }
+
 </style>
+
 </head>
+
 <body>
 
+
+
 <div id="language-selection">
+
   <div class="logo">Duhok Rest & Caffee</div>
 
+
+
   <div class="buttons-container">
+
     <button data-lang="en">English</button>
+
     <button data-lang="ar">العربية</button>
+
   </div>
+
   <div class="social-links">
+
     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+
     <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+
     <a href="#" class="social-icon"><i class="fab fa-snapchat"></i></a>
+
   </div>
+
 </div>
+
+
 
 <div class="menu-wrapper">
+
     <header class="header">
+
     <img src="https://resizer.otstatic.com/v3/photos/52293729-4" alt="Background" class="header-bg-img">
+
       <div class="container">
+
         <h1 class="restaurant-name" id="restaurant-name"></h1>
+
         <p class="cuisine-text" id="cuisine-text"></p>
+
         <div class="contact-info">
+
           <span class="contact-item" id="location-text"></span>
+
           <span class="contact-item" id="reservation-text"></span>
+
         </div>
+
       </div>
+
     </header>
 
+
+
     <nav class="sticky-nav">
+
       <div class="container">
+
         <div class="menu-tabs" id="menu-tabs"></div>
+
       </div>
+
     </nav>
 
+
+
     <main class="container">
+
       <div class="view-controls">
+
           <button class="view-button active" data-view="grid-view-2" aria-label="Grid View"><i class="fas fa-th-large"></i></button>
+
           <button class="view-button" data-view="list-view" aria-label="List View"><i class="fas fa-list"></i></button>
+
       </div>
+
       <div class="menu-content" id="menu-content"></div>
+
     </main>
 
+
+
     <footer class="footer">
+
       <div class="container">
+
         <p id="footer-text"></p>
+
       </div>
+
     </footer>
+
 </div>
 
+
+
 <script id="menu-script">
+
   const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRpEvyH9Kzk9aMNPhhKYzEyy2MbuMsx4qCyLwrDB0kPsqio0HWvlcIFPyQPJHTz4UJPm0eMr5X2qvWk/pub?output=csv";
 
+
+
   document.addEventListener("DOMContentLoaded", () => {
+
     const langSelection = document.getElementById("language-selection");
+
     const body = document.body;
+
     let activeView = "grid-view-2";
+
     let cachedData = null;
 
+
+
     langSelection.addEventListener("click", async (e) => {
+
       const btn = e.target.closest("button");
+
       if (!btn) return;
 
+
+
       document.querySelectorAll('#language-selection button').forEach(b => b.classList.remove('active'));
+
       btn.classList.add('active');
 
+
+
       const selectedLang = btn.dataset.lang;
+
       body.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+
       langSelection.classList.add('hidden');
+
       
+
       try {
+
         if (!cachedData) {
+
           const response = await fetch(SHEET_URL);
+
           if (!response.ok) throw new Error("Veri çekilemedi.");
+
           const csvText = await response.text();
+
           cachedData = parseCSVToMenuData(csvText);
+
         }
+
         
+
         setTimeout(() => {
+
           body.classList.add('lang-selected');
+
           loadMenu(cachedData, selectedLang);
+
         }, 400);
 
+
+
       } catch (error) {
+
         console.error("Hata:", error);
+
         alert("Menü yüklenirken bir hata oluştu.");
+
       }
+
     });
 
+
+
     function parseCSVToMenuData(csvText) {
+
       const lines = csvText.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
       
+
       const menuData = {
+
         "en": {
+
           "translations": {
+
             "restaurantName": "DUHOK REST & CAFFE",
+
             "cuisineText": "Mediterranean cuisine, premium coffee & hookah",
+
             "locationText": "<i class='fas fa-map-marker-alt'></i> Duhok KRO",
+
             "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+
             "footerText": "Developed | <strong> by Ghareeb</strong>"
+
           },
+
           "menu": {}
+
         },
+
         "ar": {
+
           "translations": {
+
             "restaurantName": "دهوك REST & CAFFE",
+
             "cuisineText": "مأكولات متوسطية، قهوة فاخرة وأرجيلة مميزة",
+
             "locationText": "<i class='fas fa-map-marker-alt'></i> دهوك KRO",
+
             "reservationText": "<i class='fas fa-phone-alt'></i> 0750 222 22 22",
+
             "footerText": "جميع الحقوق محفوظة | <strong>تم التطوير بواسطة Ghareeb</strong>"
+
           },
+
           "menu": {}
+
         }
+
       };
 
+
+
       for (let i = 1; i < lines.length; i++) {
+
         const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.replace(/^"|"$/g, '').trim());
+
         if (row.length < 8) continue;
 
+
+
         const [catId, catEn, catAr, catIcon, nameEn, nameAr, price, img] = row;
+
         if (!catId) continue;
 
+
+
         if (!menuData.en.menu[catId]) {
+
           menuData.en.menu[catId] = { "title": catEn, "icon": catIcon, "items": [] };
+
         }
+
         menuData.en.menu[catId].items.push({ "name": nameEn, "price": price, "img": img });
 
+
+
         if (!menuData.ar.menu[catId]) {
+
           menuData.ar.menu[catId] = { "title": catAr, "icon": catIcon, "items": [] };
+
         }
+
         menuData.ar.menu[catId].items.push({ "name": nameAr, "price": price, "img": img });
+
       }
+
       return menuData;
+
     }
+
+
 
     function loadMenu(data, lang) {
+
       const translations = data[lang].translations;
+
       const menu = data[lang].menu;
 
+
+
       document.getElementById("restaurant-name").textContent = translations.restaurantName;
+
       document.getElementById("cuisine-text").textContent = translations.cuisineText;
+
       document.getElementById("location-text").innerHTML = translations.locationText;
+
       document.getElementById("reservation-text").innerHTML = translations.reservationText;
+
       document.getElementById("footer-text").innerHTML = translations.footerText;
 
+
+
       const menuTabs = document.getElementById("menu-tabs");
+
       const menuContent = document.getElementById("menu-content");
 
+
+
       menuTabs.innerHTML = "";
+
       menuContent.innerHTML = "";
 
+
+
       Object.keys(menu).forEach((key, i) => {
+
         const cat = menu[key];
+
         const tab = document.createElement("button");
+
         tab.className = "tab-button";
+
         tab.dataset.category = key;
+
         tab.innerHTML = `<div class="icon-wrapper"><i class="${cat.icon}"></i></div><span>${cat.title}</span>`;
+
         if (i === 0) tab.classList.add("active");
+
         menuTabs.appendChild(tab);
 
+
+
         const section = document.createElement("div");
+
         section.id = `section-${key}`;
+
         section.className = "menu-section";
+
         if (i === 0) section.classList.add("active");
+
         section.innerHTML = `<h2>${cat.title}</h2><div class="menu-grid ${activeView}"></div>`;
 
+
+
         cat.items.forEach(item => {
+
           const itemDiv = document.createElement("div");
+
           itemDiv.className = "menu-item";
+
           itemDiv.innerHTML = `
+
             <div class="item-image-wrapper">
+
               <img src="${item.img}" alt="${item.name}" class="item-image" loading="lazy"/>
+
             </div>
+
             <div class="item-details">
+
               <div class="item-header">
+
                 <span class="item-name">${item.name}</span>
+
                 <span class="price">${item.price}</span>
+
               </div>
+
             </div>
+
           `;
+
           section.querySelector(".menu-grid").appendChild(itemDiv);
+
         });
+
         menuContent.appendChild(section);
+
       });
+
+
 
       document.querySelectorAll(".tab-button").forEach(btn => {
+
         btn.addEventListener("click", () => {
+
           document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+
           btn.classList.add("active");
+
           document.querySelectorAll(".menu-section").forEach(sec => sec.classList.remove("active"));
+
           document.getElementById(`section-${btn.dataset.category}`).classList.add("active");
+
           btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
         });
+
       });
+
+
 
       document.querySelectorAll(".view-button").forEach(btn => {
+
         btn.addEventListener("click", () => {
+
           document.querySelectorAll(".view-button").forEach(b => b.classList.remove("active"));
+
           btn.classList.add("active");
+
           activeView = btn.dataset.view;
+
           document.querySelectorAll(".menu-grid").forEach(grid => {
+
             grid.className = `menu-grid ${activeView}`;
+
           });
+
         });
+
       });
+
     }
+
   });
+
 </script>
 
+
+
 </body>
+
 </html>
