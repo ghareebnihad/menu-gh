@@ -19,26 +19,25 @@
   <style>
 
 /* ==========================================================================
-   DUHOK REST & CAFFE - Lüks & Minimal 60FPS Dijital Menü CSS (Full)
+   DUHOK REST & CAFFE - Dijital Menü CSS (Koyu Kahve, Siyah & %65 Karamel)
    ========================================================================== */
 
 :root {
-  /* Zengin Obsidyen ve Altın Paleti */
-  --bg-main: #080706;
-  --bg-surface: #120f0d;
-  --bg-card: #181410;
+  /* Siyah ve Koyu Kahve Arka Plan Paleti */
+  --bg-main: #080605;           /* Derin Siyah */
+  --bg-surface: #120d09;        /* Koyu Kahve Yüzey */
+  --bg-card: #1c140e;           /* Koyu Kahve Kart */
 
-  /* Şampanya Altın Vurguları */
-  --accent-gold: #c5a059;
-  --accent-gold-bright: #e5c378;
-  --accent-gold-glow: rgba(229, 195, 120, 0.25);
-  --accent-gold-muted: rgba(197, 160, 89, 0.15);
+  /* %65 Opaklık Karamel Vurguları */
+  --accent-caramel: rgba(212, 140, 70, 0.65);         /* %65 Opak Karamel */
+  --accent-caramel-bright: #e09953;                   /* Belirgin Karamel (Metinler için) */
+  --accent-caramel-muted: rgba(212, 140, 70, 0.25);   /* Yumuşak Karamel */
 
   /* Metin ve Sınır Renkleri */
-  --text-primary: #f7f3ed;
-  --text-muted: #a3978c;
-  --border-subtle: rgba(197, 160, 89, 0.18);
-  --border-gold: rgba(197, 160, 89, 0.45);
+  --text-primary: #f5ede6;
+  --text-muted: #ad9e91;
+  --border-subtle: rgba(212, 140, 70, 0.65);          /* %65 Opak Karamel Çizgi */
+  --border-caramel: rgba(212, 140, 70, 0.65);
 
   /* Tipografi */
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -95,7 +94,7 @@ body {
   padding: 36px 0 20px 0;
   text-align: center;
   background: var(--bg-main);
-  /* Üst çizgi korundu ve %45 kalınlaştırıldı */
+  /* Üst çizgi %45 kalınlaştırılmış ve %65 karamel */
   border-bottom: 1.45px solid var(--border-subtle);
 }
 
@@ -114,7 +113,7 @@ body {
   align-items: center;
   justify-content: center;
   background: 
-    linear-gradient(180deg, rgba(8, 7, 6, 0.85) 0%, rgba(8, 7, 6, 0.98) 100%),
+    linear-gradient(180deg, rgba(8, 6, 5, 0.88) 0%, rgba(8, 6, 5, 0.98) 100%),
     url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px);
@@ -134,7 +133,7 @@ body {
 #language-selection .logo {
   font-family: var(--font-serif);
   font-size: clamp(2.2rem, 6vw, 3.2rem);
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
   margin-bottom: 8px;
   letter-spacing: 2px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
@@ -155,7 +154,7 @@ body {
   font-size: 1.73rem;
   border-radius: var(--radius-lg);
   cursor: pointer;
-  background: rgba(24, 20, 16, 0.85);
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -164,7 +163,7 @@ body {
   transition: var(--gpu-transition);
   outline: none;
   touch-action: manipulation;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,10 +172,9 @@ body {
 #language-selection button:active,
 #language-selection button.active {
   transform: scale(0.96);
-  border-color: var(--accent-gold-bright);
-  color: var(--accent-gold-bright);
-  background: rgba(35, 28, 20, 0.95);
-  box-shadow: 0 0 20px var(--accent-gold-glow);
+  border-color: var(--accent-caramel-bright);
+  color: var(--accent-caramel-bright);
+  background: #281c13;
 }
 
 /* --- Üst Bar Metinleri --- */
@@ -184,7 +182,7 @@ body {
   font-family: var(--font-serif);
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 700;
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -215,18 +213,18 @@ body {
 }
 
 .contact-item i {
-  color: var(--accent-gold);
+  color: var(--accent-caramel-bright);
 }
 
 /* --- Sticky Nav (Kategori Tabları) --- */
 .sticky-nav {
   position: sticky;
   top: 0;
-  background: rgba(8, 7, 6, 0.96);
+  background: rgba(8, 6, 5, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 100;
-  border-bottom: none; /* Alttaki çizgi kaldırıldı */
+  border-bottom: none; /* Alttaki çizgi silindi */
   padding: 18px 0;
 }
 
@@ -280,18 +278,17 @@ body {
 }
 
 .tab-button.active {
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
   font-weight: 600;
 }
 
 .tab-button.active .icon-wrapper {
-  background: linear-gradient(145deg, #241e17 0%, #15120e 100%);
-  border-color: var(--accent-gold);
-  box-shadow: 0 4px 18px rgba(197, 160, 89, 0.3);
+  background: linear-gradient(145deg, #2a1d13 0%, #17100a 100%);
+  border-color: var(--accent-caramel);
 }
 
 .tab-button.active i {
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
 }
 
 /* --- Görünüm Butonları --- */
@@ -322,10 +319,9 @@ body[dir="rtl"] .view-controls {
 }
 
 .view-button.active {
-  color: var(--accent-gold-bright);
-  border-color: var(--accent-gold);
+  color: var(--accent-caramel-bright);
+  border-color: var(--accent-caramel);
   background: var(--bg-card);
-  box-shadow: 0 0 12px var(--accent-gold-glow);
 }
 
 /* --- Seksiyonlar --- */
@@ -345,7 +341,7 @@ body[dir="rtl"] .view-controls {
 .menu-section h2 {
   font-family: var(--font-serif);
   font-size: 1.35rem;
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
   margin-bottom: 18px;
   position: relative;
   padding-bottom: 6px;
@@ -357,26 +353,27 @@ body[dir="rtl"] .view-controls {
   position: absolute;
   bottom: 0; left: 0;
   width: 36px; height: 1.5px;
-  background: var(--accent-gold-bright);
+  background: var(--accent-caramel-bright);
 }
 
 body[dir="rtl"] .menu-section h2::after {
   left: auto; right: 0;
 }
 
-/* --- ŞIK MİNİMAL FİYAT TASARIMI --- */
+/* --- YENİLENMİŞ BELİRGİN FİYAT TASARIMI (%15 Büyütüldü, Düz Font, Parıltısız) --- */
 .price {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--accent-gold-bright);
+  font-family: var(--font-sans);      /* Düz font */
+  font-style: normal;                 /* İtalik değil */
+  font-weight: 800;                   /* Ekstra belirgin kalınlık */
+  font-size: 1.21rem;                 /* 1.05rem -> %15 büyütüldü */
+  color: var(--accent-caramel-bright);/* Karamel belirgin renk */
   letter-spacing: 0.5px;
   background: none;
   border: none;
   padding: 0;
   white-space: nowrap;
   display: inline-block;
-  text-shadow: 0 0 10px rgba(229, 195, 120, 0.25);
+  text-shadow: none;                  /* Glow/Parlama tamamen kaldırıldı */
 }
 
 /* --- Ürün Kartları & Grid Düzeni --- */
@@ -448,7 +445,7 @@ body[dir="rtl"] .menu-section h2::after {
 
 .menu-grid.grid-view-2 .price {
   align-self: flex-end;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 body[dir="rtl"] .menu-grid.grid-view-2 .price {
@@ -514,7 +511,7 @@ body[dir="rtl"] .menu-grid.grid-view-2 .price {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-gold-bright);
+  color: var(--accent-caramel-bright);
   font-size: 1.82rem;
   text-decoration: none;
   transition: var(--gpu-transition);
